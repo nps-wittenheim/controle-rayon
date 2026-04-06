@@ -36,9 +36,7 @@
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     }
 
-    body{
-      min-height:100vh;
-    }
+    body{min-height:100vh}
 
     .app{
       max-width:var(--maxw);
@@ -333,13 +331,8 @@
       box-shadow:var(--shadow);
     }
 
-    .tab-panel{
-      display:none;
-    }
-
-    .tab-panel.active{
-      display:block;
-    }
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
 
     .list{
       display:grid;
@@ -464,7 +457,7 @@
     .scanner-sub{
       font-size:12px;
       opacity:.94;
-      max-width:280px;
+      max-width:300px;
     }
 
     .icon-btn{
@@ -582,9 +575,7 @@
       cursor:pointer;
     }
 
-    .hidden{
-      display:none !important;
-    }
+    .hidden{display:none !important}
 
     .loader{
       display:inline-block;
@@ -657,7 +648,7 @@
         <div class="brand-mark">CR</div>
         <div>
           <h1>Contrôle rayon</h1>
-          <p>Listing collé une seule fois, scans à la chaîne, résultat final clair</p>
+          <p>Lecture ciblée de la référence et du code boule</p>
         </div>
       </div>
 
@@ -670,11 +661,11 @@
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-panel">
-          <h2 class="hero-title">Flux simple</h2>
+          <h2 class="hero-title">Nouveau fonctionnement</h2>
           <p class="hero-text">
-            1. Colle ton listing. 2. Ouvre le scanner. 3. Fais scan, scan, scan.
-            4. Clique sur “Terminer le scan”. Le site range automatiquement les produits
-            dans les bons onglets.
+            Le système ne lit plus toute l’étiquette comme un seul bloc.
+            Il découpe l’image en zones pour essayer d’attraper surtout la référence
+            et le code boule, puis il traite tous les scans à la fin.
           </p>
 
           <div class="hero-actions">
@@ -723,7 +714,9 @@
 
         <div class="panel">
           <div class="panel-title">Résumé session</div>
-          <div class="small">Les scans s’enregistrent automatiquement. Le calcul final se fait au bouton “Terminer le scan”.</div>
+          <div class="small">
+            Chaque scan est enregistré automatiquement. Le calcul final se fait au bouton “Terminer le scan”.
+          </div>
 
           <div class="summary-bar">
             <span class="pill">Scans enregistrés : <strong id="scanCountPill">0</strong></span>
@@ -737,8 +730,7 @@
       <section class="card">
         <h2>2. Résultats</h2>
         <p class="lead">
-          Utilise les onglets pour voir ce qui est dans le listing, ce qui a été trouvé,
-          ce qu’il reste et ce qui doit être contrôlé.
+          Les scans sont classés après traitement final dans les onglets ci-dessous.
         </p>
 
         <div class="tabs">
@@ -786,7 +778,7 @@
     <div class="scanner-top">
       <div>
         <div class="scanner-title">Scanner les étiquettes</div>
-        <div class="scanner-sub" id="scannerSub">Caméra prête. Les scans sont enregistrés automatiquement.</div>
+        <div class="scanner-sub" id="scannerSub">Caméra prête. Lecture par zones.</div>
       </div>
       <button class="icon-btn" id="closeScannerBtn">✕</button>
     </div>
@@ -823,6 +815,12 @@
       finalAnalysisDone: false,
       isProcessingScan: false
     };
+
+    const BRANDS = [
+      "ESSENTIELB","SAMSUNG","LG","HISENSE","BEKO","GORENJE","HAIER",
+      "LIEBHERR","LISTO","WHIRLPOOL","SIEMENS","BOSCH","MIELE",
+      "SHARP","INDESIT","HOTPOINT","CANDY","ELECTROLUX","AEG"
+    ];
 
     const listingInput = document.getElementById("listingInput");
     const parseListingBtn = document.getElementById("parseListingBtn");
@@ -883,10 +881,6 @@
         .replace(/[^a-z0-9]+/g, " ")
         .replace(/\s+/g, " ")
         .trim();
-    }
-
-    function escapeRegex(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
     function setGlobalMessage(type, text) {
@@ -951,74 +945,277 @@
       return unique;
     }
 
-    function extractBestCode(text) {
-      const compact = String(text || "").replace(/\s+/g, " ");
-      const numbers = [...compact.matchAll(/\b\d{6,13}\b/g)].map(m => m[0]);
-      if (!numbers.length) return "";
+    function preprocessToCanvas(sourceCanvas, opts = {}) {
+      const {
+        grayscale = true,
+        contrast = 1.45,
+        brightness = 0,
+        threshold = null,
+        invert = false,
+        sharpen = false
+      } = opts;
 
-      const priority = numbers
-        .filter(n => n.length >= 7 && n.length <= 10)
-        .sort((a, b) => b.length - a.length);
+      const out = document.createElement("canvas");
+      out.width = sourceCanvas.width;
+      out.height = sourceCanvas.height;
+      const ctx = out.getContext("2d");
+      ctx.drawImage(sourceCanvas, 0, 0);
 
-      return priority[0] || numbers[0];
+      const img = ctx.getImageData(0, 0, out.width, out.height);
+      const data = img.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
+
+        if (grayscale) {
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+          r = g = b = gray;
+        }
+
+        r = (r - 128) * contrast + 128 + brightness;
+        g = (g - 128) * contrast + 128 + brightness;
+        b = (b - 128) * contrast + 128 + brightness;
+
+        if (threshold !== null) {
+          const v = (r + g + b) / 3 >= threshold ? 255 : 0;
+          r = g = b = v;
+        }
+
+        if (invert) {
+          r = 255 - r;
+          g = 255 - g;
+          b = 255 - b;
+        }
+
+        data[i] = Math.max(0, Math.min(255, r));
+        data[i + 1] = Math.max(0, Math.min(255, g));
+        data[i + 2] = Math.max(0, Math.min(255, b));
+      }
+
+      ctx.putImageData(img, 0, 0);
+
+      if (sharpen) {
+        // simple sharpen pass
+        const temp = ctx.getImageData(0, 0, out.width, out.height);
+        const src = temp.data;
+        const copy = new Uint8ClampedArray(src);
+
+        const w = out.width;
+        const h = out.height;
+        const kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+
+        for (let y = 1; y < h - 1; y++) {
+          for (let x = 1; x < w - 1; x++) {
+            for (let c = 0; c < 3; c++) {
+              let sum = 0;
+              let ki = 0;
+              for (let ky = -1; ky <= 1; ky++) {
+                for (let kx = -1; kx <= 1; kx++) {
+                  const idx = ((y + ky) * w + (x + kx)) * 4 + c;
+                  sum += copy[idx] * kernel[ki++];
+                }
+              }
+              const idx = (y * w + x) * 4 + c;
+              src[idx] = Math.max(0, Math.min(255, sum));
+            }
+          }
+        }
+        ctx.putImageData(temp, 0, 0);
+      }
+
+      return out;
     }
 
-    function extractBestReference(text) {
+    function cropCanvas(sourceCanvas, x, y, w, h) {
+      const c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(w));
+      c.height = Math.max(1, Math.round(h));
+      const ctx = c.getContext("2d");
+      ctx.drawImage(sourceCanvas, x, y, w, h, 0, 0, c.width, c.height);
+      return c;
+    }
+
+    function makeWorkingCanvasFromImage(img, maxWidth = 1800) {
+      const scale = Math.min(1, maxWidth / img.width);
+      const width = Math.round(img.width * scale);
+      const height = Math.round(img.height * scale);
+
+      const c = document.createElement("canvas");
+      c.width = width;
+      c.height = height;
+      const ctx = c.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+      return c;
+    }
+
+    async function ocrCanvas(targetCanvas) {
+      const result = await Tesseract.recognize(targetCanvas, "fra+eng", {
+        tessedit_pageseg_mode: 6
+      });
+      return result.data.text || "";
+    }
+
+    function normalizeOcrText(text) {
+      return String(text || "")
+        .replace(/[|]/g, "I")
+        .replace(/[“”]/g, '"')
+        .replace(/[’]/g, "'")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function collectNumericCandidates(text) {
+      const clean = normalizeOcrText(text);
+      const raw = [...clean.matchAll(/\b\d{5,13}\b/g)].map(m => m[0]);
+      return raw.map(value => ({
+        raw: value,
+        normalized: normalizeCode(value)
+      }));
+    }
+
+    function chooseBestCodeFromCandidates(candidateGroups) {
+      const flat = candidateGroups.flat();
+      if (!flat.length) return { raw: "", normalized: "" };
+
+      const freq = new Map();
+
+      for (const item of flat) {
+        const key = item.normalized;
+        if (!key || key.length < 5) continue;
+        const current = freq.get(key) || { count: 0, bestRaw: item.raw };
+        current.count += 1;
+        if ((item.raw || "").length > (current.bestRaw || "").length) {
+          current.bestRaw = item.raw;
+        }
+        freq.set(key, current);
+      }
+
+      const ranked = [...freq.entries()]
+        .map(([normalized, data]) => ({
+          normalized,
+          raw: data.bestRaw,
+          count: data.count
+        }))
+        .sort((a, b) => {
+          if (b.count !== a.count) return b.count - a.count;
+          if (b.normalized.length !== a.normalized.length) return b.normalized.length - a.normalized.length;
+          return b.raw.length - a.raw.length;
+        });
+
+      const realistic = ranked.filter(x => x.normalized.length >= 6 && x.normalized.length <= 8);
+      if (realistic.length) return realistic[0];
+      return ranked[0];
+    }
+
+    function extractReferenceCandidates(text) {
       const lines = String(text || "")
         .split(/\n+/)
         .map(line => line.trim())
         .filter(Boolean)
+        .map(line => line.replace(/\s+/g, " "))
+        .filter(line => line.length >= 6)
         .filter(line => !/^\d+[.,]\d{2}\s*€?$/.test(line))
         .filter(line => !/^\d+\s*avis$/i.test(line))
         .filter(line => !/^[\d\s.,€|:;#*]+$/.test(line))
-        .filter(line => !/^(dont|eco part|deco part)/i.test(line));
+        .filter(line => !/^(dont|eco part|deco part|prix|au lieu de)/i.test(line));
 
-      const joined = lines.join(" ");
-      const brands = [
-        "ESSENTIELB","SAMSUNG","LG","HISENSE","BEKO","GORENJE","HAIER",
-        "LIEBHERR","LISTO","WHIRLPOOL","SIEMENS","REF","COMBI","MULTI"
-      ];
+      const candidates = [];
 
-      const upper = joined.toUpperCase();
-      const brand = brands
-        .map(name => ({ name, idx: upper.indexOf(name) }))
-        .filter(item => item.idx >= 0)
-        .sort((a, b) => a.idx - b.idx)[0];
+      for (const line of lines) {
+        const upper = line.toUpperCase();
 
-      if (brand) {
-        let slice = joined.slice(brand.idx).trim();
-        slice = slice.replace(/\s+/g, " ");
-        return slice.slice(0, 95);
+        for (const brand of BRANDS) {
+          const idx = upper.indexOf(brand);
+          if (idx >= 0) {
+            const slice = line.slice(idx).replace(/\s+/g, " ").trim();
+            candidates.push(slice);
+          }
+        }
+
+        if (/\b(ref|combi|multi|top|us|2p)\b/i.test(line)) {
+          candidates.push(line);
+        }
       }
 
-      return joined.slice(0, 95).trim();
+      return [...new Set(candidates)].map(x => x.slice(0, 95));
+    }
+
+    function scoreReferenceCandidate(candidate, listingItem) {
+      const c = normalizeRef(candidate);
+      const l = listingItem.normalizedReference;
+      if (!c || !l) return 0;
+      if (c === l) return 100;
+      if (l.includes(c)) return 92;
+      if (c.includes(l)) return 88;
+
+      const cWords = c.split(" ").filter(Boolean);
+      const lWords = l.split(" ").filter(Boolean);
+
+      let score = 0;
+
+      for (const word of cWords) {
+        if (word.length < 3) continue;
+        if (lWords.includes(word)) score += 11;
+      }
+
+      const tokenBonus = cWords.filter(w => /[a-z]/.test(w) && /\d/.test(w));
+      for (const token of tokenBonus) {
+        if (l.includes(token)) score += 20;
+      }
+
+      return Math.min(95, score);
+    }
+
+    function chooseBestReference(candidates) {
+      if (!candidates.length) return "";
+
+      const scoredCandidates = candidates.map(candidate => {
+        const best = state.listingItems
+          .map(item => ({
+            item,
+            score: scoreReferenceCandidate(candidate, item)
+          }))
+          .sort((a, b) => b.score - a.score)[0];
+
+        return {
+          candidate,
+          score: best ? best.score : 0,
+          matchedItem: best ? best.item : null
+        };
+      }).sort((a, b) => b.score - a.score);
+
+      if (scoredCandidates[0] && scoredCandidates[0].score >= 35) {
+        return scoredCandidates[0].candidate;
+      }
+
+      return candidates[0];
     }
 
     function getReferenceScore(scanRefNorm, listingRefNorm) {
       if (!scanRefNorm || !listingRefNorm) return 0;
       if (scanRefNorm === listingRefNorm) return 100;
-      if (listingRefNorm.includes(scanRefNorm)) return 88;
-      if (scanRefNorm.includes(listingRefNorm)) return 82;
+      if (listingRefNorm.includes(scanRefNorm)) return 90;
+      if (scanRefNorm.includes(listingRefNorm)) return 84;
 
-      const scanWords = scanRefNorm.split(" ").filter(Boolean);
-      const listingWords = listingRefNorm.split(" ").filter(Boolean);
+      const s = scanRefNorm.split(" ").filter(Boolean);
+      const l = listingRefNorm.split(" ").filter(Boolean);
 
       let score = 0;
-      for (const word of scanWords) {
+      for (const word of s) {
         if (word.length < 3) continue;
-        if (listingWords.includes(word)) score += 12;
+        if (l.includes(word)) score += 12;
       }
 
-      const modelTokens = scanWords.filter(word => /\d/.test(word) || /[a-z]/.test(word));
-      for (const token of modelTokens) {
+      for (const token of s) {
         if (token.length < 4) continue;
-        try {
-          const pattern = new RegExp(`\\b${escapeRegex(token)}\\b`, "i");
-          if (pattern.test(listingRefNorm)) score += 18;
-        } catch (_) {}
+        if (/[a-z]/.test(token) && /\d/.test(token) && listingRefNorm.includes(token)) {
+          score += 22;
+        }
       }
 
-      return Math.min(score, 95);
+      return Math.min(95, score);
     }
 
     function matchScan(scan) {
@@ -1069,7 +1266,7 @@
           item,
           score: getReferenceScore(refNorm, item.normalizedReference)
         }))
-        .filter(entry => entry.score >= 30)
+        .filter(entry => entry.score >= 35)
         .sort((a, b) => b.score - a.score);
 
       if (!scored.length) {
@@ -1280,7 +1477,7 @@
         state.stream = stream;
         video.srcObject = stream;
         await video.play();
-        scannerSub.textContent = "Caméra active. Les scans seront enregistrés automatiquement.";
+        scannerSub.textContent = "Caméra active. Lecture ciblée par zones.";
       } catch (error) {
         console.error(error);
         scannerSub.textContent = "Impossible d’ouvrir la caméra";
@@ -1311,18 +1508,90 @@
       stopCamera();
     }
 
-    function createScanRecord(text) {
-      const codeRaw = extractBestCode(text);
-      const codeNormalized = normalizeCode(codeRaw);
-      const reference = extractBestReference(text);
+    async function buildOcrReadings(masterCanvas) {
+      const w = masterCanvas.width;
+      const h = masterCanvas.height;
+
+      const zones = [
+        {
+          name: "reference_main",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.06, h * 0.10, w * 0.88, h * 0.40),
+            { grayscale: true, contrast: 1.8, threshold: 165, sharpen: true }
+          )
+        },
+        {
+          name: "reference_center",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.12, h * 0.18, w * 0.76, h * 0.28),
+            { grayscale: true, contrast: 1.6, threshold: 150 }
+          )
+        },
+        {
+          name: "reference_full_soft",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.02, h * 0.04, w * 0.96, h * 0.52),
+            { grayscale: true, contrast: 1.35 }
+          )
+        },
+        {
+          name: "code_bottom_left",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.02, h * 0.62, w * 0.52, h * 0.28),
+            { grayscale: true, contrast: 2.0, threshold: 155, sharpen: true }
+          )
+        },
+        {
+          name: "code_bottom_full",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.00, h * 0.58, w * 0.70, h * 0.34),
+            { grayscale: true, contrast: 1.9, threshold: 150 }
+          )
+        },
+        {
+          name: "code_left_tall",
+          canvas: preprocessToCanvas(
+            cropCanvas(masterCanvas, w * 0.00, h * 0.40, w * 0.38, h * 0.54),
+            { grayscale: true, contrast: 1.85, threshold: 150 }
+          )
+        }
+      ];
+
+      const texts = [];
+
+      for (let i = 0; i < zones.length; i++) {
+        const zone = zones[i];
+        scannerSub.textContent = `Lecture zone ${i + 1}/${zones.length}`;
+        const txt = await ocrCanvas(zone.canvas);
+        texts.push({
+          name: zone.name,
+          text: txt
+        });
+      }
+
+      return texts;
+    }
+
+    function buildScanRecordFromZoneTexts(zoneTexts) {
+      const codeCandidateGroups = zoneTexts
+        .filter(z => z.name.includes("code"))
+        .map(z => collectNumericCandidates(z.text));
+
+      const refTexts = zoneTexts
+        .filter(z => z.name.includes("reference"))
+        .map(z => z.text);
+
+      const bestCode = chooseBestCodeFromCandidates(codeCandidateGroups);
+      const refCandidates = refTexts.flatMap(extractReferenceCandidates);
+      const bestReference = chooseBestReference(refCandidates);
 
       return {
         id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        text,
-        codeRaw,
-        codeNormalized,
-        reference,
-        referenceNormalized: normalizeRef(reference),
+        zoneTexts,
+        codeRaw: bestCode.raw || "",
+        codeNormalized: bestCode.normalized || "",
+        reference: bestReference || "",
+        referenceNormalized: normalizeRef(bestReference || ""),
         status: "pending",
         reason: "",
         matchedCode: "",
@@ -1331,25 +1600,17 @@
       };
     }
 
-    async function runOcrOnCanvas(sourceCanvas) {
+    async function runSmartScan(masterCanvas) {
       if (state.isProcessingScan) return;
       state.isProcessingScan = true;
       captureBtn.disabled = true;
       importImageBtn.disabled = true;
       finishScanBtn.disabled = true;
-      scannerSub.innerHTML = `<span class="loader"></span>Analyse OCR en cours`;
+      scannerSub.innerHTML = `<span class="loader"></span>Analyse ciblée en cours`;
 
       try {
-        const result = await Tesseract.recognize(sourceCanvas, "fra+eng", {
-          logger: (message) => {
-            if (message.status === "recognizing text") {
-              scannerSub.textContent = `Analyse OCR : ${Math.round((message.progress || 0) * 100)}%`;
-            }
-          }
-        });
-
-        const text = result.data.text || "";
-        const scan = createScanRecord(text);
+        const zoneTexts = await buildOcrReadings(masterCanvas);
+        const scan = buildScanRecordFromZoneTexts(zoneTexts);
 
         state.scannedItems.push(scan);
         state.finalAnalysisDone = false;
@@ -1358,11 +1619,18 @@
         if (navigator.vibrate) navigator.vibrate(40);
 
         scannerSub.textContent = `Scan enregistré (${state.scannedItems.length})`;
-        setGlobalMessage("ok", `Scan ajouté automatiquement. Total enregistré : ${state.scannedItems.length}.`);
+
+        if (!scan.codeNormalized && !scan.reference) {
+          setGlobalMessage("warn", "Scan ajouté, mais aucune donnée fiable n’a été détectée. Il ira probablement dans “À vérifier”.");
+        } else if (!scan.codeNormalized || !scan.reference) {
+          setGlobalMessage("warn", `Scan ajouté. Détection partielle : ${scan.reference ? "référence" : "code boule"} seulement.`);
+        } else {
+          setGlobalMessage("ok", `Scan ajouté automatiquement. Réf : ${scan.reference} | Code : ${scan.codeNormalized}`);
+        }
       } catch (error) {
         console.error(error);
-        scannerSub.textContent = "Erreur OCR";
-        setGlobalMessage("err", "Impossible d’analyser cette image. Essaie avec une photo plus nette.");
+        scannerSub.textContent = "Erreur d’analyse";
+        setGlobalMessage("err", "Impossible d’analyser cette image. Essaie une photo plus nette et bien cadrée.");
       } finally {
         state.isProcessingScan = false;
         captureBtn.disabled = false;
@@ -1393,7 +1661,7 @@
       const ctx = canvas.getContext("2d");
       ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, cropW, cropH);
 
-      await runOcrOnCanvas(canvas);
+      await runSmartScan(canvas);
     }
 
     async function analyzeImportedImage(file) {
@@ -1403,19 +1671,12 @@
       const url = URL.createObjectURL(file);
 
       img.onload = async () => {
-        const maxWidth = 1800;
-        const scale = Math.min(1, maxWidth / img.width);
-        const width = Math.round(img.width * scale);
-        const height = Math.round(img.height * scale);
-
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-
-        await runOcrOnCanvas(canvas);
-        URL.revokeObjectURL(url);
+        try {
+          const masterCanvas = makeWorkingCanvasFromImage(img);
+          await runSmartScan(masterCanvas);
+        } finally {
+          URL.revokeObjectURL(url);
+        }
       };
 
       img.src = url;
