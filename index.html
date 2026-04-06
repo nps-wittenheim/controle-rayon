@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Contrôle Rayon</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --line:#d9e2ec;
+      --text:#102a43;
+      --muted:#627d98;
+      --primary:#0057b8;
+      --primary-2:#0b6bcb;
+      --success:#138a36;
+      --warning:#b26a00;
+      --danger:#c62828;
+      --shadow:0 10px 30px rgba(16,42,67,.08);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+    }
+
+    .app{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px 14px 32px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-badge{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:22px;
+      line-height:1.1;
+    }
+
+    .brand p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+
+    .card h2{
+      margin:0 0 10px;
+      font-size:18px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    textarea{
+      width:100%;
+      min-height:240px;
+      resize:vertical;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      font:inherit;
+      color:var(--text);
+      background:#fbfdff;
+      outline:none;
+    }
+
+    input[type="text"]{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px 14px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
+      outline:none;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    button{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      font:inherit;
+      font-weight:700;
+      cursor:pointer;
+      transition:.18s transform ease,.18s opacity ease,.18s background ease;
+    }
+
+    button:hover{transform:translateY(-1px)}
+    button:disabled{opacity:.55; cursor:not-allowed; transform:none}
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#eef4fb;
+      color:var(--text);
+    }
+
+    .btn-success{
+      background:var(--success);
+      color:#fff;
+    }
+
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:8px;
+    }
+
+    @media (max-width:700px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+
+    .stat{
+      background:#fbfdff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .stat .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:6px;
+    }
+
+    .stat .value{
+      font-size:28px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .value.success{color:var(--success)}
+    .value.warning{color:var(--warning)}
+    .value.danger{color:var(--danger)}
+
+    .table-wrap{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    th,td{
+      padding:10px 12px;
+      border-bottom:1px solid #edf2f7;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f7fafc;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    tr:last-child td{border-bottom:none}
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .badge-ok{
+      background:rgba(19,138,54,.12);
+      color:var(--success);
+    }
+
+    .badge-warn{
+      background:rgba(178,106,0,.12);
+      color:var(--warning);
+    }
+
+    .badge-danger{
+      background:rgba(198,40,40,.12);
+      color:var(--danger);
+    }
+
+    .scanner-shell{
+      position:fixed;
+      inset:0;
+      background:#000;
+      z-index:999;
+      display:none;
+      flex-direction:column;
+    }
+
+    .scanner-shell.open{
+      display:flex;
+    }
+
+    .scanner-top{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      z-index:3;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:env(safe-area-inset-top) 14px 12px;
+      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0));
+      color:#fff;
+    }
+
+    .scanner-title{
+      font-weight:800;
+      font-size:16px;
+    }
+
+    .scanner-sub{
+      font-size:12px;
+      opacity:.9;
+      margin-top:4px;
+    }
+
+    .icon-btn{
+      min-width:44px;
+      min-height:44px;
+      border-radius:12px;
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      backdrop-filter:blur(8px);
+      font-size:18px;
+      padding:0 12px;
+    }
+
+    .video-wrap{
+      position:relative;
+      flex:1;
+      overflow:hidden;
+      background:#000;
+    }
+
+    video, canvas.preview-canvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .scan-frame{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .scan-box{
+      width:min(86vw,420px);
+      height:min(56vh,300px);
+      border:2px solid rgba(255,255,255,.9);
+      border-radius:24px;
+      box-shadow:0 0 0 9999px rgba(0,0,0,.34);
+      position:relative;
+    }
+
+    .scan-box::after{
+      content:"Cadre bien l’étiquette à l’intérieur";
+      position:absolute;
+      left:50%;
+      bottom:-34px;
+      transform:translateX(-50%);
+      white-space:nowrap;
+      font-size:12px;
+      color:#fff;
+      background:rgba(0,0,0,.45);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .scanner-bottom{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:3;
+      padding:16px 16px calc(18px + env(safe-area-inset-bottom));
+      background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,0));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+    }
+
+    .capture-btn{
+      width:76px;
+      height:76px;
+      border-radius:50%;
+      background:#fff;
+      border:6px solid rgba(255,255,255,.35);
+      box-shadow:0 4px 20px rgba(0,0,0,.35);
+    }
+
+    .floating-import{
+      position:absolute;
+      right:18px;
+      bottom:calc(110px + env(safe-area-inset-bottom));
+      z-index:4;
+      background:rgba(255,255,255,.95);
+      color:#102a43;
+      border-radius:18px;
+      padding:12px 14px;
+      font-weight:800;
+      box-shadow:0 10px 30px rgba(0,0,0,.28);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    .loader{
+      display:inline-block;
+      width:16px;
+      height:16px;
+      border:2px solid rgba(255,255,255,.5);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg)}
+    }
+
+    .ocr-panel{
+      margin-top:14px;
+      background:#fbfdff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+    }
+
+    .ocr-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    @media (max-width:700px){
+      .ocr-grid{grid-template-columns:1fr}
+    }
+
+    .message{
+      margin-top:10px;
+      padding:12px 14px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .message.ok{
+      background:rgba(19,138,54,.1);
+      color:var(--success);
+    }
+
+    .message.warn{
+      background:rgba(178,106,0,.1);
+      color:var(--warning);
+    }
+
+    .message.err{
+      background:rgba(198,40,40,.1);
+      color:var(--danger);
+    }
+
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+      max-height:360px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .list-item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .list-item strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .footer-note{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .pill{
+      display:inline-block;
+      margin-right:8px;
+      margin-top:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eef4fb;
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">CR</div>
+        <div>
+          <h1>Contrôle Rayon</h1>
+          <p>Comparaison listing / étiquettes électroniques</p>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn-primary" id="openScannerBtn">Scanner une étiquette</button>
+        <button class="btn-secondary" id="resetSessionBtn">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Articles du listing</div>
+        <div class="value" id="statTotalListing">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Déjà trouvés</div>
+        <div class="value success" id="statFound">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Reste à contrôler</div>
+        <div class="value warning" id="statRemaining">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Hors listing</div>
+        <div class="value danger" id="statOutside">0</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:16px">
+      <div class="card">
+        <h2>1. Listing</h2>
+        <div class="muted">
+          Colle ton listing texte ici. Le système récupère le premier nombre de la ligne comme code boule, puis la référence.
+        </div>
+
+        <textarea id="listingInput" placeholder="Exemple :
+1187958 Ref Multi HISENSE RQ758N4SWSE
+1200091 Ref Multi LG GMZ765SBHJ InstaView
+1201967 Ref Multi SAMSUNG RF24B8620EB1"></textarea>
+
+        <div class="actions">
+          <button class="btn-primary" id="parseListingBtn">Analyser le listing</button>
+          <button class="btn-secondary" id="loadExampleBtn">Charger un exemple</button>
+        </div>
+
+        <div class="ocr-panel">
+          <strong>Résultat d’extraction</strong>
+          <div class="small">Vérifie vite fait avant de scanner les produits. C’est la sécurité anti-erreur.</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Code boule</th>
+                  <th>Référence</th>
+                  <th>État</th>
+                </tr>
+              </thead>
+              <tbody id="listingTableBody">
+                <tr>
+                  <td colspan="3" class="muted">Aucun listing chargé.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-note">
+            Le système enlève automatiquement les zéros au début d’un code boule avant comparaison.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Analyse étiquette</h2>
+        <div class="muted">
+          La caméra s’ouvre directement. Tu peux aussi importer une photo avec le bouton en bas à droite dans l’écran scanner.
+        </div>
+
+        <div class="ocr-panel">
+          <strong>Dernière lecture OCR</strong>
+
+          <div class="ocr-grid">
+            <div>
+              <label class="small">Code boule détecté</label>
+              <input type="text" id="ocrCodeInput" placeholder="Ex: 0001202581" />
+            </div>
+            <div>
+              <label class="small">Code normalisé</label>
+              <input type="text" id="ocrCodeNormalizedInput" placeholder="Ex: 1202581" readonly />
+            </div>
+            <div style="grid-column:1/-1">
+              <label class="small">Référence détectée</label>
+              <input type="text" id="ocrRefInput" placeholder="Ex: Ref US SAMSUNG RH650654R359" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-success" id="validateScanBtn">Valider cette lecture</button>
+            <button class="btn-secondary" id="clearOcrBtn">Effacer</button>
+          </div>
+
+          <div id="scanMessage"></div>
+        </div>
+
+        <div class="ocr-panel">
+          <strong>Produits hors listing</strong>
+          <div class="list" id="outsideList">
+            <div class="muted">Aucun produit hors listing pour le moment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>3. Articles restants à sortir</h2>
+      <div class="muted">
+        Tout ce qui n’a pas encore été retrouvé dans le rayon apparaît ici.
+      </div>
+      <div class="list" id="remainingList">
+        <div class="muted">Charge un listing pour voir les articles restants.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scanner-shell" id="scannerShell">
+    <div class="scanner-top">
+      <div>
+        <div class="scanner-title">Scanner une étiquette</div>
+        <div class="scanner-sub" id="scannerStatus">Caméra active</div>
+      </div>
+      <button class="icon-btn" id="closeScannerBtn">✕</button>
+    </div>
+
+    <div class="video-wrap">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="captureCanvas" class="preview-canvas hidden"></canvas>
+
+      <div class="scan-frame">
+        <div class="scan-box"></div>
+      </div>
+
+      <button class="floating-import" id="importPhotoBtn">
+        🖼️ Importer
+      </button>
+      <input type="file" id="importFileInput" accept="image/*" class="hidden" />
+    </div>
+
+    <div class="scanner-bottom">
+      <button class="capture-btn" id="captureBtn" title="Analyser la photo"></button>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      listingItems: [],
+      foundCodes: new Set(),
+      outsideItems: [],
+      stream: null,
+      lastOcrText: ""
+    };
+
+    const listingInput = document.getElementById("listingInput");
+    const parseListingBtn = document.getElementById("parseListingBtn");
+    const loadExampleBtn = document.getElementById("loadExampleBtn");
+    const listingTableBody = document.getElementById("listingTableBody");
+
+    const statTotalListing = document.getElementById("statTotalListing");
+    const statFound = document.getElementById("statFound");
+    const statRemaining = document.getElementById("statRemaining");
+    const statOutside = document.getElementById("statOutside");
+
+    const remainingList = document.getElementById("remainingList");
+    const outsideList = document.getElementById("outsideList");
+
+    const ocrCodeInput = document.getElementById("ocrCodeInput");
+    const ocrCodeNormalizedInput = document.getElementById("ocrCodeNormalizedInput");
+    const ocrRefInput = document.getElementById("ocrRefInput");
+    const validateScanBtn = document.getElementById("validateScanBtn");
+    const clearOcrBtn = document.getElementById("clearOcrBtn");
+    const scanMessage = document.getElementById("scanMessage");
+
+    const openScannerBtn = document.getElementById("openScannerBtn");
+    const closeScannerBtn = document.getElementById("closeScannerBtn");
+    const scannerShell = document.getElementById("scannerShell");
+    const scannerStatus = document.getElementById("scannerStatus");
+
+    const video = document.getElementById("video");
+    const captureCanvas = document.getElementById("captureCanvas");
+    const captureBtn = document.getElementById("captureBtn");
+    const importPhotoBtn = document.getElementById("importPhotoBtn");
+    const importFileInput = document.getElementById("importFileInput");
+    const resetSessionBtn = document.getElementById("resetSessionBtn");
+
+    function normalizeCode(code) {
+      if (!code) return "";
+      const onlyDigits = String(code).replace(/\D/g, "");
+      return onlyDigits.replace(/^0+/, "") || "0";
+    }
+
+    function normalizeRef(ref) {
+      return String(ref || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/œ/g, "oe")
+        .replace(/[^a-z0-9]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function cleanListingReference(ref) {
+      return String(ref || "")
+        .replace(/\b(AS|A S|DI|D1|CI|CIl|D\|)\b/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function parseListing(text) {
+      const lines = String(text || "")
+        .split(/\n+/)
+        .map(l => l.trim())
+        .filter(Boolean);
+
+      const items = [];
+
+      for (const line of lines) {
+        if (!/\d/.test(line)) continue;
+        if (/^page\b/i.test(line)) continue;
+        if (/^tarif\b/i.test(line)) continue;
+        if (/^magasin\b/i.test(line)) continue;
+        if (/^groupe\b/i.test(line)) continue;
+        if (/^reseau\b/i.test(line)) continue;
+        if (/^40\s+\d{2}\s+\d{2}/.test(line)) continue;
+
+        const match = line.match(/(?:^|\s)(\d{5,10})\s+(.+)/);
+        if (!match) continue;
+
+        const code = normalizeCode(match[1]);
+        const reference = cleanListingReference(match[2]);
+
+        if (!reference || reference.length < 5) continue;
+        if (/^\d+[.,]\d{2}$/.test(reference)) continue;
+
+        items.push({
+          code,
+          reference,
+          normalizedReference: normalizeRef(reference),
+          found: false
+        });
+      }
+
+      const unique = [];
+      const seen = new Set();
+
+      for (const item of items) {
+        const key = `${item.code}__${item.normalizedReference}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        unique.push(item);
+      }
+
+      return unique;
+    }
+
+    function renderListingTable() {
+      if (!state.listingItems.length) {
+        listingTableBody.innerHTML = `
+          <tr>
+            <td colspan="3" class="muted">Aucun listing chargé.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      listingTableBody.innerHTML = state.listingItems.map(item => `
+        <tr>
+          <td>${escapeHtml(item.code)}</td>
+          <td>${escapeHtml(item.reference)}</td>
+          <td>
+            ${item.found
+              ? `<span class="badge badge-ok">Trouvé</span>`
+              : `<span class="badge badge-warn">À contrôler</span>`}
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderRemainingList() {
+      const remaining = state.listingItems.filter(i => !i.found);
+
+      if (!remaining.length) {
+        remainingList.innerHTML = `<div class="message ok">Tous les articles du listing ont été retrouvés.</div>`;
+        return;
+      }
+
+      remainingList.innerHTML = remaining.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="pill">Code boule : ${escapeHtml(item.code)}</div>
+          <div class="pill">Statut : À sortir / à contrôler</div>
+        </div>
+      `).join("");
+    }
+
+    function renderOutsideList() {
+      if (!state.outsideItems.length) {
+        outsideList.innerHTML = `<div class="muted">Aucun produit hors listing pour le moment.</div>`;
+        return;
+      }
+
+      outsideList.innerHTML = state.outsideItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference || "Référence non reconnue")}</strong>
+          <div class="pill">Code lu : ${escapeHtml(item.code || "Non détecté")}</div>
+          <div class="pill">Hors listing</div>
+        </div>
+      `).join("");
+    }
+
+    function updateStats() {
+      const total = state.listingItems.length;
+      const found = state.listingItems.filter(i => i.found).length;
+      const remaining = total - found;
+      const outside = state.outsideItems.length;
+
+      statTotalListing.textContent = total;
+      statFound.textContent = found;
+      statRemaining.textContent = remaining;
+      statOutside.textContent = outside;
+    }
+
+    function refreshAll() {
+      renderListingTable();
+      renderRemainingList();
+      renderOutsideList();
+      updateStats();
+    }
+
+    function setMessage(type, text) {
+      scanMessage.className = "";
+      if (!text) {
+        scanMessage.innerHTML = "";
+        return;
+      }
+      scanMessage.className = `message ${type}`;
+      scanMessage.textContent = text;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function extractBestCodeFromLabelText(text) {
+      const raw = String(text || "").replace(/\s+/g, " ");
+      const matches = [...raw.matchAll(/\b\d{6,13}\b/g)].map(m => m[0]);
+
+      if (!matches.length) return "";
+
+      const candidates = matches
+        .filter(n => n.length >= 7 && n.length <= 10)
+        .sort((a, b) => b.length - a.length);
+
+      if (candidates.length) return candidates[0];
+      return matches[0];
+    }
+
+    function extractBestReferenceFromLabelText(text) {
+      const lines = String(text || "")
+        .split(/\n+/)
+        .map(l => l.trim())
+        .filter(Boolean)
+        .filter(l => !/^\d+[.,]\d{2}\s*€?$/.test(l))
+        .filter(l => !/^\d+\s*avis$/i.test(l))
+        .filter(l => !/^[\d\s.,€|:;#*]+$/.test(l))
+        .filter(l => !/^(dont|eco part|deco part)/i.test(l));
+
+      const joined = lines.join(" ");
+      const brands = [
+        "ESSENTIELB","SAMSUNG","LG","HISENSE","BEKO","GORENJE","HAIER",
+        "LIEBHERR","LISTO","WHIRLPOOL","SIEMENS","REF","COMBI","MULTI"
+      ];
+
+      const upper = joined.toUpperCase();
+      const brandIndex = brands
+        .map(b => ({ b, idx: upper.indexOf(b) }))
+        .filter(x => x.idx >= 0)
+        .sort((a,b) => a.idx - b.idx)[0];
+
+      if (brandIndex) {
+        let slice = joined.slice(brandIndex.idx).trim();
+        slice = slice.replace(/\s+/g, " ");
+        return slice.slice(0, 80);
+      }
+
+      return joined.slice(0, 80).trim();
+    }
+
+    function findListingMatch(codeNormalized, reference) {
+      const refNorm = normalizeRef(reference);
+
+      if (codeNormalized) {
+        const byCode = state.listingItems.find(item => item.code === codeNormalized);
+        if (byCode) return { item: byCode, confidence: "strong" };
+      }
+
+      if (refNorm) {
+        const byRef = state.listingItems.find(item =>
+          item.normalizedReference.includes(refNorm) ||
+          refNorm.includes(item.normalizedReference)
+        );
+        if (byRef) return { item: byRef, confidence: "medium" };
+      }
+
+      if (codeNormalized && refNorm) {
+        const byPartial = state.listingItems.find(item =>
+          item.code === codeNormalized ||
+          item.normalizedReference.includes(refNorm.split(" ").slice(0,4).join(" "))
+        );
+        if (byPartial) return { item: byPartial, confidence: "partial" };
+      }
+
+      return null;
+    }
+
+    function validateCurrentScan() {
+      if (!state.listingItems.length) {
+        setMessage("err", "Charge d’abord un listing avant de valider une étiquette.");
+        return;
+      }
+
+      const rawCode = ocrCodeInput.value.trim();
+      const normalizedCode = normalizeCode(rawCode);
+      const rawReference = ocrRefInput.value.trim();
+
+      ocrCodeNormalizedInput.value = normalizedCode;
+
+      if (!normalizedCode && !rawReference) {
+        setMessage("err", "Aucune donnée exploitable à valider.");
+        return;
+      }
+
+      const match = findListingMatch(normalizedCode, rawReference);
+
+      if (!match) {
+        state.outsideItems.unshift({
+          code: normalizedCode || rawCode || "",
+          reference: rawReference || ""
+        });
+        renderOutsideList();
+        updateStats();
+        setMessage("warn", "Produit non trouvé dans le listing. Ajouté dans “hors listing”.");
+        return;
+      }
+
+      const item = match.item;
+      const alreadyFound = item.found;
+
+      item.found = true;
+      state.foundCodes.add(item.code);
+
+      refreshAll();
+
+      if (alreadyFound) {
+        setMessage("ok", `Produit déjà scanné : ${item.reference} (${item.code}).`);
+      } else {
+        setMessage("ok", `Produit validé : ${item.reference} (${item.code}).`);
+      }
+    }
+
+    async function startCamera() {
+      try {
+        stopCamera();
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: "environment" },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          },
+          audio: false
+        });
+
+        state.stream = stream;
+        video.srcObject = stream;
+        await video.play();
+        scannerStatus.textContent = "Caméra active";
+      } catch (error) {
+        console.error(error);
+        scannerStatus.textContent = "Impossible d’ouvrir la caméra";
+        setMessage("err", "Impossible d’ouvrir la caméra sur cet appareil ou ce navigateur.");
+      }
+    }
+
+    function stopCamera() {
+      if (state.stream) {
+        state.stream.getTracks().forEach(track => track.stop());
+        state.stream = null;
+      }
+      video.srcObject = null;
+    }
+
+    function openScanner() {
+      scannerShell.classList.add("open");
+      startCamera();
+    }
+
+    function closeScanner() {
+      scannerShell.classList.remove("open");
+      stopCamera();
+    }
+
+    async function runOcrOnCanvas(canvas) {
+      scannerStatus.innerHTML = `<span class="loader"></span> Analyse OCR en cours...`;
+      setMessage("", "");
+
+      try {
+        const result = await Tesseract.recognize(canvas, "fra+eng", {
+          logger: m => {
+            if (m.status === "recognizing text") {
+              scannerStatus.textContent = `Analyse OCR : ${Math.round((m.progress || 0) * 100)}%`;
+            }
+          }
+        });
+
+        const text = result.data.text || "";
+        state.lastOcrText = text;
+
+        const detectedCode = extractBestCodeFromLabelText(text);
+        const normalizedCode = normalizeCode(detectedCode);
+        const detectedReference = extractBestReferenceFromLabelText(text);
+
+        ocrCodeInput.value = detectedCode;
+        ocrCodeNormalizedInput.value = normalizedCode;
+        ocrRefInput.value = detectedReference;
+
+        scannerStatus.textContent = "Analyse terminée";
+        setMessage("ok", "Lecture terminée. Vérifie si besoin puis valide.");
+      } catch (error) {
+        console.error(error);
+        scannerStatus.textContent = "Erreur OCR";
+        setMessage("err", "Impossible d’analyser cette image. Essaie une photo plus nette et plus cadrée.");
+      }
+    }
+
+    async function captureFromVideo() {
+      if (!video.videoWidth || !video.videoHeight) {
+        setMessage("err", "La caméra n’est pas encore prête.");
+        return;
+      }
+
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+
+      const cropW = Math.round(vw * 0.82);
+      const cropH = Math.round(vh * 0.42);
+      const sx = Math.round((vw - cropW) / 2);
+      const sy = Math.round((vh - cropH) / 2);
+
+      captureCanvas.width = cropW;
+      captureCanvas.height = cropH;
+
+      const ctx = captureCanvas.getContext("2d");
+      ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, cropW, cropH);
+
+      await runOcrOnCanvas(captureCanvas);
+    }
+
+    async function importAndAnalyzeFile(file) {
+      if (!file) return;
+
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+
+      img.onload = async () => {
+        const maxWidth = 1800;
+        const scale = Math.min(1, maxWidth / img.width);
+        const width = Math.round(img.width * scale);
+        const height = Math.round(img.height * scale);
+
+        captureCanvas.width = width;
+        captureCanvas.height = height;
+
+        const ctx = captureCanvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        await runOcrOnCanvas(captureCanvas);
+        URL.revokeObjectURL(url);
+      };
+
+      img.src = url;
+    }
+
+    parseListingBtn.addEventListener("click", () => {
+      const items = parseListing(listingInput.value);
+
+      state.listingItems = items.map(item => ({
+        ...item,
+        found: false
+      }));
+      state.foundCodes.clear();
+      state.outsideItems = [];
+
+      refreshAll();
+
+      if (!items.length) {
+        setMessage("err", "Aucune ligne exploitable détectée dans le listing.");
+      } else {
+        setMessage("ok", `${items.length} article(s) détecté(s) dans le listing.`);
+      }
+    });
+
+    loadExampleBtn.addEventListener("click", () => {
+      listingInput.value = `1187958 Ref Multi HISENSE RQ758N4SWSE
+1200091 Ref Multi LG GMZ765SBHJ InstaView
+1201967 Ref Multi SAMSUNG RF24B8620EB1
+1202581 Ref US SAMSUNG RH650654R359
+1191154 Ref 2P HISENSE RT161D4ADE
+8300861 Ref 2P ESSENTIELB ERDV165-55s3
+1208346 Ref 2P BEKO RONE35CK40XBN
+8010745 Combi LISTO RCL170-55mib2`;
+    });
+
+    validateScanBtn.addEventListener("click", validateCurrentScan);
+
+    clearOcrBtn.addEventListener("click", () => {
+      ocrCodeInput.value = "";
+      ocrCodeNormalizedInput.value = "";
+      ocrRefInput.value = "";
+      setMessage("", "");
+    });
+
+    ocrCodeInput.addEventListener("input", () => {
+      ocrCodeNormalizedInput.value = normalizeCode(ocrCodeInput.value);
+    });
+
+    openScannerBtn.addEventListener("click", openScanner);
+    closeScannerBtn.addEventListener("click", closeScanner);
+    captureBtn.addEventListener("click", captureFromVideo);
+
+    importPhotoBtn.addEventListener("click", () => {
+      importFileInput.click();
+    });
+
+    importFileInput.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        await importAndAnalyzeFile(file);
+      }
+      e.target.value = "";
+    });
+
+    resetSessionBtn.addEventListener("click", () => {
+      if (!confirm("Réinitialiser toute la session ?")) return;
+
+      listingInput.value = "";
+      state.listingItems = [];
+      state.foundCodes.clear();
+      state.outsideItems = [];
+      ocrCodeInput.value = "";
+      ocrCodeNormalizedInput.value = "";
+      ocrRefInput.value = "";
+      setMessage("", "");
+      refreshAll();
+    });
+
+    window.addEventListener("beforeunload", stopCamera);
+
+    refreshAll();
+  </script>
+</body>
+</html>
