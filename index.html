@@ -2,12 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Contrôle rayon</title>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
     :root{
       --bg:#f3f6f9;
@@ -24,7 +20,7 @@
       --neutral:#60758a;
       --shadow:0 10px 30px rgba(15,35,55,.08);
       --radius:18px;
-      --maxw:1180px;
+      --maxw:1240px;
     }
 
     *{box-sizing:border-box}
@@ -36,7 +32,9 @@
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     }
 
-    body{min-height:100vh}
+    body{
+      min-height:100vh;
+    }
 
     .app{
       max-width:var(--maxw);
@@ -60,8 +58,8 @@
     }
 
     .brand-mark{
-      width:48px;
-      height:48px;
+      width:50px;
+      height:50px;
       border-radius:16px;
       background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       color:#fff;
@@ -133,6 +131,11 @@
       color:#fff;
     }
 
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+    }
+
     .hero{
       background:var(--surface);
       border:1px solid var(--line);
@@ -144,7 +147,7 @@
 
     .hero-grid{
       display:grid;
-      grid-template-columns:1.15fr .85fr;
+      grid-template-columns:1.08fr .92fr;
       gap:16px;
     }
 
@@ -166,7 +169,7 @@
       margin:0;
       color:var(--muted);
       font-size:14px;
-      line-height:1.5;
+      line-height:1.55;
     }
 
     .hero-actions{
@@ -187,7 +190,7 @@
       border:1px solid var(--line);
       border-radius:16px;
       padding:14px;
-      min-height:94px;
+      min-height:96px;
     }
 
     .stat-label{
@@ -233,13 +236,11 @@
       margin:0 0 14px;
       color:var(--muted);
       font-size:14px;
-      line-height:1.5;
+      line-height:1.55;
     }
 
-    textarea{
+    textarea, input[type="text"]{
       width:100%;
-      min-height:220px;
-      resize:vertical;
       border:1px solid var(--line);
       border-radius:14px;
       padding:14px;
@@ -247,10 +248,15 @@
       font:inherit;
       color:var(--text);
       background:#fff;
+    }
+
+    textarea{
+      min-height:220px;
+      resize:vertical;
       line-height:1.45;
     }
 
-    textarea:focus{
+    textarea:focus, input[type="text"]:focus{
       border-color:#afc6ff;
       box-shadow:0 0 0 4px rgba(15,98,254,.08);
     }
@@ -263,7 +269,7 @@
     }
 
     .card-actions .btn{
-      flex:1 1 150px;
+      flex:1 1 140px;
     }
 
     .panel{
@@ -304,56 +310,75 @@
       color:#334e68;
     }
 
-    .tabs{
-      display:flex;
-      gap:8px;
-      overflow:auto;
-      padding-bottom:2px;
+    .quick-box{
+      background:linear-gradient(180deg,#ffffff 0%,#f9fbfd 100%);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
       margin-bottom:14px;
     }
 
-    .tab{
-      border:none;
+    .quick-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .quick-title h3{
+      margin:0;
+      font-size:17px;
+      letter-spacing:-.02em;
+    }
+
+    .focus-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 12px;
       border-radius:999px;
-      padding:11px 14px;
-      background:#edf3f9;
-      color:#334e68;
-      font:inherit;
-      font-size:13px;
+      font-size:12px;
       font-weight:800;
-      white-space:nowrap;
-      cursor:pointer;
+      background:#edf3f9;
+      color:#51606f;
     }
 
-    .tab.active{
-      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-      color:#fff;
-      box-shadow:var(--shadow);
+    .focus-pill.active{
+      background:rgba(31,143,78,.12);
+      color:var(--success);
     }
 
-    .tab-panel{display:none}
-    .tab-panel.active{display:block}
-
-    .list{
+    .search-row{
       display:grid;
+      grid-template-columns:1fr auto;
       gap:10px;
-      margin-top:12px;
-      max-height:560px;
-      overflow:auto;
-      padding-right:2px;
+      align-items:center;
     }
 
-    .list-item{
-      background:#fff;
+    .digits-input{
+      font-size:32px;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-align:center;
+      min-height:72px;
+      padding:16px 18px;
+    }
+
+    .found-preview{
+      margin-top:14px;
       border:1px solid var(--line);
       border-radius:16px;
+      background:#fff;
       padding:14px;
+      min-height:116px;
     }
 
-    .list-item strong{
+    .found-preview strong{
       display:block;
-      margin-bottom:6px;
-      font-size:15px;
+      margin-bottom:8px;
+      font-size:16px;
       line-height:1.35;
     }
 
@@ -389,12 +414,15 @@
       color:var(--danger);
     }
 
-    .empty{
-      border:1px dashed var(--line);
-      border-radius:16px;
-      padding:16px;
-      color:var(--muted);
-      background:#fbfdff;
+    .decision-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .decision-row .btn{
+      flex:1 1 180px;
     }
 
     .message{
@@ -420,177 +448,76 @@
       color:var(--danger);
     }
 
-    .scanner{
-      position:fixed;
-      inset:0;
-      background:#000;
-      z-index:9999;
-      display:none;
-      flex-direction:column;
-    }
-
-    .scanner.open{
+    .tabs{
       display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:2px;
+      margin-bottom:14px;
     }
 
-    .scanner-top{
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      z-index:4;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;
-      background:linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
-      color:#fff;
-    }
-
-    .scanner-title{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:4px;
-    }
-
-    .scanner-sub{
-      font-size:12px;
-      opacity:.94;
-      max-width:300px;
-    }
-
-    .icon-btn{
-      min-width:46px;
-      min-height:46px;
+    .tab{
       border:none;
-      border-radius:14px;
-      background:rgba(255,255,255,.18);
-      color:#fff;
-      font-size:18px;
-      font-weight:800;
-      backdrop-filter:blur(8px);
-      cursor:pointer;
-    }
-
-    .camera-wrap{
-      position:relative;
-      flex:1;
-      background:#000;
-      overflow:hidden;
-    }
-
-    video, canvas{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      background:#000;
-    }
-
-    .frame-layer{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:2;
-    }
-
-    .frame-box{
-      width:min(84vw,430px);
-      height:min(54vh,290px);
-      border:2px solid rgba(255,255,255,.9);
-      border-radius:24px;
-      box-shadow:0 0 0 9999px rgba(0,0,0,.34);
-      position:relative;
-    }
-
-    .frame-box::after{
-      content:"Cadre l’étiquette dans la zone";
-      position:absolute;
-      bottom:-38px;
-      left:50%;
-      transform:translateX(-50%);
-      white-space:nowrap;
-      font-size:12px;
-      color:#fff;
-      background:rgba(0,0,0,.46);
       border-radius:999px;
-      padding:7px 12px;
-    }
-
-    .scanner-bottom{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      z-index:4;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
-      padding:18px 18px calc(18px + env(safe-area-inset-bottom));
-      background:linear-gradient(to top, rgba(0,0,0,.84), rgba(0,0,0,0));
-    }
-
-    .capture{
-      width:78px;
-      height:78px;
-      border-radius:50%;
-      border:6px solid rgba(255,255,255,.35);
-      background:#fff;
-      box-shadow:0 10px 30px rgba(0,0,0,.28);
-      cursor:pointer;
-    }
-
-    .scanner-finish{
-      position:absolute;
-      left:16px;
-      bottom:calc(20px + env(safe-area-inset-bottom));
-      z-index:5;
-    }
-
-    .scanner-finish .btn{
-      min-height:46px;
       padding:11px 14px;
-      font-size:14px;
-    }
-
-    .import-floating{
-      position:absolute;
-      right:18px;
-      bottom:calc(114px + env(safe-area-inset-bottom));
-      z-index:5;
-      border:none;
-      border-radius:18px;
-      background:rgba(255,255,255,.96);
-      color:var(--text);
-      padding:12px 14px;
-      font-size:14px;
+      background:#edf3f9;
+      color:#334e68;
+      font:inherit;
+      font-size:13px;
       font-weight:800;
-      box-shadow:0 10px 26px rgba(0,0,0,.22);
+      white-space:nowrap;
       cursor:pointer;
     }
 
-    .hidden{display:none !important}
-
-    .loader{
-      display:inline-block;
-      width:16px;
-      height:16px;
-      border:2px solid rgba(255,255,255,.5);
-      border-top-color:#fff;
-      border-radius:50%;
-      animation:spin .8s linear infinite;
-      vertical-align:middle;
-      margin-right:8px;
+    .tab.active{
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      color:#fff;
+      box-shadow:var(--shadow);
     }
 
-    @keyframes spin{
-      to{transform:rotate(360deg)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    .list{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+      max-height:620px;
+      overflow:auto;
+      padding-right:2px;
+    }
+
+    .list-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .list-item strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:15px;
+      line-height:1.35;
+    }
+
+    .empty{
+      border:1px dashed var(--line);
+      border-radius:16px;
+      padding:16px;
+      color:var(--muted);
+      background:#fbfdff;
+    }
+
+    .footer-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .footer-actions .btn{
+      flex:1 1 220px;
     }
 
     @media (max-width:980px){
@@ -630,13 +557,25 @@
       }
 
       .top-actions,
-      .hero-actions{
+      .hero-actions,
+      .decision-row,
+      .footer-actions{
         width:100%;
       }
 
       .top-actions .btn,
-      .hero-actions .btn{
+      .hero-actions .btn,
+      .decision-row .btn,
+      .footer-actions .btn{
         flex:1 1 100%;
+      }
+
+      .search-row{
+        grid-template-columns:1fr;
+      }
+
+      .digits-input{
+        font-size:28px;
       }
     }
   </style>
@@ -648,12 +587,12 @@
         <div class="brand-mark">CR</div>
         <div>
           <h1>Contrôle rayon</h1>
-          <p>Lecture ciblée de la référence et du code boule</p>
+          <p>Saisie rapide par 3 derniers chiffres du code boule</p>
         </div>
       </div>
 
       <div class="top-actions">
-        <button class="btn btn-primary" id="openScannerTop">Scanner les étiquettes</button>
+        <button class="btn btn-secondary" id="focusEntryBtn">Aller à la saisie</button>
         <button class="btn btn-secondary" id="resetAllBtn">Réinitialiser</button>
       </div>
     </header>
@@ -661,16 +600,16 @@
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-panel">
-          <h2 class="hero-title">Nouveau fonctionnement</h2>
+          <h2 class="hero-title">Méthode la plus rapide</h2>
           <p class="hero-text">
-            Le système ne lit plus toute l’étiquette comme un seul bloc.
-            Il découpe l’image en zones pour essayer d’attraper surtout la référence
-            et le code boule, puis il traite tous les scans à la fin.
+            Tu enregistres ton listing une seule fois. Ensuite tu tapes juste les
+            3 derniers chiffres du code boule. Le site retrouve la référence,
+            tu valides en un clic, puis tu passes directement au suivant.
           </p>
 
           <div class="hero-actions">
-            <button class="btn btn-primary" id="openScannerHero">Scanner les étiquettes</button>
-            <button class="btn btn-secondary" id="loadExampleBtn">Charger un exemple</button>
+            <button class="btn btn-primary" id="loadExampleBtn">Charger un exemple</button>
+            <button class="btn btn-secondary" id="focusListingBtn">Aller au listing</button>
           </div>
         </div>
 
@@ -680,26 +619,26 @@
             <div class="stat-value" id="statTotal">0</div>
           </div>
           <div class="stat">
-            <div class="stat-label">Déjà trouvés</div>
-            <div class="stat-value success" id="statFound">0</div>
+            <div class="stat-label">Présents en rayon</div>
+            <div class="stat-value success" id="statPresent">0</div>
           </div>
           <div class="stat">
-            <div class="stat-label">Restants</div>
-            <div class="stat-value warning" id="statRemaining">0</div>
+            <div class="stat-label">Pas présents</div>
+            <div class="stat-value danger" id="statMissing">0</div>
           </div>
           <div class="stat">
             <div class="stat-label">À vérifier</div>
-            <div class="stat-value danger" id="statReview">0</div>
+            <div class="stat-value warning" id="statReview">0</div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="layout">
-      <section class="card">
-        <h2>1. Coller le listing</h2>
+      <section class="card" id="listingSection">
+        <h2>1. Enregistrer le listing</h2>
         <p class="lead">
-          Le site récupère le premier nombre de la ligne comme code boule, puis la référence.
+          Le site extrait pour chaque ligne : le code boule complet, ses 3 derniers chiffres et la référence.
         </p>
 
         <textarea id="listingInput" placeholder="Exemple :
@@ -708,154 +647,171 @@
 1201967 Ref Multi SAMSUNG RF24B8620EB1"></textarea>
 
         <div class="card-actions">
-          <button class="btn btn-primary" id="parseListingBtn">Analyser le listing</button>
+          <button class="btn btn-primary" id="parseListingBtn">Enregistrer le listing</button>
           <button class="btn btn-secondary" id="clearListingBtn">Effacer</button>
         </div>
 
         <div class="panel">
-          <div class="panel-title">Résumé session</div>
+          <div class="panel-title">État de la session</div>
           <div class="small">
-            Chaque scan est enregistré automatiquement. Le calcul final se fait au bouton “Terminer le scan”.
+            Une fois le listing enregistré, tu peux enchaîner les saisies sans perdre de temps.
           </div>
 
           <div class="summary-bar">
-            <span class="pill">Scans enregistrés : <strong id="scanCountPill">0</strong></span>
-            <span class="pill">Analyse finale : <strong id="analysisStatePill">En attente</strong></span>
+            <span class="pill">Historique : <strong id="historyCountPill">0</strong></span>
+            <span class="pill">Contrôle final : <strong id="controlStatePill">En attente</strong></span>
           </div>
 
           <div id="globalMessage"></div>
         </div>
       </section>
 
-      <section class="card">
-        <h2>2. Résultats</h2>
+      <section class="card" id="entrySection">
+        <h2>2. Saisie rapide</h2>
         <p class="lead">
-          Les scans sont classés après traitement final dans les onglets ci-dessous.
+          Tape les 3 derniers chiffres. Le site cherche immédiatement les références correspondantes dans le listing.
         </p>
 
-        <div class="tabs">
-          <button class="tab active" data-tab="listing">Articles du listing</button>
-          <button class="tab" data-tab="found">Déjà trouvés</button>
-          <button class="tab" data-tab="remaining">Restants</button>
-          <button class="tab" data-tab="review">À vérifier</button>
-          <button class="tab" data-tab="scanned">Étiquettes scannées</button>
-        </div>
+        <div class="quick-box">
+          <div class="quick-title">
+            <h3>Recherche par 3 chiffres</h3>
+            <span class="focus-pill" id="focusStatePill">Prêt</span>
+          </div>
 
-        <div class="tab-panel active" id="tab-listing">
-          <div class="list" id="listingList">
-            <div class="empty">Aucun listing chargé pour le moment.</div>
+          <div class="search-row">
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="3"
+              id="digitsInput"
+              class="digits-input"
+              placeholder="000"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+            <button class="btn btn-primary" id="searchBtn">Rechercher</button>
+          </div>
+
+          <div class="found-preview" id="searchResultBox">
+            <div class="empty" style="margin:0">
+              Tape 3 chiffres pour lancer une recherche.
+            </div>
+          </div>
+
+          <div class="decision-row">
+            <button class="btn btn-success" id="presentBtn" disabled>Présent en rayon</button>
+            <button class="btn btn-danger" id="missingBtn" disabled>Pas présent en rayon</button>
           </div>
         </div>
 
-        <div class="tab-panel" id="tab-found">
-          <div class="list" id="foundList">
-            <div class="empty">Aucun produit trouvé pour le moment.</div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-remaining">
-          <div class="list" id="remainingList">
-            <div class="empty">Charge un listing pour afficher les articles restants.</div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-review">
-          <div class="list" id="reviewList">
-            <div class="empty">Aucun élément à vérifier.</div>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-scanned">
-          <div class="list" id="scannedList">
-            <div class="empty">Aucune étiquette scannée pour le moment.</div>
-          </div>
+        <div class="footer-actions">
+          <button class="btn btn-warning" id="finalizeBtn">Valider le contrôle</button>
         </div>
       </section>
     </section>
-  </div>
 
-  <div class="scanner" id="scanner">
-    <div class="scanner-top">
-      <div>
-        <div class="scanner-title">Scanner les étiquettes</div>
-        <div class="scanner-sub" id="scannerSub">Caméra prête. Lecture par zones.</div>
-      </div>
-      <button class="icon-btn" id="closeScannerBtn">✕</button>
-    </div>
+    <section class="card" style="margin-top:16px">
+      <h2>3. Résultats du contrôle</h2>
+      <p class="lead">
+        Le site sépare automatiquement ce qui a été trouvé, ce qui manque, ce qu’il reste et ce qui demande une vérification.
+      </p>
 
-    <div class="camera-wrap">
-      <video id="video" autoplay playsinline muted></video>
-      <canvas id="canvas" class="hidden"></canvas>
-
-      <div class="frame-layer">
-        <div class="frame-box"></div>
+      <div class="tabs">
+        <button class="tab active" data-tab="listing">Articles du listing</button>
+        <button class="tab" data-tab="present">Présents en rayon</button>
+        <button class="tab" data-tab="missing">Pas présents en rayon</button>
+        <button class="tab" data-tab="remaining">Restants</button>
+        <button class="tab" data-tab="review">À vérifier</button>
+        <button class="tab" data-tab="history">Historique de saisie</button>
       </div>
 
-      <button class="import-floating" id="importImageBtn">🖼️ Importer</button>
-      <input type="file" id="imageInput" accept="image/*" class="hidden" />
-
-      <div class="scanner-finish">
-        <button class="btn btn-success" id="finishScanBtn">Terminer le scan</button>
+      <div class="tab-panel active" id="tab-listing">
+        <div class="list" id="listingList">
+          <div class="empty">Aucun listing chargé pour le moment.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="scanner-bottom">
-      <button class="capture" id="captureBtn" title="Capturer"></button>
-    </div>
+      <div class="tab-panel" id="tab-present">
+        <div class="list" id="presentList">
+          <div class="empty">Aucun produit validé comme présent pour le moment.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-missing">
+        <div class="list" id="missingList">
+          <div class="empty">Aucun produit marqué comme non présent pour le moment.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-remaining">
+        <div class="list" id="remainingList">
+          <div class="empty">Charge un listing pour afficher les restants.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-review">
+        <div class="list" id="reviewList">
+          <div class="empty">Aucun élément à vérifier.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-history">
+        <div class="list" id="historyList">
+          <div class="empty">Aucune saisie pour le moment.</div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
     const state = {
       listingItems: [],
-      scannedItems: [],
-      foundItems: [],
+      presentItems: [],
+      missingItems: [],
       remainingItems: [],
       reviewItems: [],
-      stream: null,
-      finalAnalysisDone: false,
-      isProcessingScan: false
+      historyItems: [],
+      finalized: false,
+      currentSearch: null
     };
-
-    const BRANDS = [
-      "ESSENTIELB","SAMSUNG","LG","HISENSE","BEKO","GORENJE","HAIER",
-      "LIEBHERR","LISTO","WHIRLPOOL","SIEMENS","BOSCH","MIELE",
-      "SHARP","INDESIT","HOTPOINT","CANDY","ELECTROLUX","AEG"
-    ];
 
     const listingInput = document.getElementById("listingInput");
     const parseListingBtn = document.getElementById("parseListingBtn");
     const clearListingBtn = document.getElementById("clearListingBtn");
     const loadExampleBtn = document.getElementById("loadExampleBtn");
-
-    const listingList = document.getElementById("listingList");
-    const foundList = document.getElementById("foundList");
-    const remainingList = document.getElementById("remainingList");
-    const reviewList = document.getElementById("reviewList");
-    const scannedList = document.getElementById("scannedList");
-
-    const statTotal = document.getElementById("statTotal");
-    const statFound = document.getElementById("statFound");
-    const statRemaining = document.getElementById("statRemaining");
-    const statReview = document.getElementById("statReview");
-
-    const scanCountPill = document.getElementById("scanCountPill");
-    const analysisStatePill = document.getElementById("analysisStatePill");
-    const globalMessage = document.getElementById("globalMessage");
-
-    const openScannerTop = document.getElementById("openScannerTop");
-    const openScannerHero = document.getElementById("openScannerHero");
     const resetAllBtn = document.getElementById("resetAllBtn");
 
-    const scanner = document.getElementById("scanner");
-    const scannerSub = document.getElementById("scannerSub");
-    const closeScannerBtn = document.getElementById("closeScannerBtn");
-    const finishScanBtn = document.getElementById("finishScanBtn");
+    const digitsInput = document.getElementById("digitsInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const presentBtn = document.getElementById("presentBtn");
+    const missingBtn = document.getElementById("missingBtn");
+    const finalizeBtn = document.getElementById("finalizeBtn");
 
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
-    const captureBtn = document.getElementById("captureBtn");
-    const importImageBtn = document.getElementById("importImageBtn");
-    const imageInput = document.getElementById("imageInput");
+    const searchResultBox = document.getElementById("searchResultBox");
+    const globalMessage = document.getElementById("globalMessage");
+    const focusStatePill = document.getElementById("focusStatePill");
+
+    const statTotal = document.getElementById("statTotal");
+    const statPresent = document.getElementById("statPresent");
+    const statMissing = document.getElementById("statMissing");
+    const statReview = document.getElementById("statReview");
+
+    const historyCountPill = document.getElementById("historyCountPill");
+    const controlStatePill = document.getElementById("controlStatePill");
+
+    const listingList = document.getElementById("listingList");
+    const presentList = document.getElementById("presentList");
+    const missingList = document.getElementById("missingList");
+    const remainingList = document.getElementById("remainingList");
+    const reviewList = document.getElementById("reviewList");
+    const historyList = document.getElementById("historyList");
+
+    const focusEntryBtn = document.getElementById("focusEntryBtn");
+    const focusListingBtn = document.getElementById("focusListingBtn");
+    const entrySection = document.getElementById("entrySection");
+    const listingSection = document.getElementById("listingSection");
 
     function escapeHtml(str) {
       return String(str)
@@ -872,6 +828,11 @@
       return digits.replace(/^0+/, "") || "0";
     }
 
+    function last3(code) {
+      const digits = normalizeCode(code);
+      return digits.slice(-3).padStart(3, "0");
+    }
+
     function normalizeRef(ref) {
       return String(ref || "")
         .normalize("NFD")
@@ -879,6 +840,13 @@
         .toLowerCase()
         .replace(/œ/g, "oe")
         .replace(/[^a-z0-9]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function cleanListingReference(ref) {
+      return String(ref || "")
+        .replace(/\b(AS|A S|DI|D1|CI|CIl|D\|)\b/gi, " ")
         .replace(/\s+/g, " ")
         .trim();
     }
@@ -892,11 +860,10 @@
       globalMessage.textContent = text;
     }
 
-    function cleanListingReference(ref) {
-      return String(ref || "")
-        .replace(/\b(AS|A S|DI|D1|CI|CIl|D\|)\b/gi, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+    function setFocusState(active, label) {
+      focusStatePill.textContent = label;
+      if (active) focusStatePill.classList.add("active");
+      else focusStatePill.classList.remove("active");
     }
 
     function parseListing(text) {
@@ -927,8 +894,10 @@
 
         items.push({
           code,
+          codeLast3: last3(code),
           reference,
-          normalizedReference: normalizeRef(reference)
+          normalizedReference: normalizeRef(reference),
+          status: "unprocessed"
         });
       }
 
@@ -945,351 +914,30 @@
       return unique;
     }
 
-    function preprocessToCanvas(sourceCanvas, opts = {}) {
-      const {
-        grayscale = true,
-        contrast = 1.45,
-        brightness = 0,
-        threshold = null,
-        invert = false,
-        sharpen = false
-      } = opts;
-
-      const out = document.createElement("canvas");
-      out.width = sourceCanvas.width;
-      out.height = sourceCanvas.height;
-      const ctx = out.getContext("2d");
-      ctx.drawImage(sourceCanvas, 0, 0);
-
-      const img = ctx.getImageData(0, 0, out.width, out.height);
-      const data = img.data;
-
-      for (let i = 0; i < data.length; i += 4) {
-        let r = data[i];
-        let g = data[i + 1];
-        let b = data[i + 2];
-
-        if (grayscale) {
-          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-          r = g = b = gray;
-        }
-
-        r = (r - 128) * contrast + 128 + brightness;
-        g = (g - 128) * contrast + 128 + brightness;
-        b = (b - 128) * contrast + 128 + brightness;
-
-        if (threshold !== null) {
-          const v = (r + g + b) / 3 >= threshold ? 255 : 0;
-          r = g = b = v;
-        }
-
-        if (invert) {
-          r = 255 - r;
-          g = 255 - g;
-          b = 255 - b;
-        }
-
-        data[i] = Math.max(0, Math.min(255, r));
-        data[i + 1] = Math.max(0, Math.min(255, g));
-        data[i + 2] = Math.max(0, Math.min(255, b));
-      }
-
-      ctx.putImageData(img, 0, 0);
-
-      if (sharpen) {
-        // simple sharpen pass
-        const temp = ctx.getImageData(0, 0, out.width, out.height);
-        const src = temp.data;
-        const copy = new Uint8ClampedArray(src);
-
-        const w = out.width;
-        const h = out.height;
-        const kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
-
-        for (let y = 1; y < h - 1; y++) {
-          for (let x = 1; x < w - 1; x++) {
-            for (let c = 0; c < 3; c++) {
-              let sum = 0;
-              let ki = 0;
-              for (let ky = -1; ky <= 1; ky++) {
-                for (let kx = -1; kx <= 1; kx++) {
-                  const idx = ((y + ky) * w + (x + kx)) * 4 + c;
-                  sum += copy[idx] * kernel[ki++];
-                }
-              }
-              const idx = (y * w + x) * 4 + c;
-              src[idx] = Math.max(0, Math.min(255, sum));
-            }
-          }
-        }
-        ctx.putImageData(temp, 0, 0);
-      }
-
-      return out;
+    function resetDecisionButtons() {
+      presentBtn.disabled = true;
+      missingBtn.disabled = true;
     }
 
-    function cropCanvas(sourceCanvas, x, y, w, h) {
-      const c = document.createElement("canvas");
-      c.width = Math.max(1, Math.round(w));
-      c.height = Math.max(1, Math.round(h));
-      const ctx = c.getContext("2d");
-      ctx.drawImage(sourceCanvas, x, y, w, h, 0, 0, c.width, c.height);
-      return c;
+    function clearCurrentSearch(keepInputFocus = true) {
+      state.currentSearch = null;
+      digitsInput.value = "";
+      resetDecisionButtons();
+      searchResultBox.innerHTML = `<div class="empty" style="margin:0">Tape 3 chiffres pour lancer une recherche.</div>`;
+      if (keepInputFocus) {
+        requestAnimationFrame(() => digitsInput.focus());
+      }
     }
 
-    function makeWorkingCanvasFromImage(img, maxWidth = 1800) {
-      const scale = Math.min(1, maxWidth / img.width);
-      const width = Math.round(img.width * scale);
-      const height = Math.round(img.height * scale);
-
-      const c = document.createElement("canvas");
-      c.width = width;
-      c.height = height;
-      const ctx = c.getContext("2d");
-      ctx.drawImage(img, 0, 0, width, height);
-      return c;
+    function getByStatus(status) {
+      return state.listingItems.filter(item => item.status === status);
     }
 
-    async function ocrCanvas(targetCanvas) {
-      const result = await Tesseract.recognize(targetCanvas, "fra+eng", {
-        tessedit_pageseg_mode: 6
-      });
-      return result.data.text || "";
-    }
-
-    function normalizeOcrText(text) {
-      return String(text || "")
-        .replace(/[|]/g, "I")
-        .replace(/[“”]/g, '"')
-        .replace(/[’]/g, "'")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    function collectNumericCandidates(text) {
-      const clean = normalizeOcrText(text);
-      const raw = [...clean.matchAll(/\b\d{5,13}\b/g)].map(m => m[0]);
-      return raw.map(value => ({
-        raw: value,
-        normalized: normalizeCode(value)
-      }));
-    }
-
-    function chooseBestCodeFromCandidates(candidateGroups) {
-      const flat = candidateGroups.flat();
-      if (!flat.length) return { raw: "", normalized: "" };
-
-      const freq = new Map();
-
-      for (const item of flat) {
-        const key = item.normalized;
-        if (!key || key.length < 5) continue;
-        const current = freq.get(key) || { count: 0, bestRaw: item.raw };
-        current.count += 1;
-        if ((item.raw || "").length > (current.bestRaw || "").length) {
-          current.bestRaw = item.raw;
-        }
-        freq.set(key, current);
-      }
-
-      const ranked = [...freq.entries()]
-        .map(([normalized, data]) => ({
-          normalized,
-          raw: data.bestRaw,
-          count: data.count
-        }))
-        .sort((a, b) => {
-          if (b.count !== a.count) return b.count - a.count;
-          if (b.normalized.length !== a.normalized.length) return b.normalized.length - a.normalized.length;
-          return b.raw.length - a.raw.length;
-        });
-
-      const realistic = ranked.filter(x => x.normalized.length >= 6 && x.normalized.length <= 8);
-      if (realistic.length) return realistic[0];
-      return ranked[0];
-    }
-
-    function extractReferenceCandidates(text) {
-      const lines = String(text || "")
-        .split(/\n+/)
-        .map(line => line.trim())
-        .filter(Boolean)
-        .map(line => line.replace(/\s+/g, " "))
-        .filter(line => line.length >= 6)
-        .filter(line => !/^\d+[.,]\d{2}\s*€?$/.test(line))
-        .filter(line => !/^\d+\s*avis$/i.test(line))
-        .filter(line => !/^[\d\s.,€|:;#*]+$/.test(line))
-        .filter(line => !/^(dont|eco part|deco part|prix|au lieu de)/i.test(line));
-
-      const candidates = [];
-
-      for (const line of lines) {
-        const upper = line.toUpperCase();
-
-        for (const brand of BRANDS) {
-          const idx = upper.indexOf(brand);
-          if (idx >= 0) {
-            const slice = line.slice(idx).replace(/\s+/g, " ").trim();
-            candidates.push(slice);
-          }
-        }
-
-        if (/\b(ref|combi|multi|top|us|2p)\b/i.test(line)) {
-          candidates.push(line);
-        }
-      }
-
-      return [...new Set(candidates)].map(x => x.slice(0, 95));
-    }
-
-    function scoreReferenceCandidate(candidate, listingItem) {
-      const c = normalizeRef(candidate);
-      const l = listingItem.normalizedReference;
-      if (!c || !l) return 0;
-      if (c === l) return 100;
-      if (l.includes(c)) return 92;
-      if (c.includes(l)) return 88;
-
-      const cWords = c.split(" ").filter(Boolean);
-      const lWords = l.split(" ").filter(Boolean);
-
-      let score = 0;
-
-      for (const word of cWords) {
-        if (word.length < 3) continue;
-        if (lWords.includes(word)) score += 11;
-      }
-
-      const tokenBonus = cWords.filter(w => /[a-z]/.test(w) && /\d/.test(w));
-      for (const token of tokenBonus) {
-        if (l.includes(token)) score += 20;
-      }
-
-      return Math.min(95, score);
-    }
-
-    function chooseBestReference(candidates) {
-      if (!candidates.length) return "";
-
-      const scoredCandidates = candidates.map(candidate => {
-        const best = state.listingItems
-          .map(item => ({
-            item,
-            score: scoreReferenceCandidate(candidate, item)
-          }))
-          .sort((a, b) => b.score - a.score)[0];
-
-        return {
-          candidate,
-          score: best ? best.score : 0,
-          matchedItem: best ? best.item : null
-        };
-      }).sort((a, b) => b.score - a.score);
-
-      if (scoredCandidates[0] && scoredCandidates[0].score >= 35) {
-        return scoredCandidates[0].candidate;
-      }
-
-      return candidates[0];
-    }
-
-    function getReferenceScore(scanRefNorm, listingRefNorm) {
-      if (!scanRefNorm || !listingRefNorm) return 0;
-      if (scanRefNorm === listingRefNorm) return 100;
-      if (listingRefNorm.includes(scanRefNorm)) return 90;
-      if (scanRefNorm.includes(listingRefNorm)) return 84;
-
-      const s = scanRefNorm.split(" ").filter(Boolean);
-      const l = listingRefNorm.split(" ").filter(Boolean);
-
-      let score = 0;
-      for (const word of s) {
-        if (word.length < 3) continue;
-        if (l.includes(word)) score += 12;
-      }
-
-      for (const token of s) {
-        if (token.length < 4) continue;
-        if (/[a-z]/.test(token) && /\d/.test(token) && listingRefNorm.includes(token)) {
-          score += 22;
-        }
-      }
-
-      return Math.min(95, score);
-    }
-
-    function matchScan(scan) {
-      const code = scan.codeNormalized;
-      const refNorm = scan.referenceNormalized;
-
-      const byCode = code
-        ? state.listingItems.filter(item => item.code === code)
-        : [];
-
-      if (byCode.length === 1) {
-        const item = byCode[0];
-        const refScore = getReferenceScore(refNorm, item.normalizedReference);
-
-        if (refNorm && refScore < 18) {
-          return {
-            status: "review",
-            reason: "Code boule trouvé mais référence douteuse",
-            matchedItem: item
-          };
-        }
-
-        return {
-          status: "found",
-          reason: "Correspondance par code boule",
-          matchedItem: item
-        };
-      }
-
-      if (byCode.length > 1) {
-        return {
-          status: "review",
-          reason: "Plusieurs références avec le même code boule",
-          matchedItem: null
-        };
-      }
-
-      if (!refNorm) {
-        return {
-          status: "review",
-          reason: "Référence non détectée",
-          matchedItem: null
-        };
-      }
-
-      const scored = state.listingItems
-        .map(item => ({
-          item,
-          score: getReferenceScore(refNorm, item.normalizedReference)
-        }))
-        .filter(entry => entry.score >= 35)
-        .sort((a, b) => b.score - a.score);
-
-      if (!scored.length) {
-        return {
-          status: "review",
-          reason: "Aucune correspondance trouvée dans le listing",
-          matchedItem: null
-        };
-      }
-
-      if (scored.length > 1 && (scored[0].score - scored[1].score) < 8) {
-        return {
-          status: "review",
-          reason: "Référence ambiguë, plusieurs correspondances possibles",
-          matchedItem: null
-        };
-      }
-
-      return {
-        status: "found",
-        reason: "Correspondance par référence",
-        matchedItem: scored[0].item
-      };
+    function updateDerivedLists() {
+      state.presentItems = getByStatus("present");
+      state.missingItems = getByStatus("missing");
+      state.remainingItems = getByStatus("unprocessed");
+      state.reviewItems = getByStatus("review");
     }
 
     function renderListing() {
@@ -1303,23 +951,43 @@
           <strong>${escapeHtml(item.reference)}</strong>
           <div class="meta">
             <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
           </div>
         </div>
       `).join("");
     }
 
-    function renderFound() {
-      if (!state.foundItems.length) {
-        foundList.innerHTML = `<div class="empty">Aucun produit trouvé pour le moment.</div>`;
+    function renderPresent() {
+      if (!state.presentItems.length) {
+        presentList.innerHTML = `<div class="empty">Aucun produit validé comme présent pour le moment.</div>`;
         return;
       }
 
-      foundList.innerHTML = state.foundItems.map(item => `
+      presentList.innerHTML = state.presentItems.map(item => `
         <div class="list-item">
           <strong>${escapeHtml(item.reference)}</strong>
           <div class="meta">
-            <span class="tag success">Trouvé</span>
-            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag success">Présent en rayon</span>
+            <span class="tag">Code : ${escapeHtml(item.code)}</span>
+            <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderMissing() {
+      if (!state.missingItems.length) {
+        missingList.innerHTML = `<div class="empty">Aucun produit marqué comme non présent pour le moment.</div>`;
+        return;
+      }
+
+      missingList.innerHTML = state.missingItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag danger">Pas présent en rayon</span>
+            <span class="tag">Code : ${escapeHtml(item.code)}</span>
+            <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
           </div>
         </div>
       `).join("");
@@ -1327,12 +995,12 @@
 
     function renderRemaining() {
       if (!state.listingItems.length) {
-        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les articles restants.</div>`;
+        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les restants.</div>`;
         return;
       }
 
       if (!state.remainingItems.length) {
-        remainingList.innerHTML = `<div class="message ok">Tous les articles du listing ont été retrouvés.</div>`;
+        remainingList.innerHTML = `<div class="message ok">Tout le listing a été traité.</div>`;
         return;
       }
 
@@ -1340,8 +1008,9 @@
         <div class="list-item">
           <strong>${escapeHtml(item.reference)}</strong>
           <div class="meta">
-            <span class="tag warning">Restant</span>
-            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag warning">Non traité</span>
+            <span class="tag">Code : ${escapeHtml(item.code)}</span>
+            <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
           </div>
         </div>
       `).join("");
@@ -1353,364 +1022,322 @@
         return;
       }
 
-      reviewList.innerHTML = state.reviewItems.map(scan => `
+      reviewList.innerHTML = state.reviewItems.map(item => `
         <div class="list-item">
-          <strong>${escapeHtml(scan.reference || "Référence non détectée")}</strong>
+          <strong>${escapeHtml(item.reference)}</strong>
           <div class="meta">
-            <span class="tag danger">À vérifier</span>
-            <span class="tag">Code boule : ${escapeHtml(scan.codeNormalized || scan.codeRaw || "Non détecté")}</span>
-            <span class="tag">${escapeHtml(scan.reason || "Contrôle nécessaire")}</span>
+            <span class="tag warning">À vérifier</span>
+            <span class="tag">Code : ${escapeHtml(item.code)}</span>
+            <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
           </div>
         </div>
       `).join("");
     }
 
-    function renderScanned() {
-      if (!state.scannedItems.length) {
-        scannedList.innerHTML = `<div class="empty">Aucune étiquette scannée pour le moment.</div>`;
+    function renderHistory() {
+      if (!state.historyItems.length) {
+        historyList.innerHTML = `<div class="empty">Aucune saisie pour le moment.</div>`;
         return;
       }
 
-      scannedList.innerHTML = state.scannedItems.slice().reverse().map(scan => {
-        let statusClass = "";
-        let statusLabel = "En attente";
-
-        if (scan.status === "found") {
-          statusClass = "success";
-          statusLabel = "Trouvé";
-        } else if (scan.status === "duplicate") {
-          statusClass = "warning";
-          statusLabel = "Déjà trouvé";
-        } else if (scan.status === "review") {
-          statusClass = "danger";
-          statusLabel = "À vérifier";
-        }
-
-        return `
-          <div class="list-item">
-            <strong>${escapeHtml(scan.reference || "Référence non détectée")}</strong>
-            <div class="meta">
-              <span class="tag ${statusClass}">${escapeHtml(statusLabel)}</span>
-              <span class="tag">Code boule : ${escapeHtml(scan.codeNormalized || scan.codeRaw || "Non détecté")}</span>
-              ${scan.matchedReference ? `<span class="tag">Listing : ${escapeHtml(scan.matchedReference)}</span>` : ""}
-            </div>
+      historyList.innerHTML = state.historyItems.slice().reverse().map(entry => `
+        <div class="list-item">
+          <strong>${escapeHtml(entry.label)}</strong>
+          <div class="meta">
+            <span class="tag">Saisie : ${escapeHtml(entry.input)}</span>
+            ${entry.code ? `<span class="tag">Code : ${escapeHtml(entry.code)}</span>` : ""}
+            <span class="tag ${entry.typeClass}">${escapeHtml(entry.typeLabel)}</span>
           </div>
-        `;
-      }).join("");
+        </div>
+      `).join("");
     }
 
     function updateStats() {
+      updateDerivedLists();
+
       statTotal.textContent = state.listingItems.length;
-      statFound.textContent = state.foundItems.length;
-      statRemaining.textContent = state.remainingItems.length;
+      statPresent.textContent = state.presentItems.length;
+      statMissing.textContent = state.missingItems.length;
       statReview.textContent = state.reviewItems.length;
 
-      scanCountPill.textContent = state.scannedItems.length;
-      analysisStatePill.textContent = state.finalAnalysisDone ? "Terminée" : "En attente";
+      historyCountPill.textContent = state.historyItems.length;
+      controlStatePill.textContent = state.finalized ? "Terminé" : "En attente";
     }
 
     function refreshAll() {
+      updateStats();
       renderListing();
-      renderFound();
+      renderPresent();
+      renderMissing();
       renderRemaining();
       renderReview();
-      renderScanned();
-      updateStats();
+      renderHistory();
     }
 
-    function analyzeScans() {
-      state.foundItems = [];
-      state.remainingItems = [];
-      state.reviewItems = [];
+    function findMatchesByLast3(input3) {
+      return state.listingItems.filter(item => item.codeLast3 === input3);
+    }
 
-      const matchedCodes = new Set();
-      const foundMap = new Map();
-
-      for (const scan of state.scannedItems) {
-        const result = matchScan(scan);
-
-        if (result.status === "found" && result.matchedItem) {
-          const item = result.matchedItem;
-
-          if (matchedCodes.has(item.code)) {
-            scan.status = "duplicate";
-            scan.reason = "Produit déjà trouvé par un scan précédent";
-            scan.matchedCode = item.code;
-            scan.matchedReference = item.reference;
-          } else {
-            matchedCodes.add(item.code);
-            foundMap.set(item.code, item);
-            scan.status = "found";
-            scan.reason = result.reason;
-            scan.matchedCode = item.code;
-            scan.matchedReference = item.reference;
-          }
-        } else {
-          scan.status = "review";
-          scan.reason = result.reason || "Contrôle nécessaire";
-          scan.matchedCode = result.matchedItem ? result.matchedItem.code : "";
-          scan.matchedReference = result.matchedItem ? result.matchedItem.reference : "";
-          state.reviewItems.push(scan);
-        }
+    function renderSearchResult(result) {
+      if (!result) {
+        searchResultBox.innerHTML = `<div class="empty" style="margin:0">Tape 3 chiffres pour lancer une recherche.</div>`;
+        return;
       }
 
-      state.foundItems = state.listingItems.filter(item => foundMap.has(item.code));
-      state.remainingItems = state.listingItems.filter(item => !foundMap.has(item.code));
+      if (result.type === "empty") {
+        searchResultBox.innerHTML = `
+          <div class="empty" style="margin:0">
+            ${escapeHtml(result.message)}
+          </div>
+        `;
+        return;
+      }
 
-      state.finalAnalysisDone = true;
-      refreshAll();
-    }
+      if (result.type === "single") {
+        const item = result.item;
+        const statusLabel =
+          item.status === "present" ? "Déjà marqué présent" :
+          item.status === "missing" ? "Déjà marqué absent" :
+          item.status === "review" ? "À vérifier" :
+          "Correspondance trouvée";
 
-    async function startCamera() {
-      try {
-        stopCamera();
+        const statusClass =
+          item.status === "present" ? "success" :
+          item.status === "missing" ? "danger" :
+          item.status === "review" ? "warning" :
+          "";
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { ideal: "environment" },
-            width: { ideal: 1920 },
-            height: { ideal: 1080 }
-          },
-          audio: false
-        });
+        searchResultBox.innerHTML = `
+          <div>
+            <strong>${escapeHtml(item.reference)}</strong>
+            <div class="meta">
+              <span class="tag ${statusClass}">${escapeHtml(statusLabel)}</span>
+              <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+              <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
 
-        state.stream = stream;
-        video.srcObject = stream;
-        await video.play();
-        scannerSub.textContent = "Caméra active. Lecture ciblée par zones.";
-      } catch (error) {
-        console.error(error);
-        scannerSub.textContent = "Impossible d’ouvrir la caméra";
-        setGlobalMessage("err", "Impossible d’ouvrir la caméra sur cet appareil ou ce navigateur.");
+      if (result.type === "multiple") {
+        searchResultBox.innerHTML = `
+          <div>
+            <strong>Plusieurs références correspondent à ${escapeHtml(result.input)}</strong>
+            <div class="meta" style="margin-bottom:10px">
+              <span class="tag warning">À vérifier</span>
+              <span class="tag">${result.items.length} résultats</span>
+            </div>
+            <div class="list" style="max-height:220px; margin-top:0">
+              ${result.items.map(item => `
+                <div class="list-item">
+                  <strong>${escapeHtml(item.reference)}</strong>
+                  <div class="meta">
+                    <span class="tag">Code : ${escapeHtml(item.code)}</span>
+                    <span class="tag">Fin : ${escapeHtml(item.codeLast3)}</span>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
       }
     }
 
-    function stopCamera() {
-      if (state.stream) {
-        state.stream.getTracks().forEach(track => track.stop());
-        state.stream = null;
-      }
-      video.srcObject = null;
-    }
-
-    function openScanner() {
+    function searchCurrentInput() {
       if (!state.listingItems.length) {
-        setGlobalMessage("err", "Charge d’abord le listing avant d’ouvrir le scanner.");
+        setGlobalMessage("err", "Enregistre d’abord le listing.");
+        clearCurrentSearch(false);
         return;
       }
 
-      scanner.classList.add("open");
-      startCamera();
-    }
+      const input = digitsInput.value.replace(/\D/g, "").slice(0, 3);
+      digitsInput.value = input;
 
-    function closeScanner() {
-      scanner.classList.remove("open");
-      stopCamera();
-    }
+      if (input.length !== 3) {
+        state.currentSearch = {
+          type: "empty",
+          message: "Tape exactement 3 chiffres."
+        };
+        renderSearchResult(state.currentSearch);
+        resetDecisionButtons();
+        return;
+      }
 
-    async function buildOcrReadings(masterCanvas) {
-      const w = masterCanvas.width;
-      const h = masterCanvas.height;
+      const matches = findMatchesByLast3(input);
 
-      const zones = [
-        {
-          name: "reference_main",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.06, h * 0.10, w * 0.88, h * 0.40),
-            { grayscale: true, contrast: 1.8, threshold: 165, sharpen: true }
-          )
-        },
-        {
-          name: "reference_center",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.12, h * 0.18, w * 0.76, h * 0.28),
-            { grayscale: true, contrast: 1.6, threshold: 150 }
-          )
-        },
-        {
-          name: "reference_full_soft",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.02, h * 0.04, w * 0.96, h * 0.52),
-            { grayscale: true, contrast: 1.35 }
-          )
-        },
-        {
-          name: "code_bottom_left",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.02, h * 0.62, w * 0.52, h * 0.28),
-            { grayscale: true, contrast: 2.0, threshold: 155, sharpen: true }
-          )
-        },
-        {
-          name: "code_bottom_full",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.00, h * 0.58, w * 0.70, h * 0.34),
-            { grayscale: true, contrast: 1.9, threshold: 150 }
-          )
-        },
-        {
-          name: "code_left_tall",
-          canvas: preprocessToCanvas(
-            cropCanvas(masterCanvas, w * 0.00, h * 0.40, w * 0.38, h * 0.54),
-            { grayscale: true, contrast: 1.85, threshold: 150 }
-          )
-        }
-      ];
-
-      const texts = [];
-
-      for (let i = 0; i < zones.length; i++) {
-        const zone = zones[i];
-        scannerSub.textContent = `Lecture zone ${i + 1}/${zones.length}`;
-        const txt = await ocrCanvas(zone.canvas);
-        texts.push({
-          name: zone.name,
-          text: txt
+      if (!matches.length) {
+        state.currentSearch = {
+          type: "none",
+          input,
+          items: []
+        };
+        renderSearchResult({
+          type: "empty",
+          message: `Aucune référence trouvée pour ${input}.`
         });
-      }
-
-      return texts;
-    }
-
-    function buildScanRecordFromZoneTexts(zoneTexts) {
-      const codeCandidateGroups = zoneTexts
-        .filter(z => z.name.includes("code"))
-        .map(z => collectNumericCandidates(z.text));
-
-      const refTexts = zoneTexts
-        .filter(z => z.name.includes("reference"))
-        .map(z => z.text);
-
-      const bestCode = chooseBestCodeFromCandidates(codeCandidateGroups);
-      const refCandidates = refTexts.flatMap(extractReferenceCandidates);
-      const bestReference = chooseBestReference(refCandidates);
-
-      return {
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        zoneTexts,
-        codeRaw: bestCode.raw || "",
-        codeNormalized: bestCode.normalized || "",
-        reference: bestReference || "",
-        referenceNormalized: normalizeRef(bestReference || ""),
-        status: "pending",
-        reason: "",
-        matchedCode: "",
-        matchedReference: "",
-        createdAt: Date.now()
-      };
-    }
-
-    async function runSmartScan(masterCanvas) {
-      if (state.isProcessingScan) return;
-      state.isProcessingScan = true;
-      captureBtn.disabled = true;
-      importImageBtn.disabled = true;
-      finishScanBtn.disabled = true;
-      scannerSub.innerHTML = `<span class="loader"></span>Analyse ciblée en cours`;
-
-      try {
-        const zoneTexts = await buildOcrReadings(masterCanvas);
-        const scan = buildScanRecordFromZoneTexts(zoneTexts);
-
-        state.scannedItems.push(scan);
-        state.finalAnalysisDone = false;
-        refreshAll();
-
-        if (navigator.vibrate) navigator.vibrate(40);
-
-        scannerSub.textContent = `Scan enregistré (${state.scannedItems.length})`;
-
-        if (!scan.codeNormalized && !scan.reference) {
-          setGlobalMessage("warn", "Scan ajouté, mais aucune donnée fiable n’a été détectée. Il ira probablement dans “À vérifier”.");
-        } else if (!scan.codeNormalized || !scan.reference) {
-          setGlobalMessage("warn", `Scan ajouté. Détection partielle : ${scan.reference ? "référence" : "code boule"} seulement.`);
-        } else {
-          setGlobalMessage("ok", `Scan ajouté automatiquement. Réf : ${scan.reference} | Code : ${scan.codeNormalized}`);
-        }
-      } catch (error) {
-        console.error(error);
-        scannerSub.textContent = "Erreur d’analyse";
-        setGlobalMessage("err", "Impossible d’analyser cette image. Essaie une photo plus nette et bien cadrée.");
-      } finally {
-        state.isProcessingScan = false;
-        captureBtn.disabled = false;
-        importImageBtn.disabled = false;
-        finishScanBtn.disabled = false;
-      }
-    }
-
-    async function captureFrame() {
-      if (state.isProcessingScan) return;
-
-      if (!video.videoWidth || !video.videoHeight) {
-        setGlobalMessage("err", "La caméra n’est pas encore prête.");
+        presentBtn.disabled = true;
+        missingBtn.disabled = false;
         return;
       }
 
-      const vw = video.videoWidth;
-      const vh = video.videoHeight;
+      if (matches.length === 1) {
+        state.currentSearch = {
+          type: "single",
+          input,
+          item: matches[0]
+        };
+        renderSearchResult(state.currentSearch);
+        presentBtn.disabled = false;
+        missingBtn.disabled = false;
+        return;
+      }
 
-      const cropW = Math.round(vw * 0.82);
-      const cropH = Math.round(vh * 0.42);
-      const sx = Math.round((vw - cropW) / 2);
-      const sy = Math.round((vh - cropH) / 2);
-
-      canvas.width = cropW;
-      canvas.height = cropH;
-
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, cropW, cropH);
-
-      await runSmartScan(canvas);
+      state.currentSearch = {
+        type: "multiple",
+        input,
+        items: matches
+      };
+      renderSearchResult(state.currentSearch);
+      presentBtn.disabled = true;
+      missingBtn.disabled = true;
     }
 
-    async function analyzeImportedImage(file) {
-      if (!file || state.isProcessingScan) return;
+    function pushHistory(entry) {
+      state.historyItems.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        createdAt: Date.now(),
+        ...entry
+      });
+    }
 
-      const img = new Image();
-      const url = URL.createObjectURL(file);
+    function focusFastInput() {
+      requestAnimationFrame(() => {
+        digitsInput.focus();
+        digitsInput.select();
+      });
+    }
 
-      img.onload = async () => {
-        try {
-          const masterCanvas = makeWorkingCanvasFromImage(img);
-          await runSmartScan(masterCanvas);
-        } finally {
-          URL.revokeObjectURL(url);
+    function markSingleMatch(status) {
+      if (!state.currentSearch || state.currentSearch.type !== "single") return;
+
+      const item = state.currentSearch.item;
+      item.status = status;
+      state.finalized = false;
+
+      pushHistory({
+        input: state.currentSearch.input,
+        code: item.code,
+        label: item.reference,
+        typeLabel: status === "present" ? "Présent en rayon" : "Pas présent en rayon",
+        typeClass: status === "present" ? "success" : "danger"
+      });
+
+      refreshAll();
+
+      setGlobalMessage(
+        "ok",
+        status === "present"
+          ? `Produit validé comme présent : ${item.reference}`
+          : `Produit validé comme non présent : ${item.reference}`
+      );
+
+      clearCurrentSearch(true);
+      setFocusState(true, "Saisie active");
+    }
+
+    function markNoMatchMissing() {
+      if (!state.currentSearch || state.currentSearch.type !== "none") return;
+
+      state.finalized = false;
+
+      pushHistory({
+        input: state.currentSearch.input,
+        code: "",
+        label: `Aucun résultat pour ${state.currentSearch.input}`,
+        typeLabel: "Pas présent en rayon",
+        typeClass: "danger"
+      });
+
+      refreshAll();
+      setGlobalMessage("warn", `Aucune référence trouvée pour ${state.currentSearch.input}. Entrée enregistrée comme non trouvée.`);
+      clearCurrentSearch(true);
+      setFocusState(true, "Saisie active");
+    }
+
+    function finalizeControl() {
+      if (!state.listingItems.length) {
+        setGlobalMessage("err", "Enregistre d’abord le listing.");
+        return;
+      }
+
+      // les doublons sur 3 chiffres sont automatiquement des cas à vérifier
+      const duplicateMap = new Map();
+      for (const item of state.listingItems) {
+        const arr = duplicateMap.get(item.codeLast3) || [];
+        arr.push(item);
+        duplicateMap.set(item.codeLast3, arr);
+      }
+
+      for (const [key, items] of duplicateMap.entries()) {
+        if (items.length > 1) {
+          for (const item of items) {
+            if (item.status === "unprocessed") {
+              item.status = "review";
+            }
+          }
         }
-      };
+      }
 
-      img.src = url;
+      state.finalized = true;
+      refreshAll();
+      setGlobalMessage("ok", "Contrôle validé. Les listes finales sont à jour.");
     }
 
     parseListingBtn.addEventListener("click", () => {
       const items = parseListing(listingInput.value);
 
-      state.listingItems = items;
-      state.foundItems = [];
+      state.listingItems = items.map(item => ({
+        ...item,
+        status: "unprocessed"
+      }));
+      state.presentItems = [];
+      state.missingItems = [];
       state.remainingItems = items.slice();
       state.reviewItems = [];
-      state.scannedItems = [];
-      state.finalAnalysisDone = false;
+      state.historyItems = [];
+      state.finalized = false;
+      state.currentSearch = null;
 
       refreshAll();
+      clearCurrentSearch(false);
 
       if (!items.length) {
         setGlobalMessage("err", "Aucune ligne exploitable n’a été détectée dans le listing.");
-      } else {
-        setGlobalMessage("ok", `${items.length} article(s) détecté(s). Tu peux maintenant lancer le scanner.`);
+        setFocusState(false, "Listing vide");
+        return;
       }
+
+      setGlobalMessage("ok", `${items.length} article(s) enregistrés. Tu peux commencer la saisie rapide.`);
+      setFocusState(true, "Saisie active");
+      focusFastInput();
     });
 
     clearListingBtn.addEventListener("click", () => {
       listingInput.value = "";
       state.listingItems = [];
-      state.foundItems = [];
+      state.presentItems = [];
+      state.missingItems = [];
       state.remainingItems = [];
       state.reviewItems = [];
-      state.scannedItems = [];
-      state.finalAnalysisDone = false;
+      state.historyItems = [];
+      state.finalized = false;
+      state.currentSearch = null;
+
       refreshAll();
+      clearCurrentSearch(false);
       setGlobalMessage("", "");
+      setFocusState(false, "Prêt");
     });
 
     loadExampleBtn.addEventListener("click", () => {
@@ -1721,33 +1348,59 @@
 1191154 Ref 2P HISENSE RT161D4ADE
 8300861 Ref 2P ESSENTIELB ERDV165-55s3
 1208346 Ref 2P BEKO RONE35CK40XBN
-8010745 Combi LISTO RCL170-55mib2`;
+8010745 Combi LISTO RCL170-55mib2
+8011167 Ref Top ESSENTIELB ERT85-55hcB6`;
+      setGlobalMessage("ok", "Exemple chargé. Clique sur “Enregistrer le listing”.");
     });
 
-    openScannerTop.addEventListener("click", openScanner);
-    openScannerHero.addEventListener("click", openScanner);
-    closeScannerBtn.addEventListener("click", closeScanner);
-    captureBtn.addEventListener("click", captureFrame);
+    digitsInput.addEventListener("input", () => {
+      const clean = digitsInput.value.replace(/\D/g, "").slice(0, 3);
+      digitsInput.value = clean;
 
-    importImageBtn.addEventListener("click", () => imageInput.click());
-
-    imageInput.addEventListener("change", async (event) => {
-      const file = event.target.files?.[0];
-      if (file) await analyzeImportedImage(file);
-      event.target.value = "";
+      if (clean.length === 3) {
+        searchCurrentInput();
+      } else {
+        state.currentSearch = null;
+        renderSearchResult({
+          type: "empty",
+          message: clean.length === 0
+            ? "Tape 3 chiffres pour lancer une recherche."
+            : "Tape exactement 3 chiffres."
+        });
+        resetDecisionButtons();
+      }
     });
 
-    finishScanBtn.addEventListener("click", () => {
-      closeScanner();
+    digitsInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!presentBtn.disabled) {
+          presentBtn.click();
+        } else if (!missingBtn.disabled) {
+          missingBtn.click();
+        } else {
+          searchCurrentInput();
+        }
+      }
+    });
 
-      if (!state.scannedItems.length) {
-        setGlobalMessage("warn", "Aucune étiquette n’a été scannée.");
+    searchBtn.addEventListener("click", searchCurrentInput);
+
+    presentBtn.addEventListener("click", () => {
+      markSingleMatch("present");
+    });
+
+    missingBtn.addEventListener("click", () => {
+      if (state.currentSearch?.type === "single") {
+        markSingleMatch("missing");
         return;
       }
-
-      analyzeScans();
-      setGlobalMessage("ok", `Analyse terminée. ${state.scannedItems.length} scan(s) traité(s).`);
+      if (state.currentSearch?.type === "none") {
+        markNoMatchMissing();
+      }
     });
+
+    finalizeBtn.addEventListener("click", finalizeControl);
 
     resetAllBtn.addEventListener("click", () => {
       const ok = confirm("Réinitialiser toute la session ?");
@@ -1755,32 +1408,41 @@
 
       listingInput.value = "";
       state.listingItems = [];
-      state.scannedItems = [];
-      state.foundItems = [];
+      state.presentItems = [];
+      state.missingItems = [];
       state.remainingItems = [];
       state.reviewItems = [];
-      state.finalAnalysisDone = false;
-      state.isProcessingScan = false;
+      state.historyItems = [];
+      state.finalized = false;
+      state.currentSearch = null;
 
       refreshAll();
+      clearCurrentSearch(false);
       setGlobalMessage("", "");
-      stopCamera();
-      scanner.classList.remove("open");
+      setFocusState(false, "Prêt");
+    });
+
+    focusEntryBtn.addEventListener("click", () => {
+      entrySection.scrollIntoView({ behavior: "smooth", block: "start" });
+      focusFastInput();
+    });
+
+    focusListingBtn.addEventListener("click", () => {
+      listingSection.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     document.querySelectorAll(".tab").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
         document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
-
         btn.classList.add("active");
         document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
       });
     });
 
-    window.addEventListener("beforeunload", stopCamera);
-
     refreshAll();
+    setFocusState(false, "Prêt");
+    clearCurrentSearch(false);
   </script>
 </body>
 </html>
