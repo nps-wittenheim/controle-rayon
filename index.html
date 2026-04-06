@@ -2,26 +2,33 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Contrôle Rayon</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>Contrôle rayon</title>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
     :root{
-      --bg:#f4f7fb;
-      --card:#ffffff;
+      --bg:#f3f6f9;
+      --surface:#ffffff;
+      --surface-soft:#f8fafc;
       --line:#d9e2ec;
-      --text:#102a43;
-      --muted:#627d98;
-      --primary:#0057b8;
-      --primary-2:#0b6bcb;
-      --success:#138a36;
-      --warning:#b26a00;
-      --danger:#c62828;
-      --shadow:0 10px 30px rgba(16,42,67,.08);
+      --text:#12263a;
+      --muted:#6b7c93;
+      --primary:#0f62fe;
+      --primary-dark:#0b57db;
+      --success:#1f8f4e;
+      --warning:#b7791f;
+      --danger:#d64545;
+      --shadow:0 10px 30px rgba(15, 35, 55, 0.08);
       --radius:18px;
+      --radius-sm:12px;
+      --maxw:1100px;
     }
 
     *{box-sizing:border-box}
+
     html,body{
       margin:0;
       padding:0;
@@ -35,131 +42,88 @@
     }
 
     .app{
-      max-width:1100px;
+      width:100%;
+      max-width:var(--maxw);
       margin:0 auto;
-      padding:20px 14px 32px;
+      padding:20px 14px 36px;
     }
 
     .topbar{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:14px;
       margin-bottom:18px;
       flex-wrap:wrap;
     }
 
     .brand{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       gap:12px;
     }
 
-    .brand-badge{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:800;
-      font-size:20px;
+      font-size:18px;
       box-shadow:var(--shadow);
+      flex-shrink:0;
     }
 
     .brand h1{
       margin:0;
-      font-size:22px;
+      font-size:24px;
       line-height:1.1;
+      letter-spacing:-0.02em;
     }
 
     .brand p{
-      margin:2px 0 0;
+      margin:5px 0 0;
       color:var(--muted);
-      font-size:13px;
+      font-size:14px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:16px;
-    }
-
-    @media (max-width:900px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-    }
-
-    .card h2{
-      margin:0 0 10px;
-      font-size:18px;
-    }
-
-    .muted{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    textarea{
-      width:100%;
-      min-height:240px;
-      resize:vertical;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      font:inherit;
-      color:var(--text);
-      background:#fbfdff;
-      outline:none;
-    }
-
-    input[type="text"]{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px 14px;
-      font:inherit;
-      color:var(--text);
-      background:#fff;
-      outline:none;
-    }
-
-    .actions{
+    .top-actions{
       display:flex;
-      flex-wrap:wrap;
       gap:10px;
-      margin-top:12px;
+      flex-wrap:wrap;
     }
 
-    button{
+    .btn{
       border:none;
-      border-radius:12px;
-      padding:12px 16px;
+      border-radius:14px;
+      padding:13px 16px;
       font:inherit;
       font-weight:700;
       cursor:pointer;
-      transition:.18s transform ease,.18s opacity ease,.18s background ease;
+      transition:0.18s ease;
+      min-height:48px;
     }
 
-    button:hover{transform:translateY(-1px)}
-    button:disabled{opacity:.55; cursor:not-allowed; transform:none}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none;
+    }
 
     .btn-primary{
-      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
       color:#fff;
+      box-shadow:var(--shadow);
     }
 
     .btn-secondary{
-      background:#eef4fb;
+      background:#eaf1f8;
       color:var(--text);
     }
 
@@ -173,106 +137,341 @@
       color:#fff;
     }
 
+    .hero{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:16px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+
+    @media (max-width:900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .hero-panel{
+      background:var(--surface-soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .hero-title{
+      margin:0 0 6px;
+      font-size:20px;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+
+    .hero-text{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .hero-actions .btn{
+      flex:1 1 210px;
+    }
+
     .stats{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
-      margin-top:8px;
     }
 
-    @media (max-width:700px){
-      .stats{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:760px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
 
     .stat{
-      background:#fbfdff;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      min-height:92px;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:10px;
+    }
+
+    .stat-value{
+      font-size:30px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-0.03em;
+    }
+
+    .stat-value.success{color:var(--success)}
+    .stat-value.warning{color:var(--warning)}
+    .stat-value.danger{color:var(--danger)}
+
+    .layout{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:16px;
+    }
+
+    @media (max-width:980px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .card h2{
+      margin:0 0 6px;
+      font-size:18px;
+      letter-spacing:-0.02em;
+    }
+
+    .card p.lead{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    textarea, input[type="text"]{
+      width:100%;
       border:1px solid var(--line);
       border-radius:14px;
+      background:#fff;
+      color:var(--text);
+      font:inherit;
+      padding:14px;
+      outline:none;
+    }
+
+    textarea{
+      resize:vertical;
+      min-height:230px;
+      line-height:1.45;
+    }
+
+    textarea:focus, input[type="text"]:focus{
+      border-color:#afc6ff;
+      box-shadow:0 0 0 4px rgba(15,98,254,.08);
+    }
+
+    .card-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .card-actions .btn{
+      flex:1 1 160px;
+    }
+
+    .panel{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:var(--surface-soft);
       padding:14px;
     }
 
-    .stat .label{
-      color:var(--muted);
+    .panel h3{
+      margin:0 0 5px;
+      font-size:15px;
+    }
+
+    .small{
       font-size:12px;
+      color:var(--muted);
+    }
+
+    .result-card{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+      padding:16px;
+    }
+
+    .result-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .status-neutral{
+      background:#edf2f7;
+      color:#51606f;
+    }
+
+    .status-ok{
+      background:rgba(31,143,78,.12);
+      color:var(--success);
+    }
+
+    .status-warning{
+      background:rgba(183,121,31,.12);
+      color:var(--warning);
+    }
+
+    .status-danger{
+      background:rgba(214,69,69,.12);
+      color:var(--danger);
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    @media (max-width:700px){
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .info-box{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      padding:12px;
+    }
+
+    .info-box .label{
+      font-size:12px;
+      color:var(--muted);
       margin-bottom:6px;
     }
 
-    .stat .value{
-      font-size:28px;
-      font-weight:800;
-      line-height:1;
+    .info-box .value{
+      font-size:15px;
+      font-weight:700;
+      word-break:break-word;
     }
 
-    .value.success{color:var(--success)}
-    .value.warning{color:var(--warning)}
-    .value.danger{color:var(--danger)}
-
-    .table-wrap{
-      margin-top:14px;
-      border:1px solid var(--line);
+    .message{
+      margin-top:12px;
       border-radius:14px;
-      overflow:hidden;
-      background:#fff;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
+      padding:12px 14px;
       font-size:14px;
+      font-weight:700;
     }
 
-    th,td{
-      padding:10px 12px;
-      border-bottom:1px solid #edf2f7;
-      text-align:left;
-      vertical-align:top;
+    .message.ok{
+      background:rgba(31,143,78,.1);
+      color:var(--success);
     }
 
-    th{
-      background:#f7fafc;
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.04em;
+    .message.warn{
+      background:rgba(183,121,31,.1);
+      color:var(--warning);
     }
 
-    tr:last-child td{border-bottom:none}
+    .message.err{
+      background:rgba(214,69,69,.1);
+      color:var(--danger);
+    }
 
-    .badge{
+    .list{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+      max-height:380px;
+      overflow:auto;
+      padding-right:2px;
+    }
+
+    .list-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .list-item strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:15px;
+      line-height:1.35;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .tag{
       display:inline-flex;
       align-items:center;
-      gap:6px;
-      padding:6px 10px;
+      padding:7px 10px;
       border-radius:999px;
+      background:#edf3f9;
+      color:#334e68;
       font-size:12px;
       font-weight:700;
     }
 
-    .badge-ok{
-      background:rgba(19,138,54,.12);
-      color:var(--success);
+    .empty{
+      border:1px dashed var(--line);
+      border-radius:16px;
+      padding:16px;
+      color:var(--muted);
+      background:#fbfdff;
     }
 
-    .badge-warn{
-      background:rgba(178,106,0,.12);
-      color:var(--warning);
-    }
-
-    .badge-danger{
-      background:rgba(198,40,40,.12);
-      color:var(--danger);
-    }
-
-    .scanner-shell{
+    .scanner{
       position:fixed;
       inset:0;
       background:#000;
-      z-index:999;
+      z-index:9999;
       display:none;
       flex-direction:column;
     }
 
-    .scanner-shell.open{
+    .scanner.open{
       display:flex;
     }
 
@@ -281,45 +480,48 @@
       top:0;
       left:0;
       right:0;
-      z-index:3;
+      z-index:4;
       display:flex;
+      align-items:flex-start;
       justify-content:space-between;
-      align-items:center;
-      padding:env(safe-area-inset-top) 14px 12px;
-      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0));
+      gap:12px;
+      padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;
+      background:linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
       color:#fff;
     }
 
     .scanner-title{
+      font-size:18px;
       font-weight:800;
-      font-size:16px;
+      margin-bottom:4px;
     }
 
     .scanner-sub{
       font-size:12px;
-      opacity:.9;
-      margin-top:4px;
+      opacity:.92;
     }
 
     .icon-btn{
-      min-width:44px;
-      min-height:44px;
-      border-radius:12px;
+      min-width:46px;
+      min-height:46px;
+      border:none;
+      border-radius:14px;
       background:rgba(255,255,255,.18);
       color:#fff;
-      backdrop-filter:blur(8px);
       font-size:18px;
-      padding:0 12px;
+      font-weight:800;
+      backdrop-filter:blur(8px);
+      cursor:pointer;
     }
 
-    .video-wrap{
+    .camera-wrap{
       position:relative;
       flex:1;
-      overflow:hidden;
       background:#000;
+      overflow:hidden;
     }
 
-    video, canvas.preview-canvas{
+    video, canvas{
       position:absolute;
       inset:0;
       width:100%;
@@ -328,36 +530,37 @@
       background:#000;
     }
 
-    .scan-frame{
+    .frame-layer{
       position:absolute;
       inset:0;
       pointer-events:none;
       display:flex;
       align-items:center;
       justify-content:center;
+      z-index:2;
     }
 
-    .scan-box{
-      width:min(86vw,420px);
-      height:min(56vh,300px);
+    .frame-box{
+      width:min(84vw,430px);
+      height:min(54vh,290px);
       border:2px solid rgba(255,255,255,.9);
       border-radius:24px;
       box-shadow:0 0 0 9999px rgba(0,0,0,.34);
       position:relative;
     }
 
-    .scan-box::after{
-      content:"Cadre bien l’étiquette à l’intérieur";
+    .frame-box::after{
+      content:"Cadre l’étiquette dans la zone";
       position:absolute;
+      bottom:-38px;
       left:50%;
-      bottom:-34px;
       transform:translateX(-50%);
       white-space:nowrap;
       font-size:12px;
       color:#fff;
-      background:rgba(0,0,0,.45);
-      padding:6px 10px;
+      background:rgba(0,0,0,.46);
       border-radius:999px;
+      padding:7px 12px;
     }
 
     .scanner-bottom{
@@ -365,38 +568,39 @@
       left:0;
       right:0;
       bottom:0;
-      z-index:3;
-      padding:16px 16px calc(18px + env(safe-area-inset-bottom));
-      background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,0));
+      z-index:4;
       display:flex;
-      align-items:center;
       justify-content:center;
+      align-items:center;
       gap:12px;
+      padding:18px 18px calc(18px + env(safe-area-inset-bottom));
+      background:linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,0));
     }
 
-    .capture-btn{
-      width:76px;
-      height:76px;
+    .capture{
+      width:78px;
+      height:78px;
       border-radius:50%;
-      background:#fff;
       border:6px solid rgba(255,255,255,.35);
-      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      background:#fff;
+      box-shadow:0 10px 30px rgba(0,0,0,.28);
+      cursor:pointer;
     }
 
-    .floating-import{
+    .import-floating{
       position:absolute;
       right:18px;
-      bottom:calc(110px + env(safe-area-inset-bottom));
-      z-index:4;
-      background:rgba(255,255,255,.95);
-      color:#102a43;
+      bottom:calc(114px + env(safe-area-inset-bottom));
+      z-index:5;
+      border:none;
       border-radius:18px;
+      background:rgba(255,255,255,.96);
+      color:var(--text);
       padding:12px 14px;
+      font-size:14px;
       font-weight:800;
-      box-shadow:0 10px 30px rgba(0,0,0,.28);
-      display:flex;
-      align-items:center;
-      gap:8px;
+      box-shadow:0 10px 26px rgba(0,0,0,.22);
+      cursor:pointer;
     }
 
     .hidden{
@@ -411,301 +615,270 @@
       border-top-color:#fff;
       border-radius:50%;
       animation:spin .8s linear infinite;
+      vertical-align:middle;
+      margin-right:8px;
     }
 
     @keyframes spin{
       to{transform:rotate(360deg)}
     }
 
-    .ocr-panel{
-      margin-top:14px;
-      background:#fbfdff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-    }
+    @media (max-width:640px){
+      .app{
+        padding:14px 12px 26px;
+      }
 
-    .ocr-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
+      .hero,
+      .card{
+        padding:16px;
+        border-radius:18px;
+      }
 
-    @media (max-width:700px){
-      .ocr-grid{grid-template-columns:1fr}
-    }
+      .brand h1{
+        font-size:21px;
+      }
 
-    .message{
-      margin-top:10px;
-      padding:12px 14px;
-      border-radius:12px;
-      font-size:14px;
-      font-weight:600;
-    }
+      .hero-title{
+        font-size:18px;
+      }
 
-    .message.ok{
-      background:rgba(19,138,54,.1);
-      color:var(--success);
-    }
+      .btn{
+        width:100%;
+      }
 
-    .message.warn{
-      background:rgba(178,106,0,.1);
-      color:var(--warning);
-    }
+      .top-actions{
+        width:100%;
+      }
 
-    .message.err{
-      background:rgba(198,40,40,.1);
-      color:var(--danger);
-    }
-
-    .small{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .list{
-      display:grid;
-      gap:10px;
-      margin-top:12px;
-      max-height:360px;
-      overflow:auto;
-      padding-right:4px;
-    }
-
-    .list-item{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      background:#fff;
-    }
-
-    .list-item strong{
-      display:block;
-      margin-bottom:4px;
-    }
-
-    .footer-note{
-      margin-top:12px;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .pill{
-      display:inline-block;
-      margin-right:8px;
-      margin-top:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#eef4fb;
-      color:var(--text);
-      font-size:12px;
-      font-weight:700;
+      .top-actions .btn{
+        flex:1 1 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
+    <header class="topbar">
       <div class="brand">
-        <div class="brand-badge">CR</div>
+        <div class="brand-mark">CR</div>
         <div>
-          <h1>Contrôle Rayon</h1>
-          <p>Comparaison listing / étiquettes électroniques</p>
+          <h1>Contrôle rayon</h1>
+          <p>Scan d’étiquettes électroniques et comparaison avec le listing</p>
         </div>
       </div>
-      <div class="actions" style="margin-top:0">
-        <button class="btn-primary" id="openScannerBtn">Scanner une étiquette</button>
-        <button class="btn-secondary" id="resetSessionBtn">Réinitialiser</button>
-      </div>
-    </div>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="label">Articles du listing</div>
-        <div class="value" id="statTotalListing">0</div>
+      <div class="top-actions">
+        <button class="btn btn-primary" id="openScannerTop">Scanner une étiquette</button>
+        <button class="btn btn-secondary" id="resetAllBtn">Réinitialiser</button>
       </div>
-      <div class="stat">
-        <div class="label">Déjà trouvés</div>
-        <div class="value success" id="statFound">0</div>
-      </div>
-      <div class="stat">
-        <div class="label">Reste à contrôler</div>
-        <div class="value warning" id="statRemaining">0</div>
-      </div>
-      <div class="stat">
-        <div class="label">Hors listing</div>
-        <div class="value danger" id="statOutside">0</div>
-      </div>
-    </div>
+    </header>
 
-    <div class="grid" style="margin-top:16px">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-panel">
+          <h2 class="hero-title">Contrôle rapide et clair</h2>
+          <p class="hero-text">
+            Importe ton listing, scanne les étiquettes une par une,
+            et vois immédiatement ce qui est déjà présent, ce qu’il reste à sortir
+            et ce qui est hors listing.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="openScannerHero">Scanner une étiquette</button>
+            <button class="btn btn-secondary" id="loadExampleBtn">Charger un exemple</button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Articles du listing</div>
+            <div class="stat-value" id="statTotal">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Déjà trouvés</div>
+            <div class="stat-value success" id="statFound">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Restants</div>
+            <div class="stat-value warning" id="statRemaining">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Hors listing</div>
+            <div class="stat-value danger" id="statOutside">0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
       <div class="card">
-        <h2>1. Listing</h2>
-        <div class="muted">
-          Colle ton listing texte ici. Le système récupère le premier nombre de la ligne comme code boule, puis la référence.
-        </div>
+        <h2>1. Importer le listing</h2>
+        <p class="lead">
+          Colle le texte du listing. Le système récupère le premier nombre de la ligne
+          comme code boule, puis la référence produit.
+        </p>
 
         <textarea id="listingInput" placeholder="Exemple :
 1187958 Ref Multi HISENSE RQ758N4SWSE
 1200091 Ref Multi LG GMZ765SBHJ InstaView
 1201967 Ref Multi SAMSUNG RF24B8620EB1"></textarea>
 
-        <div class="actions">
-          <button class="btn-primary" id="parseListingBtn">Analyser le listing</button>
-          <button class="btn-secondary" id="loadExampleBtn">Charger un exemple</button>
+        <div class="card-actions">
+          <button class="btn btn-primary" id="parseListingBtn">Analyser le listing</button>
+          <button class="btn btn-secondary" id="clearListingBtn">Effacer</button>
         </div>
 
-        <div class="ocr-panel">
-          <strong>Résultat d’extraction</strong>
-          <div class="small">Vérifie vite fait avant de scanner les produits. C’est la sécurité anti-erreur.</div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Code boule</th>
-                  <th>Référence</th>
-                  <th>État</th>
-                </tr>
-              </thead>
-              <tbody id="listingTableBody">
-                <tr>
-                  <td colspan="3" class="muted">Aucun listing chargé.</td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="panel">
+          <h3>Validation du listing</h3>
+          <div class="small">
+            Vérifie rapidement les lignes extraites avant de passer au scan terrain.
           </div>
-          <div class="footer-note">
-            Le système enlève automatiquement les zéros au début d’un code boule avant comparaison.
+
+          <div class="list" id="listingPreview" style="margin-top:12px">
+            <div class="empty">Aucun listing chargé pour le moment.</div>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <h2>2. Analyse étiquette</h2>
-        <div class="muted">
-          La caméra s’ouvre directement. Tu peux aussi importer une photo avec le bouton en bas à droite dans l’écran scanner.
-        </div>
+        <h2>2. Dernière lecture étiquette</h2>
+        <p class="lead">
+          Après le scan, vérifie si besoin puis valide la lecture.
+        </p>
 
-        <div class="ocr-panel">
-          <strong>Dernière lecture OCR</strong>
+        <div class="result-card">
+          <div class="result-header">
+            <strong>Résultat du scan</strong>
+            <span class="status-pill status-neutral" id="scanStatusPill">En attente</span>
+          </div>
 
-          <div class="ocr-grid">
-            <div>
-              <label class="small">Code boule détecté</label>
+          <div class="info-grid">
+            <div class="info-box">
+              <div class="label">Code boule détecté</div>
               <input type="text" id="ocrCodeInput" placeholder="Ex: 0001202581" />
             </div>
-            <div>
-              <label class="small">Code normalisé</label>
+
+            <div class="info-box">
+              <div class="label">Code boule normalisé</div>
               <input type="text" id="ocrCodeNormalizedInput" placeholder="Ex: 1202581" readonly />
             </div>
-            <div style="grid-column:1/-1">
-              <label class="small">Référence détectée</label>
+
+            <div class="info-box" style="grid-column:1/-1">
+              <div class="label">Référence détectée</div>
               <input type="text" id="ocrRefInput" placeholder="Ex: Ref US SAMSUNG RH650654R359" />
             </div>
           </div>
 
-          <div class="actions">
-            <button class="btn-success" id="validateScanBtn">Valider cette lecture</button>
-            <button class="btn-secondary" id="clearOcrBtn">Effacer</button>
+          <div class="card-actions">
+            <button class="btn btn-success" id="validateScanBtn">Valider la lecture</button>
+            <button class="btn btn-secondary" id="clearScanBtn">Effacer</button>
           </div>
 
           <div id="scanMessage"></div>
         </div>
 
-        <div class="ocr-panel">
-          <strong>Produits hors listing</strong>
-          <div class="list" id="outsideList">
-            <div class="muted">Aucun produit hors listing pour le moment.</div>
+        <div class="panel">
+          <h3>Produits hors listing</h3>
+          <div class="list" id="outsideList" style="margin-top:12px">
+            <div class="empty">Aucun produit hors listing.</div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:16px">
+    <section class="card" style="margin-top:16px">
       <h2>3. Articles restants à sortir</h2>
-      <div class="muted">
-        Tout ce qui n’a pas encore été retrouvé dans le rayon apparaît ici.
-      </div>
+      <p class="lead">
+        Les produits du listing non encore retrouvés apparaissent ici.
+      </p>
+
       <div class="list" id="remainingList">
-        <div class="muted">Charge un listing pour voir les articles restants.</div>
+        <div class="empty">Charge un listing pour afficher les articles restants.</div>
       </div>
-    </div>
+    </section>
   </div>
 
-  <div class="scanner-shell" id="scannerShell">
+  <div class="scanner" id="scanner">
     <div class="scanner-top">
       <div>
         <div class="scanner-title">Scanner une étiquette</div>
-        <div class="scanner-sub" id="scannerStatus">Caméra active</div>
+        <div class="scanner-sub" id="scannerSub">Caméra prête</div>
       </div>
       <button class="icon-btn" id="closeScannerBtn">✕</button>
     </div>
 
-    <div class="video-wrap">
+    <div class="camera-wrap">
       <video id="video" autoplay playsinline muted></video>
-      <canvas id="captureCanvas" class="preview-canvas hidden"></canvas>
+      <canvas id="canvas" class="hidden"></canvas>
 
-      <div class="scan-frame">
-        <div class="scan-box"></div>
+      <div class="frame-layer">
+        <div class="frame-box"></div>
       </div>
 
-      <button class="floating-import" id="importPhotoBtn">
-        🖼️ Importer
-      </button>
-      <input type="file" id="importFileInput" accept="image/*" class="hidden" />
+      <button class="import-floating" id="importImageBtn">🖼️ Importer</button>
+      <input type="file" id="imageInput" accept="image/*" class="hidden" />
     </div>
 
     <div class="scanner-bottom">
-      <button class="capture-btn" id="captureBtn" title="Analyser la photo"></button>
+      <button class="capture" id="captureBtn" title="Capturer"></button>
     </div>
   </div>
 
   <script>
     const state = {
       listingItems: [],
-      foundCodes: new Set(),
       outsideItems: [],
-      stream: null,
-      lastOcrText: ""
+      stream: null
     };
 
     const listingInput = document.getElementById("listingInput");
     const parseListingBtn = document.getElementById("parseListingBtn");
+    const clearListingBtn = document.getElementById("clearListingBtn");
     const loadExampleBtn = document.getElementById("loadExampleBtn");
-    const listingTableBody = document.getElementById("listingTableBody");
 
-    const statTotalListing = document.getElementById("statTotalListing");
+    const listingPreview = document.getElementById("listingPreview");
+    const remainingList = document.getElementById("remainingList");
+    const outsideList = document.getElementById("outsideList");
+
+    const statTotal = document.getElementById("statTotal");
     const statFound = document.getElementById("statFound");
     const statRemaining = document.getElementById("statRemaining");
     const statOutside = document.getElementById("statOutside");
-
-    const remainingList = document.getElementById("remainingList");
-    const outsideList = document.getElementById("outsideList");
 
     const ocrCodeInput = document.getElementById("ocrCodeInput");
     const ocrCodeNormalizedInput = document.getElementById("ocrCodeNormalizedInput");
     const ocrRefInput = document.getElementById("ocrRefInput");
     const validateScanBtn = document.getElementById("validateScanBtn");
-    const clearOcrBtn = document.getElementById("clearOcrBtn");
+    const clearScanBtn = document.getElementById("clearScanBtn");
     const scanMessage = document.getElementById("scanMessage");
+    const scanStatusPill = document.getElementById("scanStatusPill");
 
-    const openScannerBtn = document.getElementById("openScannerBtn");
+    const openScannerTop = document.getElementById("openScannerTop");
+    const openScannerHero = document.getElementById("openScannerHero");
     const closeScannerBtn = document.getElementById("closeScannerBtn");
-    const scannerShell = document.getElementById("scannerShell");
-    const scannerStatus = document.getElementById("scannerStatus");
+    const scanner = document.getElementById("scanner");
+    const scannerSub = document.getElementById("scannerSub");
 
     const video = document.getElementById("video");
-    const captureCanvas = document.getElementById("captureCanvas");
+    const canvas = document.getElementById("canvas");
     const captureBtn = document.getElementById("captureBtn");
-    const importPhotoBtn = document.getElementById("importPhotoBtn");
-    const importFileInput = document.getElementById("importFileInput");
-    const resetSessionBtn = document.getElementById("resetSessionBtn");
+    const importImageBtn = document.getElementById("importImageBtn");
+    const imageInput = document.getElementById("imageInput");
+    const resetAllBtn = document.getElementById("resetAllBtn");
 
-    function normalizeCode(code) {
-      if (!code) return "";
-      const onlyDigits = String(code).replace(/\D/g, "");
-      return onlyDigits.replace(/^0+/, "") || "0";
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeCode(value) {
+      if (!value) return "";
+      const digits = String(value).replace(/\D/g, "");
+      return digits.replace(/^0+/, "") || "0";
     }
 
     function normalizeRef(ref) {
@@ -719,6 +892,24 @@
         .trim();
     }
 
+    function setScanState(type, label) {
+      scanStatusPill.className = "status-pill";
+      if (type === "ok") scanStatusPill.classList.add("status-ok");
+      else if (type === "warn") scanStatusPill.classList.add("status-warning");
+      else if (type === "danger") scanStatusPill.classList.add("status-danger");
+      else scanStatusPill.classList.add("status-neutral");
+      scanStatusPill.textContent = label;
+    }
+
+    function setMessage(type, text) {
+      if (!text) {
+        scanMessage.innerHTML = "";
+        return;
+      }
+      scanMessage.className = `message ${type}`;
+      scanMessage.textContent = text;
+    }
+
     function cleanListingReference(ref) {
       return String(ref || "")
         .replace(/\b(AS|A S|DI|D1|CI|CIl|D\|)\b/gi, " ")
@@ -729,7 +920,7 @@
     function parseListing(text) {
       const lines = String(text || "")
         .split(/\n+/)
-        .map(l => l.trim())
+        .map(line => line.trim())
         .filter(Boolean);
 
       const items = [];
@@ -773,31 +964,30 @@
       return unique;
     }
 
-    function renderListingTable() {
+    function renderListingPreview() {
       if (!state.listingItems.length) {
-        listingTableBody.innerHTML = `
-          <tr>
-            <td colspan="3" class="muted">Aucun listing chargé.</td>
-          </tr>
-        `;
+        listingPreview.innerHTML = `<div class="empty">Aucun listing chargé pour le moment.</div>`;
         return;
       }
 
-      listingTableBody.innerHTML = state.listingItems.map(item => `
-        <tr>
-          <td>${escapeHtml(item.code)}</td>
-          <td>${escapeHtml(item.reference)}</td>
-          <td>
-            ${item.found
-              ? `<span class="badge badge-ok">Trouvé</span>`
-              : `<span class="badge badge-warn">À contrôler</span>`}
-          </td>
-        </tr>
+      listingPreview.innerHTML = state.listingItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag">${item.found ? "Trouvé" : "À contrôler"}</span>
+          </div>
+        </div>
       `).join("");
     }
 
     function renderRemainingList() {
-      const remaining = state.listingItems.filter(i => !i.found);
+      if (!state.listingItems.length) {
+        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les articles restants.</div>`;
+        return;
+      }
+
+      const remaining = state.listingItems.filter(item => !item.found);
 
       if (!remaining.length) {
         remainingList.innerHTML = `<div class="message ok">Tous les articles du listing ont été retrouvés.</div>`;
@@ -807,23 +997,27 @@
       remainingList.innerHTML = remaining.map(item => `
         <div class="list-item">
           <strong>${escapeHtml(item.reference)}</strong>
-          <div class="pill">Code boule : ${escapeHtml(item.code)}</div>
-          <div class="pill">Statut : À sortir / à contrôler</div>
+          <div class="meta">
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag">À sortir / à contrôler</span>
+          </div>
         </div>
       `).join("");
     }
 
     function renderOutsideList() {
       if (!state.outsideItems.length) {
-        outsideList.innerHTML = `<div class="muted">Aucun produit hors listing pour le moment.</div>`;
+        outsideList.innerHTML = `<div class="empty">Aucun produit hors listing.</div>`;
         return;
       }
 
       outsideList.innerHTML = state.outsideItems.map(item => `
         <div class="list-item">
           <strong>${escapeHtml(item.reference || "Référence non reconnue")}</strong>
-          <div class="pill">Code lu : ${escapeHtml(item.code || "Non détecté")}</div>
-          <div class="pill">Hors listing</div>
+          <div class="meta">
+            <span class="tag">Code lu : ${escapeHtml(item.code || "Non détecté")}</span>
+            <span class="tag">Hors listing</span>
+          </div>
         </div>
       `).join("");
     }
@@ -834,61 +1028,40 @@
       const remaining = total - found;
       const outside = state.outsideItems.length;
 
-      statTotalListing.textContent = total;
+      statTotal.textContent = total;
       statFound.textContent = found;
       statRemaining.textContent = remaining;
       statOutside.textContent = outside;
     }
 
     function refreshAll() {
-      renderListingTable();
+      renderListingPreview();
       renderRemainingList();
       renderOutsideList();
       updateStats();
     }
 
-    function setMessage(type, text) {
-      scanMessage.className = "";
-      if (!text) {
-        scanMessage.innerHTML = "";
-        return;
-      }
-      scanMessage.className = `message ${type}`;
-      scanMessage.textContent = text;
-    }
+    function extractBestCode(text) {
+      const compact = String(text || "").replace(/\s+/g, " ");
+      const numbers = [...compact.matchAll(/\b\d{6,13}\b/g)].map(m => m[0]);
+      if (!numbers.length) return "";
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function extractBestCodeFromLabelText(text) {
-      const raw = String(text || "").replace(/\s+/g, " ");
-      const matches = [...raw.matchAll(/\b\d{6,13}\b/g)].map(m => m[0]);
-
-      if (!matches.length) return "";
-
-      const candidates = matches
+      const priority = numbers
         .filter(n => n.length >= 7 && n.length <= 10)
         .sort((a, b) => b.length - a.length);
 
-      if (candidates.length) return candidates[0];
-      return matches[0];
+      return priority[0] || numbers[0];
     }
 
-    function extractBestReferenceFromLabelText(text) {
+    function extractBestReference(text) {
       const lines = String(text || "")
         .split(/\n+/)
-        .map(l => l.trim())
+        .map(line => line.trim())
         .filter(Boolean)
-        .filter(l => !/^\d+[.,]\d{2}\s*€?$/.test(l))
-        .filter(l => !/^\d+\s*avis$/i.test(l))
-        .filter(l => !/^[\d\s.,€|:;#*]+$/.test(l))
-        .filter(l => !/^(dont|eco part|deco part)/i.test(l));
+        .filter(line => !/^\d+[.,]\d{2}\s*€?$/.test(line))
+        .filter(line => !/^\d+\s*avis$/i.test(line))
+        .filter(line => !/^[\d\s.,€|:;#*]+$/.test(line))
+        .filter(line => !/^(dont|eco part|deco part)/i.test(line));
 
       const joined = lines.join(" ");
       const brands = [
@@ -897,42 +1070,34 @@
       ];
 
       const upper = joined.toUpperCase();
-      const brandIndex = brands
-        .map(b => ({ b, idx: upper.indexOf(b) }))
-        .filter(x => x.idx >= 0)
-        .sort((a,b) => a.idx - b.idx)[0];
+      const brand = brands
+        .map(name => ({ name, idx: upper.indexOf(name) }))
+        .filter(item => item.idx >= 0)
+        .sort((a, b) => a.idx - b.idx)[0];
 
-      if (brandIndex) {
-        let slice = joined.slice(brandIndex.idx).trim();
+      if (brand) {
+        let slice = joined.slice(brand.idx).trim();
         slice = slice.replace(/\s+/g, " ");
-        return slice.slice(0, 80);
+        return slice.slice(0, 90);
       }
 
-      return joined.slice(0, 80).trim();
+      return joined.slice(0, 90).trim();
     }
 
-    function findListingMatch(codeNormalized, reference) {
+    function findMatch(code, reference) {
       const refNorm = normalizeRef(reference);
 
-      if (codeNormalized) {
-        const byCode = state.listingItems.find(item => item.code === codeNormalized);
-        if (byCode) return { item: byCode, confidence: "strong" };
+      if (code) {
+        const exactCode = state.listingItems.find(item => item.code === code);
+        if (exactCode) return { item: exactCode, mode: "code" };
       }
 
       if (refNorm) {
-        const byRef = state.listingItems.find(item =>
+        const refMatch = state.listingItems.find(item =>
           item.normalizedReference.includes(refNorm) ||
           refNorm.includes(item.normalizedReference)
         );
-        if (byRef) return { item: byRef, confidence: "medium" };
-      }
-
-      if (codeNormalized && refNorm) {
-        const byPartial = state.listingItems.find(item =>
-          item.code === codeNormalized ||
-          item.normalizedReference.includes(refNorm.split(" ").slice(0,4).join(" "))
-        );
-        if (byPartial) return { item: byPartial, confidence: "partial" };
+        if (refMatch) return { item: refMatch, mode: "reference" };
       }
 
       return null;
@@ -940,7 +1105,8 @@
 
     function validateCurrentScan() {
       if (!state.listingItems.length) {
-        setMessage("err", "Charge d’abord un listing avant de valider une étiquette.");
+        setScanState("danger", "Listing manquant");
+        setMessage("err", "Charge d’abord le listing avant de valider un scan.");
         return;
       }
 
@@ -951,34 +1117,35 @@
       ocrCodeNormalizedInput.value = normalizedCode;
 
       if (!normalizedCode && !rawReference) {
-        setMessage("err", "Aucune donnée exploitable à valider.");
+        setScanState("danger", "Lecture vide");
+        setMessage("err", "Aucune donnée exploitable n’a été détectée.");
         return;
       }
 
-      const match = findListingMatch(normalizedCode, rawReference);
+      const match = findMatch(normalizedCode, rawReference);
 
       if (!match) {
         state.outsideItems.unshift({
           code: normalizedCode || rawCode || "",
           reference: rawReference || ""
         });
-        renderOutsideList();
-        updateStats();
-        setMessage("warn", "Produit non trouvé dans le listing. Ajouté dans “hors listing”.");
+        refreshAll();
+        setScanState("warn", "Hors listing");
+        setMessage("warn", "Produit non trouvé dans le listing. Il a été ajouté aux hors listing.");
         return;
       }
 
       const item = match.item;
       const alreadyFound = item.found;
-
       item.found = true;
-      state.foundCodes.add(item.code);
 
       refreshAll();
 
       if (alreadyFound) {
+        setScanState("ok", "Déjà trouvé");
         setMessage("ok", `Produit déjà scanné : ${item.reference} (${item.code}).`);
       } else {
+        setScanState("ok", "Produit reconnu");
         setMessage("ok", `Produit validé : ${item.reference} (${item.code}).`);
       }
     }
@@ -999,10 +1166,10 @@
         state.stream = stream;
         video.srcObject = stream;
         await video.play();
-        scannerStatus.textContent = "Caméra active";
+        scannerSub.textContent = "Caméra active";
       } catch (error) {
         console.error(error);
-        scannerStatus.textContent = "Impossible d’ouvrir la caméra";
+        scannerSub.textContent = "Impossible d’ouvrir la caméra";
         setMessage("err", "Impossible d’ouvrir la caméra sur cet appareil ou ce navigateur.");
       }
     }
@@ -1016,49 +1183,49 @@
     }
 
     function openScanner() {
-      scannerShell.classList.add("open");
+      scanner.classList.add("open");
       startCamera();
     }
 
     function closeScanner() {
-      scannerShell.classList.remove("open");
+      scanner.classList.remove("open");
       stopCamera();
     }
 
-    async function runOcrOnCanvas(canvas) {
-      scannerStatus.innerHTML = `<span class="loader"></span> Analyse OCR en cours...`;
-      setMessage("", "");
+    async function runOcrOnCanvas(sourceCanvas) {
+      scannerSub.innerHTML = `<span class="loader"></span>Analyse OCR en cours`;
 
       try {
-        const result = await Tesseract.recognize(canvas, "fra+eng", {
-          logger: m => {
-            if (m.status === "recognizing text") {
-              scannerStatus.textContent = `Analyse OCR : ${Math.round((m.progress || 0) * 100)}%`;
+        const result = await Tesseract.recognize(sourceCanvas, "fra+eng", {
+          logger: (message) => {
+            if (message.status === "recognizing text") {
+              scannerSub.textContent = `Analyse OCR : ${Math.round((message.progress || 0) * 100)}%`;
             }
           }
         });
 
         const text = result.data.text || "";
-        state.lastOcrText = text;
+        const code = extractBestCode(text);
+        const normalized = normalizeCode(code);
+        const reference = extractBestReference(text);
 
-        const detectedCode = extractBestCodeFromLabelText(text);
-        const normalizedCode = normalizeCode(detectedCode);
-        const detectedReference = extractBestReferenceFromLabelText(text);
+        ocrCodeInput.value = code;
+        ocrCodeNormalizedInput.value = normalized;
+        ocrRefInput.value = reference;
 
-        ocrCodeInput.value = detectedCode;
-        ocrCodeNormalizedInput.value = normalizedCode;
-        ocrRefInput.value = detectedReference;
-
-        scannerStatus.textContent = "Analyse terminée";
+        scannerSub.textContent = "Analyse terminée";
+        setScanState("neutral", "Lecture prête");
         setMessage("ok", "Lecture terminée. Vérifie si besoin puis valide.");
+        closeScanner();
       } catch (error) {
         console.error(error);
-        scannerStatus.textContent = "Erreur OCR";
-        setMessage("err", "Impossible d’analyser cette image. Essaie une photo plus nette et plus cadrée.");
+        scannerSub.textContent = "Erreur OCR";
+        setScanState("danger", "Erreur OCR");
+        setMessage("err", "Impossible d’analyser cette image. Essaie avec une photo plus nette.");
       }
     }
 
-    async function captureFromVideo() {
+    async function captureFrame() {
       if (!video.videoWidth || !video.videoHeight) {
         setMessage("err", "La caméra n’est pas encore prête.");
         return;
@@ -1072,16 +1239,16 @@
       const sx = Math.round((vw - cropW) / 2);
       const sy = Math.round((vh - cropH) / 2);
 
-      captureCanvas.width = cropW;
-      captureCanvas.height = cropH;
+      canvas.width = cropW;
+      canvas.height = cropH;
 
-      const ctx = captureCanvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, cropW, cropH);
 
-      await runOcrOnCanvas(captureCanvas);
+      await runOcrOnCanvas(canvas);
     }
 
-    async function importAndAnalyzeFile(file) {
+    async function analyzeImportedImage(file) {
       if (!file) return;
 
       const img = new Image();
@@ -1093,13 +1260,13 @@
         const width = Math.round(img.width * scale);
         const height = Math.round(img.height * scale);
 
-        captureCanvas.width = width;
-        captureCanvas.height = height;
+        canvas.width = width;
+        canvas.height = height;
 
-        const ctx = captureCanvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
 
-        await runOcrOnCanvas(captureCanvas);
+        await runOcrOnCanvas(canvas);
         URL.revokeObjectURL(url);
       };
 
@@ -1113,16 +1280,26 @@
         ...item,
         found: false
       }));
-      state.foundCodes.clear();
       state.outsideItems = [];
 
       refreshAll();
 
       if (!items.length) {
-        setMessage("err", "Aucune ligne exploitable détectée dans le listing.");
+        setMessage("err", "Aucune ligne exploitable n’a été détectée dans le listing.");
+        setScanState("danger", "Listing vide");
       } else {
         setMessage("ok", `${items.length} article(s) détecté(s) dans le listing.`);
+        setScanState("neutral", "Listing chargé");
       }
+    });
+
+    clearListingBtn.addEventListener("click", () => {
+      listingInput.value = "";
+      state.listingItems = [];
+      state.outsideItems = [];
+      refreshAll();
+      setMessage("", "");
+      setScanState("neutral", "En attente");
     });
 
     loadExampleBtn.addEventListener("click", () => {
@@ -1136,52 +1313,56 @@
 8010745 Combi LISTO RCL170-55mib2`;
     });
 
-    validateScanBtn.addEventListener("click", validateCurrentScan);
-
-    clearOcrBtn.addEventListener("click", () => {
-      ocrCodeInput.value = "";
-      ocrCodeNormalizedInput.value = "";
-      ocrRefInput.value = "";
-      setMessage("", "");
-    });
-
     ocrCodeInput.addEventListener("input", () => {
       ocrCodeNormalizedInput.value = normalizeCode(ocrCodeInput.value);
     });
 
-    openScannerBtn.addEventListener("click", openScanner);
+    validateScanBtn.addEventListener("click", validateCurrentScan);
+
+    clearScanBtn.addEventListener("click", () => {
+      ocrCodeInput.value = "";
+      ocrCodeNormalizedInput.value = "";
+      ocrRefInput.value = "";
+      setMessage("", "");
+      setScanState("neutral", "En attente");
+    });
+
+    openScannerTop.addEventListener("click", openScanner);
+    openScannerHero.addEventListener("click", openScanner);
     closeScannerBtn.addEventListener("click", closeScanner);
-    captureBtn.addEventListener("click", captureFromVideo);
+    captureBtn.addEventListener("click", captureFrame);
 
-    importPhotoBtn.addEventListener("click", () => {
-      importFileInput.click();
-    });
+    importImageBtn.addEventListener("click", () => imageInput.click());
 
-    importFileInput.addEventListener("change", async (e) => {
-      const file = e.target.files?.[0];
+    imageInput.addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
       if (file) {
-        await importAndAnalyzeFile(file);
+        await analyzeImportedImage(file);
       }
-      e.target.value = "";
+      event.target.value = "";
     });
 
-    resetSessionBtn.addEventListener("click", () => {
-      if (!confirm("Réinitialiser toute la session ?")) return;
+    resetAllBtn.addEventListener("click", () => {
+      const ok = confirm("Réinitialiser toute la session ?");
+      if (!ok) return;
 
       listingInput.value = "";
       state.listingItems = [];
-      state.foundCodes.clear();
       state.outsideItems = [];
       ocrCodeInput.value = "";
       ocrCodeNormalizedInput.value = "";
       ocrRefInput.value = "";
       setMessage("", "");
+      setScanState("neutral", "En attente");
       refreshAll();
+      stopCamera();
+      scanner.classList.remove("open");
     });
 
     window.addEventListener("beforeunload", stopCamera);
 
     refreshAll();
+    setScanState("neutral", "En attente");
   </script>
 </body>
 </html>
