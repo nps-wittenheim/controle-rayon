@@ -21,14 +21,13 @@
       --success:#1f8f4e;
       --warning:#b7791f;
       --danger:#d64545;
-      --shadow:0 10px 30px rgba(15, 35, 55, 0.08);
+      --neutral:#60758a;
+      --shadow:0 10px 30px rgba(15,35,55,.08);
       --radius:18px;
-      --radius-sm:12px;
-      --maxw:1100px;
+      --maxw:1180px;
     }
 
     *{box-sizing:border-box}
-
     html,body{
       margin:0;
       padding:0;
@@ -42,10 +41,9 @@
     }
 
     .app{
-      width:100%;
       max-width:var(--maxw);
       margin:0 auto;
-      padding:20px 14px 36px;
+      padding:18px 14px 34px;
     }
 
     .topbar{
@@ -53,8 +51,8 @@
       align-items:flex-start;
       justify-content:space-between;
       gap:14px;
-      margin-bottom:18px;
       flex-wrap:wrap;
+      margin-bottom:16px;
     }
 
     .brand{
@@ -67,22 +65,22 @@
       width:48px;
       height:48px;
       border-radius:16px;
-      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:800;
       font-size:18px;
-      box-shadow:var(--shadow);
       flex-shrink:0;
+      box-shadow:var(--shadow);
     }
 
     .brand h1{
       margin:0;
       font-size:24px;
       line-height:1.1;
-      letter-spacing:-0.02em;
+      letter-spacing:-.02em;
     }
 
     .brand p{
@@ -101,11 +99,11 @@
       border:none;
       border-radius:14px;
       padding:13px 16px;
+      min-height:48px;
       font:inherit;
       font-weight:700;
       cursor:pointer;
-      transition:0.18s ease;
-      min-height:48px;
+      transition:.18s ease;
     }
 
     .btn:hover{transform:translateY(-1px)}
@@ -117,7 +115,7 @@
     }
 
     .btn-primary{
-      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       color:#fff;
       box-shadow:var(--shadow);
     }
@@ -132,8 +130,8 @@
       color:#fff;
     }
 
-    .btn-danger{
-      background:var(--danger);
+    .btn-warning{
+      background:var(--warning);
       color:#fff;
     }
 
@@ -148,15 +146,8 @@
 
     .hero-grid{
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:1.15fr .85fr;
       gap:16px;
-      align-items:stretch;
-    }
-
-    @media (max-width:900px){
-      .hero-grid{
-        grid-template-columns:1fr;
-      }
     }
 
     .hero-panel{
@@ -170,7 +161,7 @@
       margin:0 0 6px;
       font-size:20px;
       font-weight:800;
-      letter-spacing:-0.02em;
+      letter-spacing:-.02em;
     }
 
     .hero-text{
@@ -187,20 +178,10 @@
       margin-top:16px;
     }
 
-    .hero-actions .btn{
-      flex:1 1 210px;
-    }
-
     .stats{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
-    }
-
-    @media (max-width:760px){
-      .stats{
-        grid-template-columns:repeat(2,1fr);
-      }
     }
 
     .stat{
@@ -208,7 +189,7 @@
       border:1px solid var(--line);
       border-radius:16px;
       padding:14px;
-      min-height:92px;
+      min-height:94px;
     }
 
     .stat-label{
@@ -219,26 +200,21 @@
 
     .stat-value{
       font-size:30px;
-      line-height:1;
       font-weight:800;
-      letter-spacing:-0.03em;
+      line-height:1;
+      letter-spacing:-.03em;
     }
 
     .stat-value.success{color:var(--success)}
     .stat-value.warning{color:var(--warning)}
     .stat-value.danger{color:var(--danger)}
+    .stat-value.neutral{color:var(--neutral)}
 
     .layout{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:420px 1fr;
       gap:16px;
-      margin-top:16px;
-    }
-
-    @media (max-width:980px){
-      .layout{
-        grid-template-columns:1fr;
-      }
+      align-items:start;
     }
 
     .card{
@@ -252,34 +228,31 @@
     .card h2{
       margin:0 0 6px;
       font-size:18px;
-      letter-spacing:-0.02em;
+      letter-spacing:-.02em;
     }
 
-    .card p.lead{
+    .lead{
       margin:0 0 14px;
       color:var(--muted);
       font-size:14px;
       line-height:1.5;
     }
 
-    textarea, input[type="text"]{
+    textarea{
       width:100%;
+      min-height:220px;
+      resize:vertical;
       border:1px solid var(--line);
       border-radius:14px;
-      background:#fff;
-      color:var(--text);
-      font:inherit;
       padding:14px;
       outline:none;
-    }
-
-    textarea{
-      resize:vertical;
-      min-height:230px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
       line-height:1.45;
     }
 
-    textarea:focus, input[type="text"]:focus{
+    textarea:focus{
       border-color:#afc6ff;
       box-shadow:0 0 0 4px rgba(15,98,254,.08);
     }
@@ -292,7 +265,7 @@
     }
 
     .card-actions .btn{
-      flex:1 1 160px;
+      flex:1 1 150px;
     }
 
     .panel{
@@ -303,9 +276,10 @@
       padding:14px;
     }
 
-    .panel h3{
-      margin:0 0 5px;
+    .panel-title{
+      margin:0 0 4px;
       font-size:15px;
+      font-weight:800;
     }
 
     .small{
@@ -313,112 +287,65 @@
       color:var(--muted);
     }
 
-    .result-card{
-      margin-top:14px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
-      padding:16px;
-    }
-
-    .result-header{
+    .summary-bar{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:12px;
+      gap:8px;
       flex-wrap:wrap;
+      margin-top:12px;
     }
 
-    .status-pill{
+    .pill{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
-      padding:8px 12px;
+      gap:6px;
+      padding:8px 11px;
       border-radius:999px;
       font-size:12px;
       font-weight:800;
+      background:#edf3f9;
+      color:#334e68;
     }
 
-    .status-neutral{
-      background:#edf2f7;
-      color:#51606f;
+    .tabs{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:2px;
+      margin-bottom:14px;
     }
 
-    .status-ok{
-      background:rgba(31,143,78,.12);
-      color:var(--success);
+    .tab{
+      border:none;
+      border-radius:999px;
+      padding:11px 14px;
+      background:#edf3f9;
+      color:#334e68;
+      font:inherit;
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+      cursor:pointer;
     }
 
-    .status-warning{
-      background:rgba(183,121,31,.12);
-      color:var(--warning);
+    .tab.active{
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      color:#fff;
+      box-shadow:var(--shadow);
     }
 
-    .status-danger{
-      background:rgba(214,69,69,.12);
-      color:var(--danger);
+    .tab-panel{
+      display:none;
     }
 
-    .info-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    @media (max-width:700px){
-      .info-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    .info-box{
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:#fff;
-      padding:12px;
-    }
-
-    .info-box .label{
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .info-box .value{
-      font-size:15px;
-      font-weight:700;
-      word-break:break-word;
-    }
-
-    .message{
-      margin-top:12px;
-      border-radius:14px;
-      padding:12px 14px;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .message.ok{
-      background:rgba(31,143,78,.1);
-      color:var(--success);
-    }
-
-    .message.warn{
-      background:rgba(183,121,31,.1);
-      color:var(--warning);
-    }
-
-    .message.err{
-      background:rgba(214,69,69,.1);
-      color:var(--danger);
+    .tab-panel.active{
+      display:block;
     }
 
     .list{
       display:grid;
       gap:10px;
       margin-top:12px;
-      max-height:380px;
+      max-height:560px;
       overflow:auto;
       padding-right:2px;
     }
@@ -454,12 +381,50 @@
       font-weight:700;
     }
 
+    .tag.success{
+      background:rgba(31,143,78,.12);
+      color:var(--success);
+    }
+
+    .tag.warning{
+      background:rgba(183,121,31,.12);
+      color:var(--warning);
+    }
+
+    .tag.danger{
+      background:rgba(214,69,69,.12);
+      color:var(--danger);
+    }
+
     .empty{
       border:1px dashed var(--line);
       border-radius:16px;
       padding:16px;
       color:var(--muted);
       background:#fbfdff;
+    }
+
+    .message{
+      margin-top:12px;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .message.ok{
+      background:rgba(31,143,78,.1);
+      color:var(--success);
+    }
+
+    .message.warn{
+      background:rgba(183,121,31,.1);
+      color:var(--warning);
+    }
+
+    .message.err{
+      background:rgba(214,69,69,.1);
+      color:var(--danger);
     }
 
     .scanner{
@@ -498,7 +463,8 @@
 
     .scanner-sub{
       font-size:12px;
-      opacity:.92;
+      opacity:.94;
+      max-width:280px;
     }
 
     .icon-btn{
@@ -570,11 +536,11 @@
       bottom:0;
       z-index:4;
       display:flex;
-      justify-content:center;
       align-items:center;
-      gap:12px;
+      justify-content:center;
+      gap:14px;
       padding:18px 18px calc(18px + env(safe-area-inset-bottom));
-      background:linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,0));
+      background:linear-gradient(to top, rgba(0,0,0,.84), rgba(0,0,0,0));
     }
 
     .capture{
@@ -585,6 +551,19 @@
       background:#fff;
       box-shadow:0 10px 30px rgba(0,0,0,.28);
       cursor:pointer;
+    }
+
+    .scanner-finish{
+      position:absolute;
+      left:16px;
+      bottom:calc(20px + env(safe-area-inset-bottom));
+      z-index:5;
+    }
+
+    .scanner-finish .btn{
+      min-height:46px;
+      padding:11px 14px;
+      font-size:14px;
     }
 
     .import-floating{
@@ -623,9 +602,22 @@
       to{transform:rotate(360deg)}
     }
 
+    @media (max-width:980px){
+      .hero-grid,
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:760px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
     @media (max-width:640px){
       .app{
-        padding:14px 12px 26px;
+        padding:14px 12px 24px;
       }
 
       .hero,
@@ -646,11 +638,13 @@
         width:100%;
       }
 
-      .top-actions{
+      .top-actions,
+      .hero-actions{
         width:100%;
       }
 
-      .top-actions .btn{
+      .top-actions .btn,
+      .hero-actions .btn{
         flex:1 1 100%;
       }
     }
@@ -663,12 +657,12 @@
         <div class="brand-mark">CR</div>
         <div>
           <h1>Contrôle rayon</h1>
-          <p>Scan d’étiquettes électroniques et comparaison avec le listing</p>
+          <p>Listing collé une seule fois, scans à la chaîne, résultat final clair</p>
         </div>
       </div>
 
       <div class="top-actions">
-        <button class="btn btn-primary" id="openScannerTop">Scanner une étiquette</button>
+        <button class="btn btn-primary" id="openScannerTop">Scanner les étiquettes</button>
         <button class="btn btn-secondary" id="resetAllBtn">Réinitialiser</button>
       </div>
     </header>
@@ -676,15 +670,15 @@
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-panel">
-          <h2 class="hero-title">Contrôle rapide et clair</h2>
+          <h2 class="hero-title">Flux simple</h2>
           <p class="hero-text">
-            Importe ton listing, scanne les étiquettes une par une,
-            et vois immédiatement ce qui est déjà présent, ce qu’il reste à sortir
-            et ce qui est hors listing.
+            1. Colle ton listing. 2. Ouvre le scanner. 3. Fais scan, scan, scan.
+            4. Clique sur “Terminer le scan”. Le site range automatiquement les produits
+            dans les bons onglets.
           </p>
 
           <div class="hero-actions">
-            <button class="btn btn-primary" id="openScannerHero">Scanner une étiquette</button>
+            <button class="btn btn-primary" id="openScannerHero">Scanner les étiquettes</button>
             <button class="btn btn-secondary" id="loadExampleBtn">Charger un exemple</button>
           </div>
         </div>
@@ -703,19 +697,18 @@
             <div class="stat-value warning" id="statRemaining">0</div>
           </div>
           <div class="stat">
-            <div class="stat-label">Hors listing</div>
-            <div class="stat-value danger" id="statOutside">0</div>
+            <div class="stat-label">À vérifier</div>
+            <div class="stat-value danger" id="statReview">0</div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="layout">
-      <div class="card">
-        <h2>1. Importer le listing</h2>
+      <section class="card">
+        <h2>1. Coller le listing</h2>
         <p class="lead">
-          Colle le texte du listing. Le système récupère le premier nombre de la ligne
-          comme code boule, puis la référence produit.
+          Le site récupère le premier nombre de la ligne comme code boule, puis la référence.
         </p>
 
         <textarea id="listingInput" placeholder="Exemple :
@@ -729,80 +722,71 @@
         </div>
 
         <div class="panel">
-          <h3>Validation du listing</h3>
-          <div class="small">
-            Vérifie rapidement les lignes extraites avant de passer au scan terrain.
+          <div class="panel-title">Résumé session</div>
+          <div class="small">Les scans s’enregistrent automatiquement. Le calcul final se fait au bouton “Terminer le scan”.</div>
+
+          <div class="summary-bar">
+            <span class="pill">Scans enregistrés : <strong id="scanCountPill">0</strong></span>
+            <span class="pill">Analyse finale : <strong id="analysisStatePill">En attente</strong></span>
           </div>
 
-          <div class="list" id="listingPreview" style="margin-top:12px">
+          <div id="globalMessage"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2. Résultats</h2>
+        <p class="lead">
+          Utilise les onglets pour voir ce qui est dans le listing, ce qui a été trouvé,
+          ce qu’il reste et ce qui doit être contrôlé.
+        </p>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="listing">Articles du listing</button>
+          <button class="tab" data-tab="found">Déjà trouvés</button>
+          <button class="tab" data-tab="remaining">Restants</button>
+          <button class="tab" data-tab="review">À vérifier</button>
+          <button class="tab" data-tab="scanned">Étiquettes scannées</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-listing">
+          <div class="list" id="listingList">
             <div class="empty">Aucun listing chargé pour le moment.</div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h2>2. Dernière lecture étiquette</h2>
-        <p class="lead">
-          Après le scan, vérifie si besoin puis valide la lecture.
-        </p>
-
-        <div class="result-card">
-          <div class="result-header">
-            <strong>Résultat du scan</strong>
-            <span class="status-pill status-neutral" id="scanStatusPill">En attente</span>
-          </div>
-
-          <div class="info-grid">
-            <div class="info-box">
-              <div class="label">Code boule détecté</div>
-              <input type="text" id="ocrCodeInput" placeholder="Ex: 0001202581" />
-            </div>
-
-            <div class="info-box">
-              <div class="label">Code boule normalisé</div>
-              <input type="text" id="ocrCodeNormalizedInput" placeholder="Ex: 1202581" readonly />
-            </div>
-
-            <div class="info-box" style="grid-column:1/-1">
-              <div class="label">Référence détectée</div>
-              <input type="text" id="ocrRefInput" placeholder="Ex: Ref US SAMSUNG RH650654R359" />
-            </div>
-          </div>
-
-          <div class="card-actions">
-            <button class="btn btn-success" id="validateScanBtn">Valider la lecture</button>
-            <button class="btn btn-secondary" id="clearScanBtn">Effacer</button>
-          </div>
-
-          <div id="scanMessage"></div>
-        </div>
-
-        <div class="panel">
-          <h3>Produits hors listing</h3>
-          <div class="list" id="outsideList" style="margin-top:12px">
-            <div class="empty">Aucun produit hors listing.</div>
+        <div class="tab-panel" id="tab-found">
+          <div class="list" id="foundList">
+            <div class="empty">Aucun produit trouvé pour le moment.</div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="card" style="margin-top:16px">
-      <h2>3. Articles restants à sortir</h2>
-      <p class="lead">
-        Les produits du listing non encore retrouvés apparaissent ici.
-      </p>
+        <div class="tab-panel" id="tab-remaining">
+          <div class="list" id="remainingList">
+            <div class="empty">Charge un listing pour afficher les articles restants.</div>
+          </div>
+        </div>
 
-      <div class="list" id="remainingList">
-        <div class="empty">Charge un listing pour afficher les articles restants.</div>
-      </div>
+        <div class="tab-panel" id="tab-review">
+          <div class="list" id="reviewList">
+            <div class="empty">Aucun élément à vérifier.</div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-scanned">
+          <div class="list" id="scannedList">
+            <div class="empty">Aucune étiquette scannée pour le moment.</div>
+          </div>
+        </div>
+      </section>
     </section>
   </div>
 
   <div class="scanner" id="scanner">
     <div class="scanner-top">
       <div>
-        <div class="scanner-title">Scanner une étiquette</div>
-        <div class="scanner-sub" id="scannerSub">Caméra prête</div>
+        <div class="scanner-title">Scanner les étiquettes</div>
+        <div class="scanner-sub" id="scannerSub">Caméra prête. Les scans sont enregistrés automatiquement.</div>
       </div>
       <button class="icon-btn" id="closeScannerBtn">✕</button>
     </div>
@@ -817,6 +801,10 @@
 
       <button class="import-floating" id="importImageBtn">🖼️ Importer</button>
       <input type="file" id="imageInput" accept="image/*" class="hidden" />
+
+      <div class="scanner-finish">
+        <button class="btn btn-success" id="finishScanBtn">Terminer le scan</button>
+      </div>
     </div>
 
     <div class="scanner-bottom">
@@ -827,8 +815,13 @@
   <script>
     const state = {
       listingItems: [],
-      outsideItems: [],
-      stream: null
+      scannedItems: [],
+      foundItems: [],
+      remainingItems: [],
+      reviewItems: [],
+      stream: null,
+      finalAnalysisDone: false,
+      isProcessingScan: false
     };
 
     const listingInput = document.getElementById("listingInput");
@@ -836,35 +829,35 @@
     const clearListingBtn = document.getElementById("clearListingBtn");
     const loadExampleBtn = document.getElementById("loadExampleBtn");
 
-    const listingPreview = document.getElementById("listingPreview");
+    const listingList = document.getElementById("listingList");
+    const foundList = document.getElementById("foundList");
     const remainingList = document.getElementById("remainingList");
-    const outsideList = document.getElementById("outsideList");
+    const reviewList = document.getElementById("reviewList");
+    const scannedList = document.getElementById("scannedList");
 
     const statTotal = document.getElementById("statTotal");
     const statFound = document.getElementById("statFound");
     const statRemaining = document.getElementById("statRemaining");
-    const statOutside = document.getElementById("statOutside");
+    const statReview = document.getElementById("statReview");
 
-    const ocrCodeInput = document.getElementById("ocrCodeInput");
-    const ocrCodeNormalizedInput = document.getElementById("ocrCodeNormalizedInput");
-    const ocrRefInput = document.getElementById("ocrRefInput");
-    const validateScanBtn = document.getElementById("validateScanBtn");
-    const clearScanBtn = document.getElementById("clearScanBtn");
-    const scanMessage = document.getElementById("scanMessage");
-    const scanStatusPill = document.getElementById("scanStatusPill");
+    const scanCountPill = document.getElementById("scanCountPill");
+    const analysisStatePill = document.getElementById("analysisStatePill");
+    const globalMessage = document.getElementById("globalMessage");
 
     const openScannerTop = document.getElementById("openScannerTop");
     const openScannerHero = document.getElementById("openScannerHero");
-    const closeScannerBtn = document.getElementById("closeScannerBtn");
+    const resetAllBtn = document.getElementById("resetAllBtn");
+
     const scanner = document.getElementById("scanner");
     const scannerSub = document.getElementById("scannerSub");
+    const closeScannerBtn = document.getElementById("closeScannerBtn");
+    const finishScanBtn = document.getElementById("finishScanBtn");
 
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     const captureBtn = document.getElementById("captureBtn");
     const importImageBtn = document.getElementById("importImageBtn");
     const imageInput = document.getElementById("imageInput");
-    const resetAllBtn = document.getElementById("resetAllBtn");
 
     function escapeHtml(str) {
       return String(str)
@@ -892,22 +885,17 @@
         .trim();
     }
 
-    function setScanState(type, label) {
-      scanStatusPill.className = "status-pill";
-      if (type === "ok") scanStatusPill.classList.add("status-ok");
-      else if (type === "warn") scanStatusPill.classList.add("status-warning");
-      else if (type === "danger") scanStatusPill.classList.add("status-danger");
-      else scanStatusPill.classList.add("status-neutral");
-      scanStatusPill.textContent = label;
+    function escapeRegex(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
-    function setMessage(type, text) {
+    function setGlobalMessage(type, text) {
       if (!text) {
-        scanMessage.innerHTML = "";
+        globalMessage.innerHTML = "";
         return;
       }
-      scanMessage.className = `message ${type}`;
-      scanMessage.textContent = text;
+      globalMessage.className = `message ${type}`;
+      globalMessage.textContent = text;
     }
 
     function cleanListingReference(ref) {
@@ -946,8 +934,7 @@
         items.push({
           code,
           reference,
-          normalizedReference: normalizeRef(reference),
-          found: false
+          normalizedReference: normalizeRef(reference)
         });
       }
 
@@ -962,83 +949,6 @@
       }
 
       return unique;
-    }
-
-    function renderListingPreview() {
-      if (!state.listingItems.length) {
-        listingPreview.innerHTML = `<div class="empty">Aucun listing chargé pour le moment.</div>`;
-        return;
-      }
-
-      listingPreview.innerHTML = state.listingItems.map(item => `
-        <div class="list-item">
-          <strong>${escapeHtml(item.reference)}</strong>
-          <div class="meta">
-            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
-            <span class="tag">${item.found ? "Trouvé" : "À contrôler"}</span>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderRemainingList() {
-      if (!state.listingItems.length) {
-        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les articles restants.</div>`;
-        return;
-      }
-
-      const remaining = state.listingItems.filter(item => !item.found);
-
-      if (!remaining.length) {
-        remainingList.innerHTML = `<div class="message ok">Tous les articles du listing ont été retrouvés.</div>`;
-        return;
-      }
-
-      remainingList.innerHTML = remaining.map(item => `
-        <div class="list-item">
-          <strong>${escapeHtml(item.reference)}</strong>
-          <div class="meta">
-            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
-            <span class="tag">À sortir / à contrôler</span>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderOutsideList() {
-      if (!state.outsideItems.length) {
-        outsideList.innerHTML = `<div class="empty">Aucun produit hors listing.</div>`;
-        return;
-      }
-
-      outsideList.innerHTML = state.outsideItems.map(item => `
-        <div class="list-item">
-          <strong>${escapeHtml(item.reference || "Référence non reconnue")}</strong>
-          <div class="meta">
-            <span class="tag">Code lu : ${escapeHtml(item.code || "Non détecté")}</span>
-            <span class="tag">Hors listing</span>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function updateStats() {
-      const total = state.listingItems.length;
-      const found = state.listingItems.filter(i => i.found).length;
-      const remaining = total - found;
-      const outside = state.outsideItems.length;
-
-      statTotal.textContent = total;
-      statFound.textContent = found;
-      statRemaining.textContent = remaining;
-      statOutside.textContent = outside;
-    }
-
-    function refreshAll() {
-      renderListingPreview();
-      renderRemainingList();
-      renderOutsideList();
-      updateStats();
     }
 
     function extractBestCode(text) {
@@ -1078,76 +988,280 @@
       if (brand) {
         let slice = joined.slice(brand.idx).trim();
         slice = slice.replace(/\s+/g, " ");
-        return slice.slice(0, 90);
+        return slice.slice(0, 95);
       }
 
-      return joined.slice(0, 90).trim();
+      return joined.slice(0, 95).trim();
     }
 
-    function findMatch(code, reference) {
-      const refNorm = normalizeRef(reference);
+    function getReferenceScore(scanRefNorm, listingRefNorm) {
+      if (!scanRefNorm || !listingRefNorm) return 0;
+      if (scanRefNorm === listingRefNorm) return 100;
+      if (listingRefNorm.includes(scanRefNorm)) return 88;
+      if (scanRefNorm.includes(listingRefNorm)) return 82;
 
-      if (code) {
-        const exactCode = state.listingItems.find(item => item.code === code);
-        if (exactCode) return { item: exactCode, mode: "code" };
+      const scanWords = scanRefNorm.split(" ").filter(Boolean);
+      const listingWords = listingRefNorm.split(" ").filter(Boolean);
+
+      let score = 0;
+      for (const word of scanWords) {
+        if (word.length < 3) continue;
+        if (listingWords.includes(word)) score += 12;
       }
 
-      if (refNorm) {
-        const refMatch = state.listingItems.find(item =>
-          item.normalizedReference.includes(refNorm) ||
-          refNorm.includes(item.normalizedReference)
-        );
-        if (refMatch) return { item: refMatch, mode: "reference" };
+      const modelTokens = scanWords.filter(word => /\d/.test(word) || /[a-z]/.test(word));
+      for (const token of modelTokens) {
+        if (token.length < 4) continue;
+        try {
+          const pattern = new RegExp(`\\b${escapeRegex(token)}\\b`, "i");
+          if (pattern.test(listingRefNorm)) score += 18;
+        } catch (_) {}
       }
 
-      return null;
+      return Math.min(score, 95);
     }
 
-    function validateCurrentScan() {
+    function matchScan(scan) {
+      const code = scan.codeNormalized;
+      const refNorm = scan.referenceNormalized;
+
+      const byCode = code
+        ? state.listingItems.filter(item => item.code === code)
+        : [];
+
+      if (byCode.length === 1) {
+        const item = byCode[0];
+        const refScore = getReferenceScore(refNorm, item.normalizedReference);
+
+        if (refNorm && refScore < 18) {
+          return {
+            status: "review",
+            reason: "Code boule trouvé mais référence douteuse",
+            matchedItem: item
+          };
+        }
+
+        return {
+          status: "found",
+          reason: "Correspondance par code boule",
+          matchedItem: item
+        };
+      }
+
+      if (byCode.length > 1) {
+        return {
+          status: "review",
+          reason: "Plusieurs références avec le même code boule",
+          matchedItem: null
+        };
+      }
+
+      if (!refNorm) {
+        return {
+          status: "review",
+          reason: "Référence non détectée",
+          matchedItem: null
+        };
+      }
+
+      const scored = state.listingItems
+        .map(item => ({
+          item,
+          score: getReferenceScore(refNorm, item.normalizedReference)
+        }))
+        .filter(entry => entry.score >= 30)
+        .sort((a, b) => b.score - a.score);
+
+      if (!scored.length) {
+        return {
+          status: "review",
+          reason: "Aucune correspondance trouvée dans le listing",
+          matchedItem: null
+        };
+      }
+
+      if (scored.length > 1 && (scored[0].score - scored[1].score) < 8) {
+        return {
+          status: "review",
+          reason: "Référence ambiguë, plusieurs correspondances possibles",
+          matchedItem: null
+        };
+      }
+
+      return {
+        status: "found",
+        reason: "Correspondance par référence",
+        matchedItem: scored[0].item
+      };
+    }
+
+    function renderListing() {
       if (!state.listingItems.length) {
-        setScanState("danger", "Listing manquant");
-        setMessage("err", "Charge d’abord le listing avant de valider un scan.");
+        listingList.innerHTML = `<div class="empty">Aucun listing chargé pour le moment.</div>`;
         return;
       }
 
-      const rawCode = ocrCodeInput.value.trim();
-      const normalizedCode = normalizeCode(rawCode);
-      const rawReference = ocrRefInput.value.trim();
+      listingList.innerHTML = state.listingItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
 
-      ocrCodeNormalizedInput.value = normalizedCode;
-
-      if (!normalizedCode && !rawReference) {
-        setScanState("danger", "Lecture vide");
-        setMessage("err", "Aucune donnée exploitable n’a été détectée.");
+    function renderFound() {
+      if (!state.foundItems.length) {
+        foundList.innerHTML = `<div class="empty">Aucun produit trouvé pour le moment.</div>`;
         return;
       }
 
-      const match = findMatch(normalizedCode, rawReference);
+      foundList.innerHTML = state.foundItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag success">Trouvé</span>
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
 
-      if (!match) {
-        state.outsideItems.unshift({
-          code: normalizedCode || rawCode || "",
-          reference: rawReference || ""
-        });
-        refreshAll();
-        setScanState("warn", "Hors listing");
-        setMessage("warn", "Produit non trouvé dans le listing. Il a été ajouté aux hors listing.");
+    function renderRemaining() {
+      if (!state.listingItems.length) {
+        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les articles restants.</div>`;
         return;
       }
 
-      const item = match.item;
-      const alreadyFound = item.found;
-      item.found = true;
+      if (!state.remainingItems.length) {
+        remainingList.innerHTML = `<div class="message ok">Tous les articles du listing ont été retrouvés.</div>`;
+        return;
+      }
 
+      remainingList.innerHTML = state.remainingItems.map(item => `
+        <div class="list-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag warning">Restant</span>
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderReview() {
+      if (!state.reviewItems.length) {
+        reviewList.innerHTML = `<div class="empty">Aucun élément à vérifier.</div>`;
+        return;
+      }
+
+      reviewList.innerHTML = state.reviewItems.map(scan => `
+        <div class="list-item">
+          <strong>${escapeHtml(scan.reference || "Référence non détectée")}</strong>
+          <div class="meta">
+            <span class="tag danger">À vérifier</span>
+            <span class="tag">Code boule : ${escapeHtml(scan.codeNormalized || scan.codeRaw || "Non détecté")}</span>
+            <span class="tag">${escapeHtml(scan.reason || "Contrôle nécessaire")}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderScanned() {
+      if (!state.scannedItems.length) {
+        scannedList.innerHTML = `<div class="empty">Aucune étiquette scannée pour le moment.</div>`;
+        return;
+      }
+
+      scannedList.innerHTML = state.scannedItems.slice().reverse().map(scan => {
+        let statusClass = "";
+        let statusLabel = "En attente";
+
+        if (scan.status === "found") {
+          statusClass = "success";
+          statusLabel = "Trouvé";
+        } else if (scan.status === "duplicate") {
+          statusClass = "warning";
+          statusLabel = "Déjà trouvé";
+        } else if (scan.status === "review") {
+          statusClass = "danger";
+          statusLabel = "À vérifier";
+        }
+
+        return `
+          <div class="list-item">
+            <strong>${escapeHtml(scan.reference || "Référence non détectée")}</strong>
+            <div class="meta">
+              <span class="tag ${statusClass}">${escapeHtml(statusLabel)}</span>
+              <span class="tag">Code boule : ${escapeHtml(scan.codeNormalized || scan.codeRaw || "Non détecté")}</span>
+              ${scan.matchedReference ? `<span class="tag">Listing : ${escapeHtml(scan.matchedReference)}</span>` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateStats() {
+      statTotal.textContent = state.listingItems.length;
+      statFound.textContent = state.foundItems.length;
+      statRemaining.textContent = state.remainingItems.length;
+      statReview.textContent = state.reviewItems.length;
+
+      scanCountPill.textContent = state.scannedItems.length;
+      analysisStatePill.textContent = state.finalAnalysisDone ? "Terminée" : "En attente";
+    }
+
+    function refreshAll() {
+      renderListing();
+      renderFound();
+      renderRemaining();
+      renderReview();
+      renderScanned();
+      updateStats();
+    }
+
+    function analyzeScans() {
+      state.foundItems = [];
+      state.remainingItems = [];
+      state.reviewItems = [];
+
+      const matchedCodes = new Set();
+      const foundMap = new Map();
+
+      for (const scan of state.scannedItems) {
+        const result = matchScan(scan);
+
+        if (result.status === "found" && result.matchedItem) {
+          const item = result.matchedItem;
+
+          if (matchedCodes.has(item.code)) {
+            scan.status = "duplicate";
+            scan.reason = "Produit déjà trouvé par un scan précédent";
+            scan.matchedCode = item.code;
+            scan.matchedReference = item.reference;
+          } else {
+            matchedCodes.add(item.code);
+            foundMap.set(item.code, item);
+            scan.status = "found";
+            scan.reason = result.reason;
+            scan.matchedCode = item.code;
+            scan.matchedReference = item.reference;
+          }
+        } else {
+          scan.status = "review";
+          scan.reason = result.reason || "Contrôle nécessaire";
+          scan.matchedCode = result.matchedItem ? result.matchedItem.code : "";
+          scan.matchedReference = result.matchedItem ? result.matchedItem.reference : "";
+          state.reviewItems.push(scan);
+        }
+      }
+
+      state.foundItems = state.listingItems.filter(item => foundMap.has(item.code));
+      state.remainingItems = state.listingItems.filter(item => !foundMap.has(item.code));
+
+      state.finalAnalysisDone = true;
       refreshAll();
-
-      if (alreadyFound) {
-        setScanState("ok", "Déjà trouvé");
-        setMessage("ok", `Produit déjà scanné : ${item.reference} (${item.code}).`);
-      } else {
-        setScanState("ok", "Produit reconnu");
-        setMessage("ok", `Produit validé : ${item.reference} (${item.code}).`);
-      }
     }
 
     async function startCamera() {
@@ -1166,11 +1280,11 @@
         state.stream = stream;
         video.srcObject = stream;
         await video.play();
-        scannerSub.textContent = "Caméra active";
+        scannerSub.textContent = "Caméra active. Les scans seront enregistrés automatiquement.";
       } catch (error) {
         console.error(error);
         scannerSub.textContent = "Impossible d’ouvrir la caméra";
-        setMessage("err", "Impossible d’ouvrir la caméra sur cet appareil ou ce navigateur.");
+        setGlobalMessage("err", "Impossible d’ouvrir la caméra sur cet appareil ou ce navigateur.");
       }
     }
 
@@ -1183,6 +1297,11 @@
     }
 
     function openScanner() {
+      if (!state.listingItems.length) {
+        setGlobalMessage("err", "Charge d’abord le listing avant d’ouvrir le scanner.");
+        return;
+      }
+
       scanner.classList.add("open");
       startCamera();
     }
@@ -1192,7 +1311,32 @@
       stopCamera();
     }
 
+    function createScanRecord(text) {
+      const codeRaw = extractBestCode(text);
+      const codeNormalized = normalizeCode(codeRaw);
+      const reference = extractBestReference(text);
+
+      return {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        text,
+        codeRaw,
+        codeNormalized,
+        reference,
+        referenceNormalized: normalizeRef(reference),
+        status: "pending",
+        reason: "",
+        matchedCode: "",
+        matchedReference: "",
+        createdAt: Date.now()
+      };
+    }
+
     async function runOcrOnCanvas(sourceCanvas) {
+      if (state.isProcessingScan) return;
+      state.isProcessingScan = true;
+      captureBtn.disabled = true;
+      importImageBtn.disabled = true;
+      finishScanBtn.disabled = true;
       scannerSub.innerHTML = `<span class="loader"></span>Analyse OCR en cours`;
 
       try {
@@ -1205,29 +1349,33 @@
         });
 
         const text = result.data.text || "";
-        const code = extractBestCode(text);
-        const normalized = normalizeCode(code);
-        const reference = extractBestReference(text);
+        const scan = createScanRecord(text);
 
-        ocrCodeInput.value = code;
-        ocrCodeNormalizedInput.value = normalized;
-        ocrRefInput.value = reference;
+        state.scannedItems.push(scan);
+        state.finalAnalysisDone = false;
+        refreshAll();
 
-        scannerSub.textContent = "Analyse terminée";
-        setScanState("neutral", "Lecture prête");
-        setMessage("ok", "Lecture terminée. Vérifie si besoin puis valide.");
-        closeScanner();
+        if (navigator.vibrate) navigator.vibrate(40);
+
+        scannerSub.textContent = `Scan enregistré (${state.scannedItems.length})`;
+        setGlobalMessage("ok", `Scan ajouté automatiquement. Total enregistré : ${state.scannedItems.length}.`);
       } catch (error) {
         console.error(error);
         scannerSub.textContent = "Erreur OCR";
-        setScanState("danger", "Erreur OCR");
-        setMessage("err", "Impossible d’analyser cette image. Essaie avec une photo plus nette.");
+        setGlobalMessage("err", "Impossible d’analyser cette image. Essaie avec une photo plus nette.");
+      } finally {
+        state.isProcessingScan = false;
+        captureBtn.disabled = false;
+        importImageBtn.disabled = false;
+        finishScanBtn.disabled = false;
       }
     }
 
     async function captureFrame() {
+      if (state.isProcessingScan) return;
+
       if (!video.videoWidth || !video.videoHeight) {
-        setMessage("err", "La caméra n’est pas encore prête.");
+        setGlobalMessage("err", "La caméra n’est pas encore prête.");
         return;
       }
 
@@ -1249,7 +1397,7 @@
     }
 
     async function analyzeImportedImage(file) {
-      if (!file) return;
+      if (!file || state.isProcessingScan) return;
 
       const img = new Image();
       const url = URL.createObjectURL(file);
@@ -1276,30 +1424,32 @@
     parseListingBtn.addEventListener("click", () => {
       const items = parseListing(listingInput.value);
 
-      state.listingItems = items.map(item => ({
-        ...item,
-        found: false
-      }));
-      state.outsideItems = [];
+      state.listingItems = items;
+      state.foundItems = [];
+      state.remainingItems = items.slice();
+      state.reviewItems = [];
+      state.scannedItems = [];
+      state.finalAnalysisDone = false;
 
       refreshAll();
 
       if (!items.length) {
-        setMessage("err", "Aucune ligne exploitable n’a été détectée dans le listing.");
-        setScanState("danger", "Listing vide");
+        setGlobalMessage("err", "Aucune ligne exploitable n’a été détectée dans le listing.");
       } else {
-        setMessage("ok", `${items.length} article(s) détecté(s) dans le listing.`);
-        setScanState("neutral", "Listing chargé");
+        setGlobalMessage("ok", `${items.length} article(s) détecté(s). Tu peux maintenant lancer le scanner.`);
       }
     });
 
     clearListingBtn.addEventListener("click", () => {
       listingInput.value = "";
       state.listingItems = [];
-      state.outsideItems = [];
+      state.foundItems = [];
+      state.remainingItems = [];
+      state.reviewItems = [];
+      state.scannedItems = [];
+      state.finalAnalysisDone = false;
       refreshAll();
-      setMessage("", "");
-      setScanState("neutral", "En attente");
+      setGlobalMessage("", "");
     });
 
     loadExampleBtn.addEventListener("click", () => {
@@ -1313,20 +1463,6 @@
 8010745 Combi LISTO RCL170-55mib2`;
     });
 
-    ocrCodeInput.addEventListener("input", () => {
-      ocrCodeNormalizedInput.value = normalizeCode(ocrCodeInput.value);
-    });
-
-    validateScanBtn.addEventListener("click", validateCurrentScan);
-
-    clearScanBtn.addEventListener("click", () => {
-      ocrCodeInput.value = "";
-      ocrCodeNormalizedInput.value = "";
-      ocrRefInput.value = "";
-      setMessage("", "");
-      setScanState("neutral", "En attente");
-    });
-
     openScannerTop.addEventListener("click", openScanner);
     openScannerHero.addEventListener("click", openScanner);
     closeScannerBtn.addEventListener("click", closeScanner);
@@ -1336,10 +1472,20 @@
 
     imageInput.addEventListener("change", async (event) => {
       const file = event.target.files?.[0];
-      if (file) {
-        await analyzeImportedImage(file);
-      }
+      if (file) await analyzeImportedImage(file);
       event.target.value = "";
+    });
+
+    finishScanBtn.addEventListener("click", () => {
+      closeScanner();
+
+      if (!state.scannedItems.length) {
+        setGlobalMessage("warn", "Aucune étiquette n’a été scannée.");
+        return;
+      }
+
+      analyzeScans();
+      setGlobalMessage("ok", `Analyse terminée. ${state.scannedItems.length} scan(s) traité(s).`);
     });
 
     resetAllBtn.addEventListener("click", () => {
@@ -1348,21 +1494,32 @@
 
       listingInput.value = "";
       state.listingItems = [];
-      state.outsideItems = [];
-      ocrCodeInput.value = "";
-      ocrCodeNormalizedInput.value = "";
-      ocrRefInput.value = "";
-      setMessage("", "");
-      setScanState("neutral", "En attente");
+      state.scannedItems = [];
+      state.foundItems = [];
+      state.remainingItems = [];
+      state.reviewItems = [];
+      state.finalAnalysisDone = false;
+      state.isProcessingScan = false;
+
       refreshAll();
+      setGlobalMessage("", "");
       stopCamera();
       scanner.classList.remove("open");
+    });
+
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
+
+        btn.classList.add("active");
+        document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
+      });
     });
 
     window.addEventListener("beforeunload", stopCamera);
 
     refreshAll();
-    setScanState("neutral", "En attente");
   </script>
 </body>
 </html>
