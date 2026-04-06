@@ -8,7 +8,6 @@
     :root{
       --bg:#f3f6f9;
       --surface:#ffffff;
-      --surface-soft:#f8fafc;
       --line:#d9e2ec;
       --line-strong:#c7d4e2;
       --text:#12263a;
@@ -17,15 +16,12 @@
       --primary-dark:#0b57db;
       --success:#1f8f4e;
       --danger:#d64545;
-      --warning:#b7791f;
       --neutral:#60758a;
       --shadow:0 10px 30px rgba(15,35,55,.08);
-      --radius:18px;
-      --maxw:1320px;
+      --maxw:760px;
     }
 
     *{box-sizing:border-box}
-
     html,body{
       margin:0;
       padding:0;
@@ -33,95 +29,164 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     }
-
-    body{
-      min-height:100vh;
-    }
+    body{min-height:100vh}
 
     .app{
       max-width:var(--maxw);
       margin:0 auto;
-      padding:18px 14px 36px;
+      padding:12px 12px 24px;
     }
 
-    .topbar{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:16px;
+    .header{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:14px;
+      margin-bottom:12px;
     }
 
     .brand{
       display:flex;
       align-items:flex-start;
-      gap:12px;
+      gap:10px;
     }
 
     .brand-mark{
-      width:50px;
-      height:50px;
-      border-radius:16px;
+      width:44px;
+      height:44px;
+      border-radius:14px;
       background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:800;
-      font-size:18px;
+      font-size:17px;
       flex-shrink:0;
-      box-shadow:var(--shadow);
     }
 
     .brand h1{
       margin:0;
-      font-size:24px;
-      line-height:1.1;
+      font-size:22px;
+      line-height:1.08;
       letter-spacing:-.02em;
     }
 
     .brand p{
-      margin:5px 0 0;
+      margin:4px 0 0;
+      font-size:13px;
       color:var(--muted);
-      font-size:14px;
-      line-height:1.4;
+      line-height:1.35;
     }
 
-    .top-actions{
-      display:flex;
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .stat{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:11px;
+    }
+
+    .stat-label{
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+
+    .stat-value{
+      font-size:26px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .stat-value.success{color:var(--success)}
+    .stat-value.danger{color:var(--danger)}
+    .stat-value.neutral{color:var(--neutral)}
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .card h2{
+      margin:0 0 6px;
+      font-size:18px;
+      letter-spacing:-.02em;
+    }
+
+    .lead{
+      margin:0 0 10px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    textarea,input{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
+      outline:none;
+    }
+
+    textarea{
+      min-height:210px;
+      resize:vertical;
+      line-height:1.45;
+    }
+
+    textarea:focus,input:focus{
+      border-color:#afc6ff;
+      box-shadow:0 0 0 4px rgba(15,98,254,.08);
+    }
+
+    .code-input{
+      font-size:24px;
+      font-weight:800;
+      text-align:center;
+      letter-spacing:.04em;
+      min-height:64px;
+    }
+
+    .actions{
+      display:grid;
       gap:10px;
-      flex-wrap:wrap;
+      margin-top:10px;
     }
 
     .btn{
       border:none;
       border-radius:14px;
-      padding:13px 16px;
       min-height:48px;
+      padding:13px 16px;
       font:inherit;
       font-weight:700;
       cursor:pointer;
-      transition:.18s ease;
+      width:100%;
     }
 
-    .btn:hover{transform:translateY(-1px)}
-    .btn:active{transform:translateY(0)}
     .btn:disabled{
       opacity:.55;
       cursor:not-allowed;
-      transform:none;
     }
 
     .btn-primary{
       background:linear-gradient(135deg,var(--primary),var(--primary-dark));
       color:#fff;
-      box-shadow:var(--shadow);
-    }
-
-    .btn-secondary{
-      background:#eaf1f8;
-      color:var(--text);
     }
 
     .btn-success{
@@ -134,282 +199,20 @@
       color:#fff;
     }
 
-    .btn-warning{
-      background:var(--warning);
-      color:#fff;
-    }
-
-    .hero{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-      padding:18px;
-      margin-bottom:16px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:16px;
-    }
-
-    .hero-panel{
-      background:var(--surface-soft);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-    }
-
-    .hero-title{
-      margin:0 0 6px;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:-.02em;
-    }
-
-    .hero-text{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-    }
-
-    .stat{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      min-height:96px;
-    }
-
-    .stat-label{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:10px;
-    }
-
-    .stat-value{
-      font-size:30px;
-      font-weight:800;
-      line-height:1;
-      letter-spacing:-.03em;
-    }
-
-    .stat-value.success{color:var(--success)}
-    .stat-value.danger{color:var(--danger)}
-    .stat-value.warning{color:var(--warning)}
-    .stat-value.neutral{color:var(--neutral)}
-
-    .layout{
-      display:grid;
-      grid-template-columns:420px 1fr;
-      gap:16px;
-      align-items:start;
-    }
-
-    .card{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-
-    .card h2{
-      margin:0 0 6px;
-      font-size:18px;
-      letter-spacing:-.02em;
-    }
-
-    .lead{
-      margin:0 0 14px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    textarea, input[type="text"]{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      outline:none;
-      font:inherit;
+    .btn-secondary{
+      background:#eaf1f8;
       color:var(--text);
-      background:#fff;
     }
 
-    textarea{
-      min-height:240px;
-      resize:vertical;
-      line-height:1.45;
-    }
-
-    textarea:focus, input[type="text"]:focus{
-      border-color:#afc6ff;
-      box-shadow:0 0 0 4px rgba(15,98,254,.08);
-    }
-
-    .card-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .card-actions .btn{
-      flex:1 1 140px;
-    }
-
-    .panel{
-      margin-top:14px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:var(--surface-soft);
-      padding:14px;
-    }
-
-    .panel-title{
-      margin:0 0 4px;
-      font-size:15px;
-      font-weight:800;
-    }
-
-    .small{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-
-    .summary-bar{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 11px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      background:#edf3f9;
-      color:#334e68;
-    }
-
-    .quick-box{
-      background:linear-gradient(180deg,#ffffff 0%,#f9fbfd 100%);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      margin-bottom:14px;
-    }
-
-    .quick-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-      flex-wrap:wrap;
-    }
-
-    .quick-title h3{
-      margin:0;
-      font-size:17px;
-      letter-spacing:-.02em;
-    }
-
-    .focus-pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      background:#edf3f9;
-      color:#51606f;
-    }
-
-    .focus-pill.active{
-      background:rgba(31,143,78,.12);
-      color:var(--success);
-    }
-
-    .search-row{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:10px;
-      align-items:center;
-    }
-
-    .digits-input{
-      font-size:24px;
-      font-weight:800;
-      letter-spacing:.04em;
-      text-align:center;
-      min-height:70px;
-      padding:16px 18px;
-    }
-
-    .search-hint{
-      margin-top:8px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-
-    .search-results{
-      margin-top:14px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#fff;
-      padding:14px;
-      min-height:160px;
-    }
-
-    .result-row{
-      display:grid;
-      gap:10px;
+    .result-box{
       margin-top:10px;
     }
 
     .result-item{
       border:1px solid var(--line);
       border-radius:14px;
-      background:#fff;
-      padding:12px 14px;
-      cursor:pointer;
-      transition:.16s ease;
-    }
-
-    .result-item:hover{
-      border-color:#b7cbf8;
-      background:#f9fbff;
-    }
-
-    .result-item.active{
-      border-color:var(--primary);
       background:#eef4ff;
-      box-shadow:0 0 0 3px rgba(15,98,254,.10);
+      padding:12px 14px;
     }
 
     .result-item strong{
@@ -419,26 +222,10 @@
       line-height:1.35;
     }
 
-    .selected-card{
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#fff;
-      padding:14px;
-      margin-top:14px;
-      display:none;
-    }
-
-    .selected-card strong{
-      display:block;
-      margin-bottom:8px;
-      font-size:16px;
-      line-height:1.35;
-    }
-
     .meta{
       display:flex;
       flex-wrap:wrap;
-      gap:8px;
+      gap:7px;
     }
 
     .tag{
@@ -446,10 +233,10 @@
       align-items:center;
       padding:7px 10px;
       border-radius:999px;
-      background:#edf3f9;
-      color:#334e68;
       font-size:12px;
       font-weight:700;
+      background:#edf3f9;
+      color:#334e68;
     }
 
     .tag.success{
@@ -462,29 +249,13 @@
       color:var(--danger);
     }
 
-    .tag.warning{
-      background:rgba(183,121,31,.12);
-      color:var(--warning);
-    }
-
-    .decision-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .decision-row .btn{
-      flex:1 1 180px;
-    }
-
     .message{
-      margin-top:12px;
+      margin-top:10px;
       border-radius:14px;
       padding:12px 14px;
       font-size:14px;
       font-weight:700;
-      line-height:1.45;
+      line-height:1.4;
     }
 
     .message.ok{
@@ -492,64 +263,26 @@
       color:var(--success);
     }
 
-    .message.warn{
-      background:rgba(183,121,31,.1);
-      color:var(--warning);
-    }
-
     .message.err{
       background:rgba(214,69,69,.1);
       color:var(--danger);
     }
 
-    .tabs{
-      display:flex;
-      gap:8px;
-      overflow:auto;
-      padding-bottom:2px;
-      margin-bottom:14px;
-    }
-
-    .tab{
-      border:none;
-      border-radius:999px;
-      padding:11px 14px;
-      background:#edf3f9;
-      color:#334e68;
-      font:inherit;
-      font-size:13px;
-      font-weight:800;
-      white-space:nowrap;
-      cursor:pointer;
-    }
-
-    .tab.active{
-      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-      color:#fff;
-      box-shadow:var(--shadow);
-    }
-
-    .tab-panel{display:none}
-    .tab-panel.active{display:block}
-
     .list{
       display:grid;
       gap:10px;
-      margin-top:12px;
-      max-height:640px;
-      overflow:auto;
-      padding-right:2px;
+      margin-top:10px;
     }
 
     .category-block{
       border:1px solid var(--line-strong);
-      border-radius:18px;
+      border-radius:16px;
       background:#fcfdff;
       overflow:hidden;
     }
 
     .category-head{
-      padding:12px 14px;
+      padding:11px 13px;
       border-bottom:1px solid var(--line);
       background:#f6f9fc;
       font-weight:800;
@@ -565,8 +298,8 @@
     .list-item{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
+      border-radius:14px;
+      padding:12px 14px;
     }
 
     .list-item strong{
@@ -578,262 +311,113 @@
 
     .empty{
       border:1px dashed var(--line);
-      border-radius:16px;
-      padding:16px;
+      border-radius:14px;
+      padding:14px;
       color:var(--muted);
       background:#fbfdff;
     }
 
-    .footer-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .footer-actions .btn{
-      flex:1 1 220px;
-    }
-
-    @media (max-width:1100px){
-      .hero-grid,
-      .layout{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:760px){
+    @media (min-width:700px){
       .stats{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media (max-width:640px){
-      .app{
-        padding:14px 12px 24px;
-      }
-
-      .hero,
-      .card{
-        padding:16px;
-        border-radius:18px;
-      }
-
-      .brand h1{
-        font-size:21px;
-      }
-
-      .hero-title{
-        font-size:18px;
-      }
-
-      .btn{
-        width:100%;
-      }
-
-      .top-actions,
-      .hero-actions,
-      .decision-row,
-      .footer-actions{
-        width:100%;
-      }
-
-      .top-actions .btn,
-      .hero-actions .btn,
-      .decision-row .btn,
-      .footer-actions .btn{
-        flex:1 1 100%;
-      }
-
-      .search-row{
-        grid-template-columns:1fr;
-      }
-
-      .stats{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(4,1fr);
       }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="topbar">
+    <section class="header">
       <div class="brand">
         <div class="brand-mark">CR</div>
         <div>
           <h1>Contrôle rayon</h1>
-          <p>Recherche dynamique + catégories + rapport final</p>
+          <p>Optimisé smartphone, rapide, sans éléments inutiles</p>
         </div>
       </div>
 
-      <div class="top-actions">
-        <button class="btn btn-secondary" id="focusEntryBtn">Aller à la saisie</button>
-        <button class="btn btn-secondary" id="resetAllBtn">Réinitialiser</button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-panel">
-          <h2 class="hero-title">Contrôle rapide</h2>
-          <p class="hero-text">
-            Le listing est classé automatiquement par catégories.
-            Dès que tu valides le contrôle, tous les produits non saisis passent automatiquement en “Pas présents en rayon”.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn btn-primary" id="loadExampleBtn">Charger un exemple</button>
-            <button class="btn btn-secondary" id="focusListingBtn">Aller au listing</button>
-          </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total listing</div>
+          <div class="stat-value" id="statTotal">0</div>
         </div>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-label">Articles du listing</div>
-            <div class="stat-value" id="statTotal">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Présents en rayon</div>
-            <div class="stat-value success" id="statPresent">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Pas présents</div>
-            <div class="stat-value danger" id="statMissing">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">Non traités</div>
-            <div class="stat-value neutral" id="statRemaining">0</div>
-          </div>
+        <div class="stat">
+          <div class="stat-label">Validés</div>
+          <div class="stat-value success" id="statPresent">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Pas présents</div>
+          <div class="stat-value danger" id="statMissing">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Restants</div>
+          <div class="stat-value neutral" id="statRemaining">0</div>
         </div>
       </div>
     </section>
 
-    <section class="layout">
-      <section class="card" id="listingSection">
-        <h2>1. Enregistrer le listing</h2>
-        <p class="lead">
-          Colle le listing brut. Le site séparera automatiquement les titres de catégories et les produits.
-        </p>
+    <section class="card">
+      <h2>1. Enregistrer le listing</h2>
+      <p class="lead">Format attendu : ligne catégorie avec 🔹, puis lignes produit au format <b>code – référence</b>.</p>
 
-        <textarea id="listingInput" placeholder="Exemple :
-40 20 05 Refrigérateur - Ref Top - Top
-8010740 Ref Tcp LISTO RTFL85-50m1b5
-0010452 Ref Tcp ESSENTIELB ERTL85-55hob1"></textarea>
+      <textarea id="listingInput" placeholder="🔹 Réfrigérateur Top
+8010452 – ESSENTIELB ERT85-55hob1
+8010481 – ESSENTIELB ERT85-55mis1
 
-        <div class="card-actions">
-          <button class="btn btn-primary" id="parseListingBtn">Enregistrer le listing</button>
-          <button class="btn btn-secondary" id="clearListingBtn">Effacer</button>
-        </div>
+⸻
 
-        <div class="panel">
-          <div class="panel-title">État de la session</div>
-          <div class="small">
-            Au moment de la validation finale, tout produit encore non traité passera automatiquement en “Pas présents en rayon”.
-          </div>
+🔹 Réfrigérateur combiné statique
+8010745 – LISTO RCL170-55minb2"></textarea>
 
-          <div class="summary-bar">
-            <span class="pill">Historique : <strong id="historyCountPill">0</strong></span>
-            <span class="pill">Contrôle final : <strong id="controlStatePill">En attente</strong></span>
-          </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="parseListingBtn">Enregistrer le listing</button>
+        <button class="btn btn-secondary" id="clearListingBtn">Effacer</button>
+      </div>
 
-          <div id="globalMessage"></div>
-        </div>
-      </section>
-
-      <section class="card" id="entrySection">
-        <h2>2. Saisie rapide</h2>
-        <p class="lead">
-          Tape les chiffres du code boule. Les références correspondantes sont filtrées en direct.
-        </p>
-
-        <div class="quick-box">
-          <div class="quick-title">
-            <h3>Recherche dynamique</h3>
-            <span class="focus-pill" id="focusStatePill">Prêt</span>
-          </div>
-
-          <div class="search-row">
-            <input
-              type="text"
-              inputmode="numeric"
-              maxlength="7"
-              id="digitsInput"
-              class="digits-input"
-              placeholder="Code boule"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-            />
-            <button class="btn btn-primary" id="searchBtn">Chercher</button>
-          </div>
-
-          <div class="search-hint">
-            Recherche prioritaire : exact → commence par → finit par → contient.
-          </div>
-
-          <div class="search-results" id="searchResultsBox">
-            <div class="empty" style="margin:0">
-              Commence à taper pour voir les références correspondantes.
-            </div>
-          </div>
-
-          <div class="selected-card" id="selectedCard"></div>
-
-          <div class="decision-row">
-            <button class="btn btn-success" id="presentBtn" disabled>Présent en rayon</button>
-            <button class="btn btn-danger" id="missingBtn" disabled>Pas présent en rayon</button>
-          </div>
-        </div>
-
-        <div class="footer-actions">
-          <button class="btn btn-warning" id="finalizeBtn">Valider le contrôle</button>
-        </div>
-      </section>
+      <div id="globalMessage"></div>
     </section>
 
-    <section class="card" style="margin-top:16px">
+    <section class="card">
+      <h2>2. Saisie du code boule</h2>
+      <p class="lead">Tape les chiffres du code boule. Le meilleur résultat s’affiche directement.</p>
+
+      <input
+        type="text"
+        inputmode="numeric"
+        maxlength="7"
+        id="digitsInput"
+        class="code-input"
+        placeholder="Code boule"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+
+      <div class="actions">
+        <button class="btn btn-primary" id="searchBtn">Chercher</button>
+      </div>
+
+      <div class="result-box" id="selectedResult"></div>
+
+      <div class="actions">
+        <button class="btn btn-success" id="validateBtn" disabled>Valider</button>
+        <button class="btn btn-danger" id="finalizeBtn">Valider le contrôle</button>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>3. Suivi du contrôle</h2>
-      <p class="lead">
-        Les articles sont affichés avec leur catégorie, leur code boule et leur référence.
-      </p>
+      <p class="lead">Affichage simple des produits validés, manquants et restants.</p>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="listing">Articles du listing</button>
-        <button class="tab" data-tab="present">Présents en rayon</button>
-        <button class="tab" data-tab="missing">Pas présents en rayon</button>
-        <button class="tab" data-tab="remaining">Restants</button>
-        <button class="tab" data-tab="history">Historique</button>
+      <div class="actions">
+        <button class="btn btn-secondary" id="showPresentBtn">Voir les validés</button>
+        <button class="btn btn-secondary" id="showMissingBtn">Voir les pas présents</button>
+        <button class="btn btn-secondary" id="showRemainingBtn">Voir les restants</button>
+        <button class="btn btn-primary" id="generateReportBtn">Générer le rapport</button>
       </div>
 
-      <div class="tab-panel active" id="tab-listing">
-        <div class="list" id="listingList">
-          <div class="empty">Aucun listing chargé pour le moment.</div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-present">
-        <div class="list" id="presentList">
-          <div class="empty">Aucun produit validé comme présent pour le moment.</div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-missing">
-        <div class="list" id="missingList">
-          <div class="empty">Aucun produit marqué comme non présent pour le moment.</div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-remaining">
-        <div class="list" id="remainingList">
-          <div class="empty">Charge un listing pour afficher les restants.</div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-history">
-        <div class="list" id="historyList">
-          <div class="empty">Aucune saisie pour le moment.</div>
-        </div>
+      <div class="list" id="resultList">
+        <div class="empty">Enregistre un listing pour commencer.</div>
       </div>
     </section>
   </div>
@@ -841,7 +425,6 @@
   <script>
     const state = {
       listingItems: [],
-      historyItems: [],
       currentResults: [],
       selectedItemId: null,
       finalized: false,
@@ -851,38 +434,25 @@
     const listingInput = document.getElementById("listingInput");
     const parseListingBtn = document.getElementById("parseListingBtn");
     const clearListingBtn = document.getElementById("clearListingBtn");
-    const loadExampleBtn = document.getElementById("loadExampleBtn");
-    const resetAllBtn = document.getElementById("resetAllBtn");
 
     const digitsInput = document.getElementById("digitsInput");
     const searchBtn = document.getElementById("searchBtn");
-    const presentBtn = document.getElementById("presentBtn");
-    const missingBtn = document.getElementById("missingBtn");
+    const validateBtn = document.getElementById("validateBtn");
     const finalizeBtn = document.getElementById("finalizeBtn");
 
-    const searchResultsBox = document.getElementById("searchResultsBox");
-    const selectedCard = document.getElementById("selectedCard");
+    const showPresentBtn = document.getElementById("showPresentBtn");
+    const showMissingBtn = document.getElementById("showMissingBtn");
+    const showRemainingBtn = document.getElementById("showRemainingBtn");
+    const generateReportBtn = document.getElementById("generateReportBtn");
+
+    const selectedResult = document.getElementById("selectedResult");
+    const resultList = document.getElementById("resultList");
     const globalMessage = document.getElementById("globalMessage");
-    const focusStatePill = document.getElementById("focusStatePill");
 
     const statTotal = document.getElementById("statTotal");
     const statPresent = document.getElementById("statPresent");
     const statMissing = document.getElementById("statMissing");
     const statRemaining = document.getElementById("statRemaining");
-
-    const historyCountPill = document.getElementById("historyCountPill");
-    const controlStatePill = document.getElementById("controlStatePill");
-
-    const listingList = document.getElementById("listingList");
-    const presentList = document.getElementById("presentList");
-    const missingList = document.getElementById("missingList");
-    const remainingList = document.getElementById("remainingList");
-    const historyList = document.getElementById("historyList");
-
-    const focusEntryBtn = document.getElementById("focusEntryBtn");
-    const focusListingBtn = document.getElementById("focusListingBtn");
-    const entrySection = document.getElementById("entrySection");
-    const listingSection = document.getElementById("listingSection");
 
     function escapeHtml(str) {
       return String(str)
@@ -895,26 +465,7 @@
 
     function normalizeCode(value) {
       if (!value) return "";
-      const digits = String(value).replace(/\D/g, "");
-      return digits.replace(/^0+/, "") || "0";
-    }
-
-    function normalizeRef(ref) {
-      return String(ref || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase()
-        .replace(/œ/g, "oe")
-        .replace(/[^a-z0-9]+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    function cleanListingReference(ref) {
-      return String(ref || "")
-        .replace(/\b(AS|A S|DI|D1|CI|CIl|D\|)\b/gi, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+      return String(value).replace(/\D/g, "");
     }
 
     function setGlobalMessage(type, text) {
@@ -926,55 +477,6 @@
       globalMessage.textContent = text;
     }
 
-    function setFocusState(active, label) {
-      focusStatePill.textContent = label;
-      if (active) focusStatePill.classList.add("active");
-      else focusStatePill.classList.remove("active");
-    }
-
-    function formatDate(date) {
-      if (!date) return "Date non générée";
-      try {
-        return new Intl.DateTimeFormat("fr-FR", {
-          dateStyle: "medium",
-          timeStyle: "short"
-        }).format(date);
-      } catch {
-        return date.toLocaleString("fr-FR");
-      }
-    }
-
-    function isCategoryLine(line) {
-      const clean = String(line || "").trim();
-      if (!clean) return false;
-      if (/^\d{2}\s+\d{2}\s+\d{2}\s+/i.test(clean)) return true;
-      if (/refrigerateur|réfrigérateur|congelateur|congélateur|cave a vin|cave à vin|plaque|four|americain|américain|multi doors|integrable|intégrable/i.test(clean) && !/^\d{5,10}\s+/.test(clean)) return true;
-      return false;
-    }
-
-    function cleanCategoryName(raw) {
-      let text = String(raw || "").trim();
-      text = text.replace(/\(.*$/g, "").trim();
-      text = text.replace(/\s+/g, " ");
-
-      const lower = text.toLowerCase();
-
-      if (lower.includes("ref top") || /\btop\b/i.test(text)) return "Réfrigérateurs top";
-      if (lower.includes("ref combine") || lower.includes("combi")) return "Réfrigérateurs combinés";
-      if (lower.includes("2 portes")) return "Réfrigérateurs 2 portes";
-      if (lower.includes("1 porte")) return "Réfrigérateurs 1 porte";
-      if (lower.includes("mini ref") || lower.includes("cube")) return "Réfrigérateurs mini";
-      if (lower.includes("americain") || lower.includes("américain") || lower.includes("side")) return "Réfrigérateurs américains";
-      if (lower.includes("multi doors") || lower.includes("multi") || lower.includes("multi doors")) return "Réfrigérateurs multiportes";
-      if (lower.includes("integrable") || lower.includes("intégrable")) return "Réfrigérateurs intégrables";
-      if (lower.includes("cave") && lower.includes("vin")) return "Caves à vin";
-      if (lower.includes("congelateur") || lower.includes("congélateur")) return "Congélateurs";
-      if (lower.includes("plaque") || lower.includes("induction") || lower.includes("gaz") || lower.includes("vitro")) return "Plaques de cuisson";
-      if (lower.includes("four")) return "Fours encastrables";
-
-      return text;
-    }
-
     function parseListing(text) {
       const lines = String(text || "")
         .split(/\n+/)
@@ -982,37 +484,28 @@
         .filter(Boolean);
 
       const items = [];
-      let currentCategoryRaw = "Sans catégorie";
       let currentCategory = "Sans catégorie";
 
       for (const line of lines) {
-        if (/^page\b/i.test(line)) continue;
-        if (/^tarif\b/i.test(line)) continue;
-        if (/^magasin\b/i.test(line)) continue;
-        if (/^groupe\b/i.test(line)) continue;
-        if (/^reseau\b/i.test(line)) continue;
+        if (line === "⸻" || line === "---") continue;
 
-        if (isCategoryLine(line)) {
-          currentCategoryRaw = line;
-          currentCategory = cleanCategoryName(line);
+        if (line.startsWith("🔹")) {
+          currentCategory = line.replace(/^🔹\s*/, "").trim() || "Sans catégorie";
           continue;
         }
 
-        const match = line.match(/(?:^|\s)(\d{5,10})\s+(.+)/);
+        const match = line.match(/^(\d{5,10})\s*[–-]\s*(.+)$/);
         if (!match) continue;
 
         const code = normalizeCode(match[1]);
-        const reference = cleanListingReference(match[2]);
+        const reference = match[2].trim();
 
-        if (!reference || reference.length < 5) continue;
-        if (/^\d+[.,]\d{2}$/.test(reference)) continue;
+        if (!code || !reference) continue;
 
         items.push({
           id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
           code,
           reference,
-          normalizedReference: normalizeRef(reference),
-          categoryRaw: currentCategoryRaw,
           category: currentCategory,
           status: "unprocessed"
         });
@@ -1022,7 +515,7 @@
       const seen = new Set();
 
       for (const item of items) {
-        const key = `${item.code}__${item.normalizedReference}`;
+        const key = `${item.code}__${item.reference}`;
         if (seen.has(key)) continue;
         seen.add(key);
         unique.push(item);
@@ -1041,7 +534,7 @@
     }
 
     function getSortedMatches(input) {
-      const clean = String(input || "").replace(/\D/g, "").slice(0, 7);
+      const clean = normalizeCode(input).slice(0, 7);
       if (!clean) return [];
 
       return state.listingItems
@@ -1050,10 +543,7 @@
           score: scoreCodeMatch(clean, item.code)
         }))
         .filter(entry => entry.score >= 0)
-        .sort((a, b) => {
-          if (b.score !== a.score) return b.score - a.score;
-          return a.item.reference.localeCompare(b.item.reference, "fr");
-        })
+        .sort((a, b) => b.score - a.score)
         .map(entry => entry.item);
     }
 
@@ -1063,17 +553,12 @@
 
     function groupByCategory(items) {
       const map = new Map();
-
       for (const item of items) {
         const key = item.category || "Sans catégorie";
         if (!map.has(key)) map.set(key, []);
         map.get(key).push(item);
       }
-
-      return [...map.entries()].map(([category, values]) => ({
-        category,
-        items: values
-      }));
+      return [...map.entries()].map(([category, values]) => ({ category, items: values }));
     }
 
     function renderCategoryGroups(container, items, emptyText, statusLabel, statusClass) {
@@ -1094,56 +579,10 @@
                 <div class="meta">
                   <span class="tag ${statusClass || ""}">${escapeHtml(statusLabel)}</span>
                   <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
-                  <span class="tag">Catégorie : ${escapeHtml(item.category)}</span>
+                  <span class="tag">${escapeHtml(item.category)}</span>
                 </div>
               </div>
             `).join("")}
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderListing() {
-      renderCategoryGroups(listingList, state.listingItems, "Aucun listing chargé pour le moment.", "Listing", "");
-    }
-
-    function renderPresent() {
-      renderCategoryGroups(presentList, getItemsByStatus("present"), "Aucun produit validé comme présent pour le moment.", "Présent en rayon", "success");
-    }
-
-    function renderMissing() {
-      renderCategoryGroups(missingList, getItemsByStatus("missing"), "Aucun produit marqué comme non présent pour le moment.", "Pas présent en rayon", "danger");
-    }
-
-    function renderRemaining() {
-      if (!state.listingItems.length) {
-        remainingList.innerHTML = `<div class="empty">Charge un listing pour afficher les restants.</div>`;
-        return;
-      }
-
-      const remaining = getItemsByStatus("unprocessed");
-      if (!remaining.length) {
-        remainingList.innerHTML = `<div class="message ok">Tout le listing a été traité.</div>`;
-        return;
-      }
-
-      renderCategoryGroups(remainingList, remaining, "Aucun article restant.", "Non traité", "");
-    }
-
-    function renderHistory() {
-      if (!state.historyItems.length) {
-        historyList.innerHTML = `<div class="empty">Aucune saisie pour le moment.</div>`;
-        return;
-      }
-
-      historyList.innerHTML = state.historyItems.slice().reverse().map(entry => `
-        <div class="list-item">
-          <strong>${escapeHtml(entry.label)}</strong>
-          <div class="meta">
-            <span class="tag">Recherche : ${escapeHtml(entry.input)}</span>
-            <span class="tag">Code : ${escapeHtml(entry.code)}</span>
-            <span class="tag">${escapeHtml(entry.category)}</span>
-            <span class="tag ${entry.typeClass}">${escapeHtml(entry.typeLabel)}</span>
           </div>
         </div>
       `).join("");
@@ -1154,109 +593,35 @@
       statPresent.textContent = getItemsByStatus("present").length;
       statMissing.textContent = getItemsByStatus("missing").length;
       statRemaining.textContent = getItemsByStatus("unprocessed").length;
-      historyCountPill.textContent = state.historyItems.length;
-      controlStatePill.textContent = state.finalized ? "Terminé" : "En attente";
-    }
-
-    function refreshAll() {
-      updateStats();
-      renderListing();
-      renderPresent();
-      renderMissing();
-      renderRemaining();
-      renderHistory();
     }
 
     function clearSearch(keepFocus = true) {
       state.currentResults = [];
       state.selectedItemId = null;
       digitsInput.value = "";
-      presentBtn.disabled = true;
-      missingBtn.disabled = true;
-      searchResultsBox.innerHTML = `
-        <div class="empty" style="margin:0">
-          Commence à taper pour voir les références correspondantes.
-        </div>
-      `;
-      selectedCard.style.display = "none";
-      selectedCard.innerHTML = "";
+      selectedResult.innerHTML = "";
+      validateBtn.disabled = true;
       if (keepFocus) requestAnimationFrame(() => digitsInput.focus());
     }
 
-    function renderSelectedCard(item) {
+    function renderSelected(item) {
       if (!item) {
-        selectedCard.style.display = "none";
-        selectedCard.innerHTML = "";
-        presentBtn.disabled = true;
-        missingBtn.disabled = true;
+        selectedResult.innerHTML = "";
+        validateBtn.disabled = true;
         return;
       }
 
-      selectedCard.style.display = "block";
-      selectedCard.innerHTML = `
-        <strong>${escapeHtml(item.reference)}</strong>
-        <div class="meta">
-          <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
-          <span class="tag">Catégorie : ${escapeHtml(item.category)}</span>
-          ${
-            item.status === "present"
-              ? `<span class="tag success">Déjà marqué présent</span>`
-              : item.status === "missing"
-                ? `<span class="tag danger">Déjà marqué absent</span>`
-                : `<span class="tag">Sélection active</span>`
-          }
+      selectedResult.innerHTML = `
+        <div class="result-item">
+          <strong>${escapeHtml(item.reference)}</strong>
+          <div class="meta">
+            <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
+            <span class="tag">${escapeHtml(item.category)}</span>
+            ${item.status === "present" ? `<span class="tag success">Déjà validé</span>` : ``}
+          </div>
         </div>
       `;
-      presentBtn.disabled = false;
-      missingBtn.disabled = false;
-    }
-
-    function renderSearchResults(results, input) {
-      if (!input) {
-        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Commence à taper pour voir les références correspondantes.</div>`;
-        return;
-      }
-
-      if (!results.length) {
-        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Aucune référence trouvée pour <strong>${escapeHtml(input)}</strong>.</div>`;
-        return;
-      }
-
-      const visible = results.slice(0, 12);
-
-      searchResultsBox.innerHTML = `
-        <div class="search-hint" style="margin-top:0; margin-bottom:10px">
-          ${results.length} résultat(s) trouvé(s)
-        </div>
-        <div class="result-row">
-          ${visible.map(item => `
-            <div class="result-item ${state.selectedItemId === item.id ? "active" : ""}" data-select-id="${escapeHtml(item.id)}">
-              <strong>${escapeHtml(item.reference)}</strong>
-              <div class="meta">
-                <span class="tag">Code : ${escapeHtml(item.code)}</span>
-                <span class="tag">${escapeHtml(item.category)}</span>
-                ${
-                  item.code === input
-                    ? `<span class="tag success">Exact</span>`
-                    : item.code.startsWith(input)
-                      ? `<span class="tag">Commence par</span>`
-                      : item.code.endsWith(input)
-                        ? `<span class="tag warning">Finit par</span>`
-                        : `<span class="tag">Contient</span>`
-                }
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      `;
-
-      document.querySelectorAll("[data-select-id]").forEach(el => {
-        el.addEventListener("click", () => {
-          state.selectedItemId = el.getAttribute("data-select-id");
-          renderSearchResults(state.currentResults, input);
-          renderSelectedCard(state.currentResults.find(item => item.id === state.selectedItemId) || null);
-        });
-      });
+      validateBtn.disabled = false;
     }
 
     function runLiveSearch() {
@@ -1266,75 +631,47 @@
         return;
       }
 
-      const input = digitsInput.value.replace(/\D/g, "").slice(0, 7);
+      const input = normalizeCode(digitsInput.value).slice(0, 7);
       digitsInput.value = input;
 
       if (!input) {
         state.currentResults = [];
         state.selectedItemId = null;
-        renderSearchResults([], "");
-        renderSelectedCard(null);
+        renderSelected(null);
         return;
       }
 
       const matches = getSortedMatches(input);
       state.currentResults = matches;
-
-      if (matches.length === 1) {
-        state.selectedItemId = matches[0].id;
-      } else if (!matches.some(item => item.id === state.selectedItemId)) {
-        state.selectedItemId = matches.length ? matches[0].id : null;
-      }
-
-      renderSearchResults(matches, input);
-      renderSelectedCard(matches.find(item => item.id === state.selectedItemId) || null);
-    }
-
-    function pushHistory(entry) {
-      state.historyItems.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        createdAt: Date.now(),
-        ...entry
-      });
+      state.selectedItemId = matches.length ? matches[0].id : null;
+      renderSelected(matches.find(item => item.id === state.selectedItemId) || null);
     }
 
     function getSelectedItem() {
       return state.currentResults.find(item => item.id === state.selectedItemId) || null;
     }
 
-    function focusFastInput() {
-      requestAnimationFrame(() => {
-        digitsInput.focus();
-        digitsInput.select();
-      });
-    }
-
-    function markSelected(status) {
+    function markPresent() {
       const item = getSelectedItem();
       if (!item) return;
 
-      item.status = status;
+      item.status = "present";
       state.finalized = false;
-
-      pushHistory({
-        input: digitsInput.value,
-        code: item.code,
-        label: item.reference,
-        category: item.category,
-        typeLabel: status === "present" ? "Présent en rayon" : "Pas présent en rayon",
-        typeClass: status === "present" ? "success" : "danger"
-      });
-
-      refreshAll();
-      setGlobalMessage(
-        "ok",
-        status === "present"
-          ? `Produit validé comme présent : ${item.reference}`
-          : `Produit validé comme non présent : ${item.reference}`
-      );
-
+      updateStats();
+      setGlobalMessage("ok", `Produit validé : ${item.reference}`);
       clearSearch(true);
-      setFocusState(true, "Saisie active");
+    }
+
+    function showPresent() {
+      renderCategoryGroups(resultList, getItemsByStatus("present"), "Aucun produit validé.", "Validé", "success");
+    }
+
+    function showMissing() {
+      renderCategoryGroups(resultList, getItemsByStatus("missing"), "Aucun produit pas présent.", "Pas présent", "danger");
+    }
+
+    function showRemaining() {
+      renderCategoryGroups(resultList, getItemsByStatus("unprocessed"), "Aucun produit restant.", "Restant", "");
     }
 
     function finalizeControl() {
@@ -1351,26 +688,29 @@
 
       state.finalized = true;
       state.reportDateValue = new Date();
-      refreshAll();
-      setGlobalMessage("ok", "Contrôle validé. Tous les produits non saisis ont été classés en “Pas présents en rayon”.");
+      updateStats();
+      showMissing();
+      setGlobalMessage("ok", "Contrôle validé. Tous les produits non validés ont été classés en pas présents.");
+    }
+
+    function formatDate(date) {
+      if (!date) return "";
+      try {
+        return new Intl.DateTimeFormat("fr-FR", {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }).format(date);
+      } catch {
+        return date.toLocaleString("fr-FR");
+      }
     }
 
     function buildReportWindowHtml() {
       const present = getItemsByStatus("present");
       const missing = getItemsByStatus("missing");
-      const reportDateText = state.reportDateValue ? formatDate(state.reportDateValue) : formatDate(new Date());
+      const reportDateText = formatDate(state.reportDateValue || new Date());
 
-      function groupByCategory(items) {
-        const map = new Map();
-        for (const item of items) {
-          const key = item.category || "Sans catégorie";
-          if (!map.has(key)) map.set(key, []);
-          map.get(key).push(item);
-        }
-        return [...map.entries()].map(([category, values]) => ({ category, items: values }));
-      }
-
-      function renderSection(title, items, badgeText, badgeColor) {
+      function renderSection(title, items, badgeText, badgeClass) {
         if (!items.length) {
           return `
             <section class="section">
@@ -1393,9 +733,9 @@
                     <div class="line">
                       <div class="line-ref">${escapeHtml(item.reference)}</div>
                       <div class="meta">
-                        <span class="badge ${badgeColor}">${escapeHtml(badgeText)}</span>
+                        <span class="badge ${badgeClass}">${escapeHtml(badgeText)}</span>
                         <span class="chip">Code boule : ${escapeHtml(item.code)}</span>
-                        <span class="chip">Catégorie : ${escapeHtml(item.category)}</span>
+                        <span class="chip">${escapeHtml(item.category)}</span>
                       </div>
                     </div>
                   `).join("")}
@@ -1420,119 +760,119 @@
     --line:#d9e2ec;
     --surface:#ffffff;
     --soft:#f8fafc;
-    --primary:#0f62fe;
     --success:#1f8f4e;
     --danger:#d64545;
   }
   *{box-sizing:border-box}
   body{
     margin:0;
-    padding:28px;
-    background:#ffffff;
+    padding:16px;
+    background:#fff;
     color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   .wrap{
-    max-width:1000px;
+    max-width:820px;
     margin:0 auto;
   }
   .head{
     display:flex;
     justify-content:space-between;
-    gap:16px;
+    gap:12px;
     align-items:flex-start;
     flex-wrap:wrap;
-    padding-bottom:18px;
+    padding-bottom:14px;
     border-bottom:1px solid var(--line);
   }
   .title{
     margin:0;
-    font-size:30px;
-    line-height:1.05;
+    font-size:24px;
+    line-height:1.08;
     letter-spacing:-.02em;
   }
   .sub{
-    margin:8px 0 0;
+    margin:6px 0 0;
     color:var(--muted);
-    font-size:14px;
+    font-size:13px;
   }
   .date{
     color:var(--muted);
-    font-size:14px;
+    font-size:12px;
     white-space:nowrap;
   }
   .summary{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-top:20px;
+    gap:10px;
+    margin-top:16px;
   }
   .stat{
     border:1px solid var(--line);
-    border-radius:16px;
-    padding:16px;
+    border-radius:14px;
+    padding:12px;
     background:var(--soft);
   }
   .stat .label{
-    font-size:12px;
+    font-size:11px;
     color:var(--muted);
-    margin-bottom:8px;
+    margin-bottom:6px;
   }
   .stat .value{
-    font-size:28px;
+    font-size:24px;
     font-weight:800;
     line-height:1;
   }
   .section{
-    margin-top:24px;
+    margin-top:18px;
   }
   .section h2{
-    margin:0 0 12px;
-    font-size:20px;
+    margin:0 0 10px;
+    font-size:17px;
     letter-spacing:-.02em;
   }
   .category{
     border:1px solid var(--line);
-    border-radius:16px;
+    border-radius:14px;
     overflow:hidden;
-    margin-top:12px;
-    background:var(--surface);
+    margin-top:10px;
+    background:#fff;
   }
   .category-title{
-    padding:12px 14px;
+    padding:10px 12px;
     background:var(--soft);
     border-bottom:1px solid var(--line);
-    font-size:14px;
+    font-size:13px;
     font-weight:800;
   }
   .category-body{
-    padding:12px;
+    padding:10px;
     display:grid;
-    gap:10px;
+    gap:8px;
   }
   .line{
     border:1px solid var(--line);
-    border-radius:14px;
-    padding:12px 14px;
+    border-radius:12px;
+    padding:10px 12px;
     background:#fff;
   }
   .line-ref{
-    font-size:14px;
+    font-size:13px;
     font-weight:700;
-    line-height:1.4;
-    margin-bottom:6px;
+    line-height:1.35;
+    margin-bottom:5px;
+    word-break:break-word;
   }
   .meta{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
+    gap:6px;
   }
   .chip,.badge{
     display:inline-flex;
     align-items:center;
-    padding:7px 10px;
+    padding:6px 9px;
     border-radius:999px;
-    font-size:12px;
+    font-size:11px;
     font-weight:700;
     background:#eef3f8;
     color:#334e68;
@@ -1547,40 +887,36 @@
   }
   .empty{
     border:1px dashed var(--line);
-    border-radius:14px;
-    padding:14px;
+    border-radius:12px;
+    padding:12px;
     color:var(--muted);
     background:#fbfdff;
   }
   .actions{
-    margin-top:26px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+    margin-top:20px;
   }
-  .btn{
+  .print-btn{
     border:none;
     border-radius:12px;
-    padding:12px 16px;
+    padding:12px 14px;
     font:inherit;
     font-weight:700;
+    background:#12263a;
+    color:#fff;
+    width:100%;
     cursor:pointer;
   }
-  .btn-primary{
-    background:var(--primary);
-    color:#fff;
-  }
-  .btn-secondary{
-    background:#eaf1f8;
-    color:var(--text);
+  @page{
+    size:A4;
+    margin:10mm;
   }
   @media print{
-    .actions{display:none}
     body{padding:0}
     .wrap{max-width:none}
+    .actions{display:none}
+    .category, .line, .stat{break-inside:avoid; page-break-inside:avoid;}
   }
   @media (max-width:700px){
-    body{padding:18px}
     .summary{grid-template-columns:1fr}
   }
 </style>
@@ -1610,12 +946,11 @@
       </div>
     </div>
 
-    ${renderSection("Présents en rayon", present, "Présent en rayon", "success")}
-    ${renderSection("Pas présents en rayon", missing, "Pas présent en rayon", "danger")}
+    ${renderSection("Présents en rayon", present, "Présent", "success")}
+    ${renderSection("Pas présents en rayon", missing, "Pas présent", "danger")}
 
     <div class="actions">
-      <button class="btn btn-primary" onclick="window.print()">Imprimer cette page</button>
-      <button class="btn btn-secondary" onclick="window.close()">Fermer</button>
+      <button class="print-btn" onclick="window.print()">Imprimer</button>
     </div>
   </div>
 </body>
@@ -1630,17 +965,13 @@
       }
 
       if (!state.finalized) {
-        setGlobalMessage("warn", "Valide d’abord le contrôle pour générer le rapport final.");
+        setGlobalMessage("err", "Valide d’abord le contrôle.");
         return;
-      }
-
-      if (!state.reportDateValue) {
-        state.reportDateValue = new Date();
       }
 
       const win = window.open("", "_blank");
       if (!win) {
-        setGlobalMessage("err", "Impossible d’ouvrir la page du rapport. Vérifie que les pop-ups ne sont pas bloquées.");
+        setGlobalMessage("err", "Impossible d’ouvrir le rapport sur ce smartphone ou ce navigateur.");
         return;
       }
 
@@ -1651,259 +982,48 @@
 
     parseListingBtn.addEventListener("click", () => {
       const items = parseListing(listingInput.value);
-
-      state.listingItems = items.map(item => ({
-        ...item,
-        status: "unprocessed"
-      }));
-      state.historyItems = [];
+      state.listingItems = items.map(item => ({ ...item, status: "unprocessed" }));
       state.currentResults = [];
       state.selectedItemId = null;
       state.finalized = false;
       state.reportDateValue = null;
-
-      refreshAll();
+      updateStats();
       clearSearch(false);
+      showRemaining();
 
       if (!items.length) {
-        setGlobalMessage("err", "Aucune ligne exploitable n’a été détectée dans le listing.");
-        setFocusState(false, "Listing vide");
+        setGlobalMessage("err", "Aucune ligne exploitable n’a été détectée.");
         return;
       }
 
-      setGlobalMessage("ok", `${items.length} article(s) enregistrés avec leurs catégories. Tu peux commencer la saisie.`);
-      setFocusState(true, "Saisie active");
-      focusFastInput();
+      setGlobalMessage("ok", `${items.length} article(s) enregistrés.`);
+      digitsInput.focus();
     });
 
     clearListingBtn.addEventListener("click", () => {
       listingInput.value = "";
       state.listingItems = [];
-      state.historyItems = [];
       state.currentResults = [];
       state.selectedItemId = null;
       state.finalized = false;
       state.reportDateValue = null;
-
-      refreshAll();
+      updateStats();
       clearSearch(false);
+      resultList.innerHTML = `<div class="empty">Enregistre un listing pour commencer.</div>`;
       setGlobalMessage("", "");
-      setFocusState(false, "Prêt");
-    });
-
-    loadExampleBtn.addEventListener("click", () => {
-      listingInput.value = `40 20 05 Refrigérateur - Ref Top - Top
-8010740 Ref Tcp LISTO RTFL85-50m1b5
-0010452 Ref Tcp ESSENTIELB ERTL85-55hob1
-8016481 Ref Tcp ESSENTIELB ERT85-55m151
-8011167 Ref Top ESSENTIELB ERT85-55hcB6
-1205522 Ref Tcp LIEBHERR TK12Ve01
-
-40 50 10 Refrigérateur - Ref combiné - Combi ventilé
-1400224 Combi GORENJE NRK619EPXL4
-1802902 Combi BEKO B5RCNA345HXB1
-1201543 Combi LG GBV3110EPY
-1201785 Combi HISENSE RB39CN4BCC
-
-40 60 05 Refrigérateur - Ref. americain - Side
-8010836 Ref US ESSENTIELB ERAVE180-90v3
-8010646 Ref US ESSENTIELB ERAVDE180-90h0v5
-1202581 Ref US SAMSUNG RH650654R359`;
-      setGlobalMessage("ok", "Exemple chargé. Clique sur “Enregistrer le listing”.");
     });
 
     digitsInput.addEventListener("input", runLiveSearch);
-
-    digitsInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const selected = getSelectedItem();
-        if (selected) presentBtn.click();
-      }
-    });
-
     searchBtn.addEventListener("click", runLiveSearch);
-    presentBtn.addEventListener("click", () => markSelected("present"));
-    missingBtn.addEventListener("click", () => markSelected("missing"));
+    validateBtn.addEventListener("click", markPresent);
     finalizeBtn.addEventListener("click", finalizeControl);
 
-    resetAllBtn.addEventListener("click", () => {
-      const ok = confirm("Réinitialiser toute la session ?");
-      if (!ok) return;
+    showPresentBtn.addEventListener("click", showPresent);
+    showMissingBtn.addEventListener("click", showMissing);
+    showRemainingBtn.addEventListener("click", showRemaining);
+    generateReportBtn.addEventListener("click", openReportWindow);
 
-      listingInput.value = "";
-      state.listingItems = [];
-      state.historyItems = [];
-      state.currentResults = [];
-      state.selectedItemId = null;
-      state.finalized = false;
-      state.reportDateValue = null;
-
-      refreshAll();
-      clearSearch(false);
-      setGlobalMessage("", "");
-      setFocusState(false, "Prêt");
-    });
-
-    focusEntryBtn.addEventListener("click", () => {
-      entrySection.scrollIntoView({ behavior: "smooth", block: "start" });
-      focusFastInput();
-    });
-
-    focusListingBtn.addEventListener("click", () => {
-      listingSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    document.querySelectorAll(".tab").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-        document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
-      });
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target && e.target.id === "generateReportBtn") {
-        openReportWindow();
-      }
-    });
-
-    function renderSearchResults(results, input) {
-      if (!input) {
-        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Commence à taper pour voir les références correspondantes.</div>`;
-        return;
-      }
-
-      if (!results.length) {
-        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Aucune référence trouvée pour <strong>${escapeHtml(input)}</strong>.</div>`;
-        return;
-      }
-
-      const visible = results.slice(0, 12);
-
-      searchResultsBox.innerHTML = `
-        <div class="search-hint" style="margin-top:0; margin-bottom:10px">
-          ${results.length} résultat(s) trouvé(s)
-        </div>
-        <div class="result-row">
-          ${visible.map(item => `
-            <div class="result-item ${state.selectedItemId === item.id ? "active" : ""}" data-select-id="${escapeHtml(item.id)}">
-              <strong>${escapeHtml(item.reference)}</strong>
-              <div class="meta">
-                <span class="tag">Code : ${escapeHtml(item.code)}</span>
-                <span class="tag">${escapeHtml(item.category)}</span>
-                ${
-                  item.code === input
-                    ? `<span class="tag success">Exact</span>`
-                    : item.code.startsWith(input)
-                      ? `<span class="tag">Commence par</span>`
-                      : item.code.endsWith(input)
-                        ? `<span class="tag warning">Finit par</span>`
-                        : `<span class="tag">Contient</span>`
-                }
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      `;
-
-      document.querySelectorAll("[data-select-id]").forEach(el => {
-        el.addEventListener("click", () => {
-          state.selectedItemId = el.getAttribute("data-select-id");
-          renderSearchResults(state.currentResults, input);
-          renderSelectedCard(state.currentResults.find(item => item.id === state.selectedItemId) || null);
-        });
-      });
-    }
-
-    function runLiveSearch() {
-      if (!state.listingItems.length) {
-        setGlobalMessage("err", "Enregistre d’abord le listing.");
-        clearSearch(false);
-        return;
-      }
-
-      const input = digitsInput.value.replace(/\D/g, "").slice(0, 7);
-      digitsInput.value = input;
-
-      if (!input) {
-        state.currentResults = [];
-        state.selectedItemId = null;
-        renderSearchResults([], "");
-        renderSelectedCard(null);
-        return;
-      }
-
-      const matches = getSortedMatches(input);
-      state.currentResults = matches;
-
-      if (matches.length === 1) {
-        state.selectedItemId = matches[0].id;
-      } else if (!matches.some(item => item.id === state.selectedItemId)) {
-        state.selectedItemId = matches.length ? matches[0].id : null;
-      }
-
-      renderSearchResults(matches, input);
-      renderSelectedCard(matches.find(item => item.id === state.selectedItemId) || null);
-    }
-
-    function pushHistory(entry) {
-      state.historyItems.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        createdAt: Date.now(),
-        ...entry
-      });
-    }
-
-    function getSelectedItem() {
-      return state.currentResults.find(item => item.id === state.selectedItemId) || null;
-    }
-
-    function focusFastInput() {
-      requestAnimationFrame(() => {
-        digitsInput.focus();
-        digitsInput.select();
-      });
-    }
-
-    function markSelected(status) {
-      const item = getSelectedItem();
-      if (!item) return;
-
-      item.status = status;
-      state.finalized = false;
-
-      pushHistory({
-        input: digitsInput.value,
-        code: item.code,
-        label: item.reference,
-        category: item.category,
-        typeLabel: status === "present" ? "Présent en rayon" : "Pas présent en rayon",
-        typeClass: status === "present" ? "success" : "danger"
-      });
-
-      refreshAll();
-      setGlobalMessage(
-        "ok",
-        status === "present"
-          ? `Produit validé comme présent : ${item.reference}`
-          : `Produit validé comme non présent : ${item.reference}`
-      );
-
-      clearSearch(true);
-      setFocusState(true, "Saisie active");
-    }
-
-    refreshAll();
-    setFocusState(false, "Prêt");
-    clearSearch(false);
-
-    const reportButtonHost = document.createElement("div");
-    reportButtonHost.className = "footer-actions";
-    reportButtonHost.style.marginTop = "16px";
-    reportButtonHost.innerHTML = `<button class="btn btn-primary" id="generateReportBtn">Générer le rapport</button>`;
-    document.querySelector(".app").appendChild(reportButtonHost);
+    updateStats();
   </script>
 </body>
 </html>
