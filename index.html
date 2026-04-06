@@ -362,9 +362,9 @@
     }
 
     .digits-input{
-      font-size:28px;
+      font-size:24px;
       font-weight:800;
-      letter-spacing:.08em;
+      letter-spacing:.04em;
       text-align:center;
       min-height:70px;
       padding:16px 18px;
@@ -595,131 +595,6 @@
       flex:1 1 220px;
     }
 
-    .report-box{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:22px;
-      margin-top:16px;
-    }
-
-    .report-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      padding-bottom:16px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:18px;
-    }
-
-    .report-title{
-      margin:0;
-      font-size:24px;
-      line-height:1.1;
-      letter-spacing:-.02em;
-    }
-
-    .report-sub{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .report-date{
-      font-size:13px;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-
-    .report-summary{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-bottom:18px;
-    }
-
-    .report-stat{
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
-      background:#fafcff;
-    }
-
-    .report-stat .label{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:8px;
-    }
-
-    .report-stat .value{
-      font-size:26px;
-      font-weight:800;
-      line-height:1;
-    }
-
-    .report-section{
-      margin-top:18px;
-    }
-
-    .report-section h3{
-      margin:0 0 10px;
-      font-size:17px;
-      letter-spacing:-.02em;
-    }
-
-    .report-category{
-      border:1px solid var(--line);
-      border-radius:16px;
-      margin-top:10px;
-      overflow:hidden;
-      background:#fff;
-    }
-
-    .report-category-title{
-      padding:11px 14px;
-      background:#f7fafc;
-      border-bottom:1px solid var(--line);
-      font-weight:800;
-      font-size:14px;
-    }
-
-    .report-list{
-      display:grid;
-      gap:8px;
-      padding:12px;
-    }
-
-    .report-line{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 14px;
-      background:#fff;
-    }
-
-    .report-line strong{
-      display:block;
-      margin-bottom:5px;
-      font-size:14px;
-      line-height:1.35;
-    }
-
-    .print-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .print-actions .btn{
-      flex:1 1 220px;
-    }
-
-    .screen-only{display:block}
-    .print-only{display:none}
-
     @media (max-width:1100px){
       .hero-grid,
       .layout{
@@ -728,8 +603,7 @@
     }
 
     @media (max-width:760px){
-      .stats,
-      .report-summary{
+      .stats{
         grid-template-columns:repeat(2,1fr);
       }
     }
@@ -740,8 +614,7 @@
       }
 
       .hero,
-      .card,
-      .report-box{
+      .card{
         padding:16px;
         border-radius:18px;
       }
@@ -761,16 +634,14 @@
       .top-actions,
       .hero-actions,
       .decision-row,
-      .footer-actions,
-      .print-actions{
+      .footer-actions{
         width:100%;
       }
 
       .top-actions .btn,
       .hero-actions .btn,
       .decision-row .btn,
-      .footer-actions .btn,
-      .print-actions .btn{
+      .footer-actions .btn{
         flex:1 1 100%;
       }
 
@@ -778,79 +649,20 @@
         grid-template-columns:1fr;
       }
 
-      .digits-input{
-        font-size:24px;
-        letter-spacing:.04em;
-      }
-
-      .stats,
-      .report-summary{
+      .stats{
         grid-template-columns:1fr;
-      }
-    }
-
-    @media print{
-      body{
-        background:#fff;
-      }
-
-      .screen-only{
-        display:none !important;
-      }
-
-      .print-only{
-        display:block !important;
-      }
-
-      .app{
-        max-width:none;
-        padding:0;
-        margin:0;
-      }
-
-      .topbar,
-      .hero,
-      .layout,
-      .tabs,
-      .tab-panel,
-      .footer-actions,
-      .print-actions,
-      .message{
-        display:none !important;
-      }
-
-      #reportSection{
-        display:block !important;
-        margin:0;
-        box-shadow:none;
-        border:none;
-        padding:0;
-      }
-
-      .report-box{
-        box-shadow:none;
-        border:none;
-        margin:0;
-        padding:0;
-      }
-
-      .report-category,
-      .report-line,
-      .report-stat{
-        break-inside:avoid;
-        page-break-inside:avoid;
       }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="topbar screen-only">
+    <header class="topbar">
       <div class="brand">
         <div class="brand-mark">CR</div>
         <div>
           <h1>Contrôle rayon</h1>
-          <p>Recherche dynamique + classement automatique par catégorie + rapport PDF propre</p>
+          <p>Recherche dynamique + catégories + rapport final</p>
         </div>
       </div>
 
@@ -860,13 +672,13 @@
       </div>
     </header>
 
-    <section class="hero screen-only">
+    <section class="hero">
       <div class="hero-grid">
         <div class="hero-panel">
-          <h2 class="hero-title">Lecture du listing par catégories</h2>
+          <h2 class="hero-title">Contrôle rapide</h2>
           <p class="hero-text">
-            Le site repère les titres du listing, les garde comme catégories, puis rattache chaque produit à la bonne famille.
-            Ensuite, la recherche se fait chiffre par chiffre sur le code boule.
+            Le listing est classé automatiquement par catégories.
+            Dès que tu valides le contrôle, tous les produits non saisis passent automatiquement en “Pas présents en rayon”.
           </p>
 
           <div class="hero-actions">
@@ -896,7 +708,7 @@
       </div>
     </section>
 
-    <section class="layout screen-only">
+    <section class="layout">
       <section class="card" id="listingSection">
         <h2>1. Enregistrer le listing</h2>
         <p class="lead">
@@ -906,8 +718,7 @@
         <textarea id="listingInput" placeholder="Exemple :
 40 20 05 Refrigérateur - Ref Top - Top
 8010740 Ref Tcp LISTO RTFL85-50m1b5
-0010452 Ref Tcp ESSENTIELB ERTL85-55hob1
-8016481 Ref Tcp ESSENTIELB ERT85-55m151"></textarea>
+0010452 Ref Tcp ESSENTIELB ERTL85-55hob1"></textarea>
 
         <div class="card-actions">
           <button class="btn btn-primary" id="parseListingBtn">Enregistrer le listing</button>
@@ -917,7 +728,7 @@
         <div class="panel">
           <div class="panel-title">État de la session</div>
           <div class="small">
-            Les titres détectés sont conservés comme catégories pour le suivi et pour le PDF final.
+            Au moment de la validation finale, tout produit encore non traité passera automatiquement en “Pas présents en rayon”.
           </div>
 
           <div class="summary-bar">
@@ -932,7 +743,7 @@
       <section class="card" id="entrySection">
         <h2>2. Saisie rapide</h2>
         <p class="lead">
-          Tape les chiffres du code boule. Les références correspondantes sont filtrées en direct et triées automatiquement.
+          Tape les chiffres du code boule. Les références correspondantes sont filtrées en direct.
         </p>
 
         <div class="quick-box">
@@ -981,7 +792,7 @@
       </section>
     </section>
 
-    <section class="card screen-only" style="margin-top:16px">
+    <section class="card" style="margin-top:16px">
       <h2>3. Suivi du contrôle</h2>
       <p class="lead">
         Les articles sont affichés avec leur catégorie, leur code boule et leur référence.
@@ -1023,50 +834,6 @@
         <div class="list" id="historyList">
           <div class="empty">Aucune saisie pour le moment.</div>
         </div>
-      </div>
-    </section>
-
-    <section id="reportSection" class="report-box">
-      <div class="report-head">
-        <div>
-          <h2 class="report-title">Rapport de contrôle rayon</h2>
-          <p class="report-sub">Présents en rayon / Pas présents en rayon</p>
-        </div>
-        <div class="report-date" id="reportDate">Date non générée</div>
-      </div>
-
-      <div class="report-summary">
-        <div class="report-stat">
-          <div class="label">Total du listing</div>
-          <div class="value" id="reportTotal">0</div>
-        </div>
-        <div class="report-stat">
-          <div class="label">Présents en rayon</div>
-          <div class="value" id="reportPresent">0</div>
-        </div>
-        <div class="report-stat">
-          <div class="label">Pas présents en rayon</div>
-          <div class="value" id="reportMissing">0</div>
-        </div>
-      </div>
-
-      <div class="report-section">
-        <h3>Présents en rayon</h3>
-        <div id="reportPresentList">
-          <div class="empty">Aucun produit présent enregistré pour le moment.</div>
-        </div>
-      </div>
-
-      <div class="report-section">
-        <h3>Pas présents en rayon</h3>
-        <div id="reportMissingList">
-          <div class="empty">Aucun produit manquant enregistré pour le moment.</div>
-        </div>
-      </div>
-
-      <div class="print-actions screen-only">
-        <button class="btn btn-primary" id="generateReportBtn">Générer le rapport</button>
-        <button class="btn btn-secondary" id="printPdfBtn">Imprimer / Enregistrer en PDF</button>
       </div>
     </section>
   </div>
@@ -1111,15 +878,6 @@
     const missingList = document.getElementById("missingList");
     const remainingList = document.getElementById("remainingList");
     const historyList = document.getElementById("historyList");
-
-    const reportDate = document.getElementById("reportDate");
-    const reportTotal = document.getElementById("reportTotal");
-    const reportPresent = document.getElementById("reportPresent");
-    const reportMissing = document.getElementById("reportMissing");
-    const reportPresentList = document.getElementById("reportPresentList");
-    const reportMissingList = document.getElementById("reportMissingList");
-    const generateReportBtn = document.getElementById("generateReportBtn");
-    const printPdfBtn = document.getElementById("printPdfBtn");
 
     const focusEntryBtn = document.getElementById("focusEntryBtn");
     const focusListingBtn = document.getElementById("focusListingBtn");
@@ -1189,37 +947,28 @@
     function isCategoryLine(line) {
       const clean = String(line || "").trim();
       if (!clean) return false;
-
       if (/^\d{2}\s+\d{2}\s+\d{2}\s+/i.test(clean)) return true;
-      if (/^40\s+\d{2}\s+\d{2}\s+/i.test(clean)) return true;
-      if (/refrigerateur|réfrigérateur|congelateur|congélateur|cave a vin|cave à vin|plaque|four|americain|américain|multi doors|multidoors|integrable|intégrable/i.test(clean) && !/^\d{5,10}\s+/.test(clean)) return true;
-
+      if (/refrigerateur|réfrigérateur|congelateur|congélateur|cave a vin|cave à vin|plaque|four|americain|américain|multi doors|integrable|intégrable/i.test(clean) && !/^\d{5,10}\s+/.test(clean)) return true;
       return false;
     }
 
     function cleanCategoryName(raw) {
       let text = String(raw || "").trim();
-
       text = text.replace(/\(.*$/g, "").trim();
       text = text.replace(/\s+/g, " ");
 
       const lower = text.toLowerCase();
 
       if (lower.includes("ref top") || /\btop\b/i.test(text)) return "Réfrigérateurs top";
-      if (lower.includes("ref combine") || lower.includes("combi ventil") || lower.includes("combi stat")) return "Réfrigérateurs combinés";
+      if (lower.includes("ref combine") || lower.includes("combi")) return "Réfrigérateurs combinés";
       if (lower.includes("2 portes")) return "Réfrigérateurs 2 portes";
       if (lower.includes("1 porte")) return "Réfrigérateurs 1 porte";
       if (lower.includes("mini ref") || lower.includes("cube")) return "Réfrigérateurs mini";
       if (lower.includes("americain") || lower.includes("américain") || lower.includes("side")) return "Réfrigérateurs américains";
-      if (lower.includes("multi doors") || lower.includes("multi door") || lower.includes("multi doors") || /\bmulti\b/i.test(text)) return "Réfrigérateurs multiportes";
+      if (lower.includes("multi doors") || lower.includes("multi") || lower.includes("multi doors")) return "Réfrigérateurs multiportes";
       if (lower.includes("integrable") || lower.includes("intégrable")) return "Réfrigérateurs intégrables";
       if (lower.includes("cave") && lower.includes("vin")) return "Caves à vin";
-      if (lower.includes("congelateur") || lower.includes("congélateur")) {
-        if (lower.includes("coffre")) return "Congélateurs coffre";
-        if (lower.includes("armoire")) return "Congélateurs armoire";
-        if (lower.includes("mini")) return "Congélateurs mini";
-        return "Congélateurs";
-      }
+      if (lower.includes("congelateur") || lower.includes("congélateur")) return "Congélateurs";
       if (lower.includes("plaque") || lower.includes("induction") || lower.includes("gaz") || lower.includes("vitro")) return "Plaques de cuisson";
       if (lower.includes("four")) return "Fours encastrables";
 
@@ -1237,7 +986,6 @@
       let currentCategory = "Sans catégorie";
 
       for (const line of lines) {
-        if (!/\d/.test(line) && line.length < 4) continue;
         if (/^page\b/i.test(line)) continue;
         if (/^tarif\b/i.test(line)) continue;
         if (/^magasin\b/i.test(line)) continue;
@@ -1356,33 +1104,15 @@
     }
 
     function renderListing() {
-      renderCategoryGroups(
-        listingList,
-        state.listingItems,
-        "Aucun listing chargé pour le moment.",
-        "Listing",
-        ""
-      );
+      renderCategoryGroups(listingList, state.listingItems, "Aucun listing chargé pour le moment.", "Listing", "");
     }
 
     function renderPresent() {
-      renderCategoryGroups(
-        presentList,
-        getItemsByStatus("present"),
-        "Aucun produit validé comme présent pour le moment.",
-        "Présent en rayon",
-        "success"
-      );
+      renderCategoryGroups(presentList, getItemsByStatus("present"), "Aucun produit validé comme présent pour le moment.", "Présent en rayon", "success");
     }
 
     function renderMissing() {
-      renderCategoryGroups(
-        missingList,
-        getItemsByStatus("missing"),
-        "Aucun produit marqué comme non présent pour le moment.",
-        "Pas présent en rayon",
-        "danger"
-      );
+      renderCategoryGroups(missingList, getItemsByStatus("missing"), "Aucun produit marqué comme non présent pour le moment.", "Pas présent en rayon", "danger");
     }
 
     function renderRemaining() {
@@ -1397,13 +1127,7 @@
         return;
       }
 
-      renderCategoryGroups(
-        remainingList,
-        remaining,
-        "Aucun article restant.",
-        "Non traité",
-        ""
-      );
+      renderCategoryGroups(remainingList, remaining, "Aucun article restant.", "Non traité", "");
     }
 
     function renderHistory() {
@@ -1434,62 +1158,6 @@
       controlStatePill.textContent = state.finalized ? "Terminé" : "En attente";
     }
 
-    function renderReportSection(target, items, emptyText, badgeText, badgeClass) {
-      if (!items.length) {
-        target.innerHTML = `<div class="empty">${escapeHtml(emptyText)}</div>`;
-        return;
-      }
-
-      const groups = groupByCategory(items);
-
-      target.innerHTML = groups.map(group => `
-        <div class="report-category">
-          <div class="report-category-title">${escapeHtml(group.category)}</div>
-          <div class="report-list">
-            ${group.items.map(item => `
-              <div class="report-line">
-                <strong>${escapeHtml(item.reference)}</strong>
-                <div class="meta">
-                  <span class="tag ${badgeClass}">${escapeHtml(badgeText)}</span>
-                  <span class="tag">Code boule : ${escapeHtml(item.code)}</span>
-                  <span class="tag">Catégorie : ${escapeHtml(item.category)}</span>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function updateReport() {
-      const present = getItemsByStatus("present");
-      const missing = getItemsByStatus("missing");
-
-      reportDate.textContent = state.reportDateValue
-        ? `Contrôle généré le ${formatDate(state.reportDateValue)}`
-        : "Date non générée";
-
-      reportTotal.textContent = state.listingItems.length;
-      reportPresent.textContent = present.length;
-      reportMissing.textContent = missing.length;
-
-      renderReportSection(
-        reportPresentList,
-        present,
-        "Aucun produit présent enregistré pour le moment.",
-        "Présent en rayon",
-        "success"
-      );
-
-      renderReportSection(
-        reportMissingList,
-        missing,
-        "Aucun produit manquant enregistré pour le moment.",
-        "Pas présent en rayon",
-        "danger"
-      );
-    }
-
     function refreshAll() {
       updateStats();
       renderListing();
@@ -1497,7 +1165,6 @@
       renderMissing();
       renderRemaining();
       renderHistory();
-      updateReport();
     }
 
     function clearSearch(keepFocus = true) {
@@ -1513,9 +1180,7 @@
       `;
       selectedCard.style.display = "none";
       selectedCard.innerHTML = "";
-      if (keepFocus) {
-        requestAnimationFrame(() => digitsInput.focus());
-      }
+      if (keepFocus) requestAnimationFrame(() => digitsInput.focus());
     }
 
     function renderSelectedCard(item) {
@@ -1548,20 +1213,12 @@
 
     function renderSearchResults(results, input) {
       if (!input) {
-        searchResultsBox.innerHTML = `
-          <div class="empty" style="margin:0">
-            Commence à taper pour voir les références correspondantes.
-          </div>
-        `;
+        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Commence à taper pour voir les références correspondantes.</div>`;
         return;
       }
 
       if (!results.length) {
-        searchResultsBox.innerHTML = `
-          <div class="empty" style="margin:0">
-            Aucune référence trouvée pour <strong>${escapeHtml(input)}</strong>.
-          </div>
-        `;
+        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Aucune référence trouvée pour <strong>${escapeHtml(input)}</strong>.</div>`;
         return;
       }
 
@@ -1596,9 +1253,8 @@
       document.querySelectorAll("[data-select-id]").forEach(el => {
         el.addEventListener("click", () => {
           state.selectedItemId = el.getAttribute("data-select-id");
-          const selected = state.currentResults.find(item => item.id === state.selectedItemId) || null;
           renderSearchResults(state.currentResults, input);
-          renderSelectedCard(selected);
+          renderSelectedCard(state.currentResults.find(item => item.id === state.selectedItemId) || null);
         });
       });
     }
@@ -1687,10 +1343,310 @@
         return;
       }
 
+      for (const item of state.listingItems) {
+        if (item.status === "unprocessed") {
+          item.status = "missing";
+        }
+      }
+
       state.finalized = true;
       state.reportDateValue = new Date();
       refreshAll();
-      setGlobalMessage("ok", "Contrôle validé. Le rapport est prêt.");
+      setGlobalMessage("ok", "Contrôle validé. Tous les produits non saisis ont été classés en “Pas présents en rayon”.");
+    }
+
+    function buildReportWindowHtml() {
+      const present = getItemsByStatus("present");
+      const missing = getItemsByStatus("missing");
+      const reportDateText = state.reportDateValue ? formatDate(state.reportDateValue) : formatDate(new Date());
+
+      function groupByCategory(items) {
+        const map = new Map();
+        for (const item of items) {
+          const key = item.category || "Sans catégorie";
+          if (!map.has(key)) map.set(key, []);
+          map.get(key).push(item);
+        }
+        return [...map.entries()].map(([category, values]) => ({ category, items: values }));
+      }
+
+      function renderSection(title, items, badgeText, badgeColor) {
+        if (!items.length) {
+          return `
+            <section class="section">
+              <h2>${title}</h2>
+              <div class="empty">Aucun élément.</div>
+            </section>
+          `;
+        }
+
+        const groups = groupByCategory(items);
+
+        return `
+          <section class="section">
+            <h2>${title}</h2>
+            ${groups.map(group => `
+              <div class="category">
+                <div class="category-title">${escapeHtml(group.category)}</div>
+                <div class="category-body">
+                  ${group.items.map(item => `
+                    <div class="line">
+                      <div class="line-ref">${escapeHtml(item.reference)}</div>
+                      <div class="meta">
+                        <span class="badge ${badgeColor}">${escapeHtml(badgeText)}</span>
+                        <span class="chip">Code boule : ${escapeHtml(item.code)}</span>
+                        <span class="chip">Catégorie : ${escapeHtml(item.category)}</span>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            `).join("")}
+          </section>
+        `;
+      }
+
+      return `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rapport de contrôle rayon</title>
+<style>
+  :root{
+    --text:#12263a;
+    --muted:#6b7c93;
+    --line:#d9e2ec;
+    --surface:#ffffff;
+    --soft:#f8fafc;
+    --primary:#0f62fe;
+    --success:#1f8f4e;
+    --danger:#d64545;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    padding:28px;
+    background:#ffffff;
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  .wrap{
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .head{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .title{
+    margin:0;
+    font-size:30px;
+    line-height:1.05;
+    letter-spacing:-.02em;
+  }
+  .sub{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .date{
+    color:var(--muted);
+    font-size:14px;
+    white-space:nowrap;
+  }
+  .summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:20px;
+  }
+  .stat{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+    background:var(--soft);
+  }
+  .stat .label{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .stat .value{
+    font-size:28px;
+    font-weight:800;
+    line-height:1;
+  }
+  .section{
+    margin-top:24px;
+  }
+  .section h2{
+    margin:0 0 12px;
+    font-size:20px;
+    letter-spacing:-.02em;
+  }
+  .category{
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    margin-top:12px;
+    background:var(--surface);
+  }
+  .category-title{
+    padding:12px 14px;
+    background:var(--soft);
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+    font-weight:800;
+  }
+  .category-body{
+    padding:12px;
+    display:grid;
+    gap:10px;
+  }
+  .line{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:12px 14px;
+    background:#fff;
+  }
+  .line-ref{
+    font-size:14px;
+    font-weight:700;
+    line-height:1.4;
+    margin-bottom:6px;
+  }
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip,.badge{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    background:#eef3f8;
+    color:#334e68;
+  }
+  .badge.success{
+    background:rgba(31,143,78,.12);
+    color:var(--success);
+  }
+  .badge.danger{
+    background:rgba(214,69,69,.12);
+    color:var(--danger);
+  }
+  .empty{
+    border:1px dashed var(--line);
+    border-radius:14px;
+    padding:14px;
+    color:var(--muted);
+    background:#fbfdff;
+  }
+  .actions{
+    margin-top:26px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    border:none;
+    border-radius:12px;
+    padding:12px 16px;
+    font:inherit;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-primary{
+    background:var(--primary);
+    color:#fff;
+  }
+  .btn-secondary{
+    background:#eaf1f8;
+    color:var(--text);
+  }
+  @media print{
+    .actions{display:none}
+    body{padding:0}
+    .wrap{max-width:none}
+  }
+  @media (max-width:700px){
+    body{padding:18px}
+    .summary{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h1 class="title">Rapport de contrôle rayon</h1>
+        <p class="sub">Présents en rayon / Pas présents en rayon</p>
+      </div>
+      <div class="date">Contrôle généré le ${escapeHtml(reportDateText)}</div>
+    </div>
+
+    <div class="summary">
+      <div class="stat">
+        <div class="label">Total du listing</div>
+        <div class="value">${state.listingItems.length}</div>
+      </div>
+      <div class="stat">
+        <div class="label">Présents en rayon</div>
+        <div class="value">${present.length}</div>
+      </div>
+      <div class="stat">
+        <div class="label">Pas présents en rayon</div>
+        <div class="value">${missing.length}</div>
+      </div>
+    </div>
+
+    ${renderSection("Présents en rayon", present, "Présent en rayon", "success")}
+    ${renderSection("Pas présents en rayon", missing, "Pas présent en rayon", "danger")}
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.print()">Imprimer cette page</button>
+      <button class="btn btn-secondary" onclick="window.close()">Fermer</button>
+    </div>
+  </div>
+</body>
+</html>
+      `;
+    }
+
+    function openReportWindow() {
+      if (!state.listingItems.length) {
+        setGlobalMessage("err", "Enregistre d’abord le listing.");
+        return;
+      }
+
+      if (!state.finalized) {
+        setGlobalMessage("warn", "Valide d’abord le contrôle pour générer le rapport final.");
+        return;
+      }
+
+      if (!state.reportDateValue) {
+        state.reportDateValue = new Date();
+      }
+
+      const win = window.open("", "_blank");
+      if (!win) {
+        setGlobalMessage("err", "Impossible d’ouvrir la page du rapport. Vérifie que les pop-ups ne sont pas bloquées.");
+        return;
+      }
+
+      win.document.open();
+      win.document.write(buildReportWindowHtml());
+      win.document.close();
     }
 
     parseListingBtn.addEventListener("click", () => {
@@ -1752,16 +1708,7 @@
 40 60 05 Refrigérateur - Ref. americain - Side
 8010836 Ref US ESSENTIELB ERAVE180-90v3
 8010646 Ref US ESSENTIELB ERAVDE180-90h0v5
-1202581 Ref US SAMSUNG RH650654R359
-
-40 60 15 Refrigérateur - Ref. americain - MULTI DOORS
-1201053 Ref Multi GORENJE NRMB18EMB
-1187958 Ref Multi HISENSE RQ758N4SWSE
-1200091 Ref Multi LG GMZ765SBHJ InstaView
-
-40 65 30 Cave a vin
-1210450 Cave à vin ESSENTIELB ECV28-18b1
-1210451 Cave à vin LA SOMMELIERE ECS31.2Z`;
+1202581 Ref US SAMSUNG RH650654R359`;
       setGlobalMessage("ok", "Exemple chargé. Clique sur “Enregistrer le listing”.");
     });
 
@@ -1816,22 +1763,147 @@
       });
     });
 
-    generateReportBtn.addEventListener("click", () => {
-      state.reportDateValue = new Date();
-      refreshAll();
-      setGlobalMessage("ok", "Rapport mis à jour. Tu peux maintenant l’imprimer en PDF.");
-      document.getElementById("reportSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "generateReportBtn") {
+        openReportWindow();
+      }
     });
 
-    printPdfBtn.addEventListener("click", () => {
-      state.reportDateValue = new Date();
+    function renderSearchResults(results, input) {
+      if (!input) {
+        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Commence à taper pour voir les références correspondantes.</div>`;
+        return;
+      }
+
+      if (!results.length) {
+        searchResultsBox.innerHTML = `<div class="empty" style="margin:0">Aucune référence trouvée pour <strong>${escapeHtml(input)}</strong>.</div>`;
+        return;
+      }
+
+      const visible = results.slice(0, 12);
+
+      searchResultsBox.innerHTML = `
+        <div class="search-hint" style="margin-top:0; margin-bottom:10px">
+          ${results.length} résultat(s) trouvé(s)
+        </div>
+        <div class="result-row">
+          ${visible.map(item => `
+            <div class="result-item ${state.selectedItemId === item.id ? "active" : ""}" data-select-id="${escapeHtml(item.id)}">
+              <strong>${escapeHtml(item.reference)}</strong>
+              <div class="meta">
+                <span class="tag">Code : ${escapeHtml(item.code)}</span>
+                <span class="tag">${escapeHtml(item.category)}</span>
+                ${
+                  item.code === input
+                    ? `<span class="tag success">Exact</span>`
+                    : item.code.startsWith(input)
+                      ? `<span class="tag">Commence par</span>`
+                      : item.code.endsWith(input)
+                        ? `<span class="tag warning">Finit par</span>`
+                        : `<span class="tag">Contient</span>`
+                }
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+
+      document.querySelectorAll("[data-select-id]").forEach(el => {
+        el.addEventListener("click", () => {
+          state.selectedItemId = el.getAttribute("data-select-id");
+          renderSearchResults(state.currentResults, input);
+          renderSelectedCard(state.currentResults.find(item => item.id === state.selectedItemId) || null);
+        });
+      });
+    }
+
+    function runLiveSearch() {
+      if (!state.listingItems.length) {
+        setGlobalMessage("err", "Enregistre d’abord le listing.");
+        clearSearch(false);
+        return;
+      }
+
+      const input = digitsInput.value.replace(/\D/g, "").slice(0, 7);
+      digitsInput.value = input;
+
+      if (!input) {
+        state.currentResults = [];
+        state.selectedItemId = null;
+        renderSearchResults([], "");
+        renderSelectedCard(null);
+        return;
+      }
+
+      const matches = getSortedMatches(input);
+      state.currentResults = matches;
+
+      if (matches.length === 1) {
+        state.selectedItemId = matches[0].id;
+      } else if (!matches.some(item => item.id === state.selectedItemId)) {
+        state.selectedItemId = matches.length ? matches[0].id : null;
+      }
+
+      renderSearchResults(matches, input);
+      renderSelectedCard(matches.find(item => item.id === state.selectedItemId) || null);
+    }
+
+    function pushHistory(entry) {
+      state.historyItems.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        createdAt: Date.now(),
+        ...entry
+      });
+    }
+
+    function getSelectedItem() {
+      return state.currentResults.find(item => item.id === state.selectedItemId) || null;
+    }
+
+    function focusFastInput() {
+      requestAnimationFrame(() => {
+        digitsInput.focus();
+        digitsInput.select();
+      });
+    }
+
+    function markSelected(status) {
+      const item = getSelectedItem();
+      if (!item) return;
+
+      item.status = status;
+      state.finalized = false;
+
+      pushHistory({
+        input: digitsInput.value,
+        code: item.code,
+        label: item.reference,
+        category: item.category,
+        typeLabel: status === "present" ? "Présent en rayon" : "Pas présent en rayon",
+        typeClass: status === "present" ? "success" : "danger"
+      });
+
       refreshAll();
-      window.print();
-    });
+      setGlobalMessage(
+        "ok",
+        status === "present"
+          ? `Produit validé comme présent : ${item.reference}`
+          : `Produit validé comme non présent : ${item.reference}`
+      );
+
+      clearSearch(true);
+      setFocusState(true, "Saisie active");
+    }
 
     refreshAll();
     setFocusState(false, "Prêt");
     clearSearch(false);
+
+    const reportButtonHost = document.createElement("div");
+    reportButtonHost.className = "footer-actions";
+    reportButtonHost.style.marginTop = "16px";
+    reportButtonHost.innerHTML = `<button class="btn btn-primary" id="generateReportBtn">Générer le rapport</button>`;
+    document.querySelector(".app").appendChild(reportButtonHost);
   </script>
 </body>
 </html>
